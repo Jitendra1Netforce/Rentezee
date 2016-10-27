@@ -5,9 +5,8 @@
     tools:context="com.rentezee.fragments.DashboardSliderImage">
 
     <ImageView
-        android:id="@+id/ivDashboardSlider"
+        android:id="@+id/ivSliderImage"
         android:layout_width="match_parent"
-        android:src="@mipmap/img_car"
         android:layout_height="match_parent" />
 
 </LinearLayout>

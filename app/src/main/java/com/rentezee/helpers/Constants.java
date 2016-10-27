@@ -29,6 +29,7 @@ public interface Constants {
     String CATEGORIES="categories";
     String SELECTED_TAB_POSITION="selectedTabPosition";
     String PRODUCT_ID="productId";
+    String CATEGORY_NAME="categoryName";
 
 
 }

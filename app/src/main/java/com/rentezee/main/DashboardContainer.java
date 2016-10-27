@@ -677,6 +677,7 @@ public class DashboardContainer extends BaseActivity
                 adapter.addFragment(fragment, sliderData.getCategoryName());
             }
             viewPager.setAdapter(adapter);
+            indicator.setViewPager(viewPager);
         }
 
         //Categories

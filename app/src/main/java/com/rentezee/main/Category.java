@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -38,6 +39,7 @@ public class Category extends BaseActivity implements View.OnClickListener {
     private static  final String TAG=Category.class.getSimpleName();
     private Context context;
     private CoordinatorLayout coordinatorLayout;
+    private LinearLayout layoutBottom;
 
     private ArrayList<CategoryData> fetchedCategoryDataList;
 
@@ -61,6 +63,7 @@ public class Category extends BaseActivity implements View.OnClickListener {
 
         //find views
         coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinatorLayout);
+        layoutBottom=(LinearLayout)findViewById(R.id.layoutBottom);
         ListView lvProducts=(ListView)findViewById(R.id.lvProducts);
         productsAdapter=new ProductsAdapter(context, productList);
         lvProducts.setAdapter(productsAdapter);
@@ -158,6 +161,7 @@ public class Category extends BaseActivity implements View.OnClickListener {
     }
 
     private void reset(){
+        layoutBottom.setVisibility(View.GONE);
         page=1;
         sortBy=0;
         productList.clear();
@@ -220,6 +224,7 @@ public class Category extends BaseActivity implements View.OnClickListener {
     private void processCategoryResponse(com.rentezee.pojos.mcategory.Response response){
         ArrayList<Product> list=response.getData().getProducts();
         if(list!=null){
+            layoutBottom.setVisibility(View.VISIBLE);
             productList.addAll(list);
             productsAdapter.notifyDataSetChanged();
         }
