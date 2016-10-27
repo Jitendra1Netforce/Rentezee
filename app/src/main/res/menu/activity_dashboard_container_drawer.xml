@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:title="@string/my_information">
+        <menu>
+            <item
+                android:id="@+id/nav_orders"
+                android:icon="@mipmap/nav_orders"
+                android:title="My Orders" />
+            <item
+                android:id="@+id/nav_cart"
+                android:icon="@mipmap/ic_cart"
+                android:title="My Cart"
+                app:actionLayout="@layout/menu_counter" />
+
+            <item
+                android:id="@+id/nav_wishlist"
+                android:icon="@mipmap/nav_wishlist"
+                android:title="My Wishlist" />
+
+            <item
+                android:id="@+id/nav_notifications"
+                android:icon="@mipmap/nav_notifications"
+                android:title="My Notifications"
+                app:actionLayout="@layout/menu_counter" />
+            <item
+                android:id="@+id/nav_rentezee_credits"
+                android:icon="@mipmap/nav_rentezee_credits"
+                android:title="Rentezee Credits"
+                app:actionLayout="@layout/menu_credits" />
+            <item
+                android:id="@+id/nav_ret_it_out"
+                android:icon="@mipmap/nav_rent_it_out"
+                android:title="Rent It Out" />
+        </menu>
+    </item>
+
+    <item android:title="Others">
+        <menu>
+            <item
+                android:id="@+id/nav_legal_and_about"
+                android:icon="@mipmap/nav_legal_about"
+                android:title="@string/legal_about" />
+            <item
+                android:id="@+id/nav_chat"
+                android:icon="@mipmap/nav_chat"
+                android:title="@string/hi_let_s_chat" />
+            <item
+                android:id="@+id/nav_share"
+                android:icon="@drawable/ic_menu_share"
+                android:title="Share" />
+        </menu>
+    </item>
+    <item android:title=" ">
+        <menu>
+            <item
+                android:id="@+id/nav_blank"
+                android:title="" />
+        </menu>
+    </item>
+
+</menu>

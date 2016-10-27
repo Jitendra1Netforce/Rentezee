@@ -1,0 +1,55 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.rentezee.fragments.MyOrders1">
+
+    <LinearLayout
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/tvPoint1"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="@drawable/order_status_circle_reached" />
+
+        <TextView
+            android:id="@+id/tvLine1"
+            android:layout_width="@dimen/order_status_line_width"
+            android:layout_height="2dp"
+            android:background="@color/hintColor" />
+        <TextView
+            android:id="@+id/tvPoint2"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="@drawable/order_status_circle_unreached" />
+
+        <TextView
+            android:id="@+id/tvLine2"
+            android:layout_width="@dimen/order_status_line_width"
+            android:layout_height="2dp"
+            android:background="@color/hintColor" />
+        <TextView
+            android:id="@+id/tvPoint3"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="@drawable/order_status_circle_unreached" />
+
+        <TextView
+            android:id="@+id/tvLine3"
+            android:layout_width="@dimen/order_status_line_width"
+            android:layout_height="2dp"
+            android:background="@color/hintColor" />
+        <TextView
+            android:id="@+id/tvPoint4"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="@drawable/order_status_circle_unreached" />
+
+    </LinearLayout>
+
+</LinearLayout>

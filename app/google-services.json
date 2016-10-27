@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "141904853897",
+    "project_id": "rentezee-c86d9"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:141904853897:android:3e27d55603bccfed",
+        "android_client_info": {
+          "package_name": "com.rentezee.main"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "141904853897-nmefe2lq71rj5amm7miolqjp5m9m9gqb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.rentezee.main",
+            "certificate_hash": "91934A3BC25B8CAD1CB6F38A000DBF5B6C1C84CF"
+          }
+        },
+        {
+          "client_id": "141904853897-vmad4qdac21dgmfdljfuj398einhau7i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAxHNvfzoJ-QOJUIh8bFpUbMQTHtn68Yuw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,78 @@
+<resources>
+    <string name="app_name">Rentezee</string>
+    <string name="facebook_app_id">1093337920752228</string>
+    <string name="server_client_id">AIzaSyDHqjwGoceysoS7DRPoD2y4AftSgHd-Bxo</string>
+    <string name="title_activity_dashboard_container">DashboardContainer</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_cart">Cart</string>
+    <string name="action_search">Search</string>
+    <string name="action_settings">Settings</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="log_in">Log In</string>
+    <string name="facebook">Facebook</string>
+    <string name="google">Google</string>
+    <string name="email">Email</string>
+    <string name="intro1">Search any product according to categories and buy on rent.</string>
+    <string name="intro2">Your product reach at your home easily.</string>
+    <string name="intro3">Your some products are unused? So, you can earn cash for your products.</string>
+    <string name="title_activity_login">Login</string>
+    <string name="or">or</string>
+    <string name="email_address">Email Address</string>
+    <string name="password">Password</string>
+    <string name="forget_your_password">Forget your password?</string>
+    <string name="new_user">New user?</string>
+
+    <!--validation error -->
+    <string name="error_name">Please enter valid name</string>
+    <string name="error_email_empty">Please enter your email address</string>
+    <string name="error_email_not_valid">Email address is not valid</string>
+    <string name="error_mobile_empty">Please enter your mobile no.</string>
+    <string name="error_mobile_not_valid">Mobile no. is not valid</string>
+    <string name="error_pwd_empty">Please enter valid password</string>
+    <string name="error_pwd_no_space">Password must not contain any space!</string>
+    <string name="error_pwd_min_chars">Password must be in between 6-10 characters</string>
+    <string name="name">Name</string>
+    <string name="already_have_account">Already have account?</string>
+
+    <!--Error-->
+    <string name="not_found_error">The requested resource is not found. Please check your url.</string>
+    <string name="unauthorized_error">You are not an authorized user. An authentication is needed in order to access this resource</string>
+    <string name="network_error">There might be a network error when performing a request</string>
+    <string name="timeout_error">The server timed out waiting for the request. The client did not produce a request within the time that the server was prepared to wait. May be your internet connection is slow. Please try again.</string>
+    <string name="server_error">The server is currently unavailable (because it is overloaded or down for maintenance). Please try again after sometime.</string>
+    <string name="generic_error">Oops! Something went wrong. Please try again.</string>
+    <string name="no_internet_error">No internet connection.</string>
+    <string name="sign_in">Sign In</string>
+    <string name="recover_password_msg">Enter your email address to recover your password.</string>
+    <string name="send_mail">Send mail</string>
+    <string name="logout">Logout</string>
+    <string name="logout_msg">Are you sure you want to logout?</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="search">Search</string>
+    <string name="trending">Trending</string>
+
+    <string name="rs">\u20B9</string>
+    <string name="my_information">My Information</string>
+    <string name="legal_about"><![CDATA[Legal & About]]></string>
+    <string name="hi_let_s_chat">Hi Let\'s Chat</string>
+    <string name="skip_login">Skip Login</string>
+
+    <string name="okay">Okay</string>
+    <!--Permission-->
+    <string name="permission_message">In order to use this app you must need to provide this permission</string>
+    <string name="profile_settings">Profile Settings</string>
+    <string name="edit">Edit</string>
+    <string name="sort">Sort</string>
+    <string name="sort_by">Sort By</string>
+    <string name="filter">Filter</string>
+    <string name="title_activity_category">Category</string>
+    <string name="title_activity_detail">Detail</string>
+    <string name="title_activity_search">Search</string>
+    <string name="add_to_cart">Add to Cart</string>
+    <string name="add_to_wishlist">Add to Wishlist</string>
+</resources>
