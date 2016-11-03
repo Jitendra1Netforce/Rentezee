@@ -49,13 +49,13 @@ public class ProductDetail {
 
     @Override
     public String toString() {
-        return "ProductDetail{" +
+        return "data{" +
                 "images=" + images +
-                ", productId=" + productId +
+                ", id=" + productId +
                 ", price=" + price +
                 ", offerPrice=" + offerPrice +
-                ", securityPrice=" + securityPrice +
-                ", productName='" + productName + '\'' +
+                ", special=" + securityPrice +
+                ", name='" + productName + '\'' +
                 ", model='" + model + '\'' +
                 ", description='" + description + '\'' +
                 '}';

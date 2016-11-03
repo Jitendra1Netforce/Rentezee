@@ -34,17 +34,21 @@ import java.util.Locale;
 
 import me.relex.circleindicator.CircleIndicator;
 
-public class Detail extends BaseActivity {
+public class Detail extends BaseActivity
+{
+
     private static  final String TAG=Detail.class.getSimpleName();
     private Context context;
     private CoordinatorLayout coordinatorLayout;
-
     private ViewPager viewPager;
     private CircleIndicator indicator;
     private TextView tvProductName, tvProductCategoryName, tvDescription;
     private TextView tvSecurityMoney, tvPerDayRent;
     private CardView cardViewDescription;
     private LinearLayout layoutPrice, layoutBottom;
+    ActionBar actionBar;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,10 +58,11 @@ public class Detail extends BaseActivity {
 
         context=this;
 
-        ActionBar actionBar=getSupportActionBar();
-        if(actionBar!=null){
+         actionBar=getSupportActionBar();
+        if(actionBar!=null)
+        {
             actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setTitle("");
+
         }
 
         //Screen height and width
@@ -136,10 +141,11 @@ public class Detail extends BaseActivity {
             bundle.putString(Constants.URL, imageUrl);
             fragment.setArguments(bundle);
             adapter.addFragment(fragment, "");
+
         }
         viewPager.setAdapter(adapter);
         indicator.setViewPager(viewPager);
-
+        actionBar.setTitle(productDetail.getProductName());
         tvProductName.setText(productDetail.getProductName());
         tvProductCategoryName.setText(productDetail.getProductName());
         tvDescription.setText(productDetail.getDescription());

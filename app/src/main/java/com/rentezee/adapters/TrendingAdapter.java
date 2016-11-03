@@ -10,8 +10,10 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.rentezee.main.R;
+import com.rentezee.main.TrendingData;
 import com.rentezee.pojos.mdashboard.Trending;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,11 +22,11 @@ import java.util.List;
 
 public class TrendingAdapter extends BaseAdapter {
     private Context context;
-    private List<Trending> list;
+    private ArrayList<TrendingData> list;
     private String rs;
     private int imageWidth;
 
-    public TrendingAdapter(Context context, List<Trending> list, int imageWidth) {
+    public TrendingAdapter(Context context, ArrayList<TrendingData> list, int imageWidth) {
         this.context = context;
         this.list = list;
         rs = context.getString(R.string.rs);
@@ -37,7 +39,7 @@ public class TrendingAdapter extends BaseAdapter {
     }
 
     @Override
-    public Trending getItem(int position) {
+    public TrendingData getItem(int position) {
         return list.get(position);
     }
 
@@ -62,18 +64,17 @@ public class TrendingAdapter extends BaseAdapter {
             viewHolder = (DashboardTrendingViewHolder) convertView.getTag();
         }
 
-        Trending trending = getItem(position);
 
         Glide.with(context)
-                .load(trending.getImageUrl())
+                .load(list.get(position).image_url)
                 .centerCrop()
                 //.placeholder(R.mipmap.ic_loading)
                 .crossFade()
                 .into(viewHolder.ivTrendingImage);
 
-        viewHolder.tvDashboardTrendingText.setText(trending.getProductName());
-        viewHolder.tvDashboardTrendingPrice.setText(rs + trending.getPrice() + " per day");
-        viewHolder.tvDashboardTrendingCategoryText.setText(trending.getCategoryName());
+        viewHolder.tvDashboardTrendingText.setText(list.get(position).product_name);
+        viewHolder.tvDashboardTrendingPrice.setText(rs + list.get(position).price + " per day");
+        viewHolder.tvDashboardTrendingCategoryText.setText(list.get(position).category_name);
 
         return convertView;
     }

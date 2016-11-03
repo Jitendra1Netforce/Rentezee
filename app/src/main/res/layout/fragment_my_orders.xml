@@ -3,13 +3,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.rentezee.fragments.MyOrders1">
+    tools:context="com.rentezee.fragments.MyOrders">
 
     <LinearLayout
         android:layout_marginTop="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center">
+        android:gravity="center"
+        android:visibility="gone"
+        >
 
         <TextView
             android:id="@+id/tvPoint1"
@@ -51,5 +53,25 @@
             android:background="@drawable/order_status_circle_unreached" />
 
     </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        >
+
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Not Implement"
+            android:layout_margin="20dp"
+            android:layout_centerVertical="true"
+            android:textColor="@color/white80"
+            android:background="@color/colorAccent"
+            />
+
+
+    </RelativeLayout>
 
 </LinearLayout>

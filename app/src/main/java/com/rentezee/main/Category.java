@@ -6,9 +6,11 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -19,7 +21,15 @@ import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.koushikdutta.async.future.FutureCallback;
+import com.koushikdutta.ion.Ion;
+import com.rentezee.adapters.DashboardCategoriesAdapter;
 import com.rentezee.adapters.ProductsAdapter;
+import com.rentezee.adapters.TrendingAdapter;
+import com.rentezee.adapters.ViewPagerAdapter;
+import com.rentezee.fragments.DashboardSliderImage;
 import com.rentezee.helpers.BaseActivity;
 import com.rentezee.helpers.Constants;
 import com.rentezee.helpers.Debugger;
@@ -34,18 +44,21 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class Category extends BaseActivity implements View.OnClickListener {
+public class Category extends BaseActivity implements View.OnClickListener
+{
 
-    private static  final String TAG=Category.class.getSimpleName();
-    private Context context;
-    private CoordinatorLayout coordinatorLayout;
-    private LinearLayout layoutBottom;
 
-    private ArrayList<CategoryData> fetchedCategoryDataList;
+     private static  final String TAG=Category.class.getSimpleName();
+     private Context context;
+     private CoordinatorLayout coordinatorLayout;
+     private LinearLayout layoutBottom;
+     ListView lvProducts;
+     ArrayList<ProductListData> productListDatas = new ArrayList<>();
+     ArrayList<CategoriesData> fetchedCategoryDataList;
 
-    private ArrayList<Product> productList=new ArrayList<>();
-    private ProductsAdapter productsAdapter;
-    private int categoryId, page, sortBy;
+     private ArrayList<Product> productList=new ArrayList<>();
+     private ProductsAdapter productsAdapter;
+     private int categoryId, page, sortBy;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,9 +77,8 @@ public class Category extends BaseActivity implements View.OnClickListener {
         //find views
         coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinatorLayout);
         layoutBottom=(LinearLayout)findViewById(R.id.layoutBottom);
-        ListView lvProducts=(ListView)findViewById(R.id.lvProducts);
-        productsAdapter=new ProductsAdapter(context, productList);
-        lvProducts.setAdapter(productsAdapter);
+         lvProducts=(ListView)findViewById(R.id.lvProducts);
+
 
         lvProducts.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -83,22 +95,22 @@ public class Category extends BaseActivity implements View.OnClickListener {
 
         Intent intent=getIntent();
         categoryId=intent.getIntExtra(Constants.CATEGORY_ID, 0);
-        fetchedCategoryDataList = (ArrayList<CategoryData>) intent.getSerializableExtra(Constants.CATEGORIES);
+        fetchedCategoryDataList = (ArrayList<CategoriesData>) intent.getSerializableExtra(Constants.CATEGORIES);
         int selectedTabPosition=intent.getIntExtra(Constants.SELECTED_TAB_POSITION, 0);
         setUpTabs(tabLayout, selectedTabPosition);
 
-        if(categoryId==0){
+       /* if(categoryId==0){
             showSnackBar(coordinatorLayout, "Not able to find the category");
             return;
-        }
+        }*/
         fetchData(true);
     }
 
     private void setUpTabs(final TabLayout tabLayout, final int selectedTabPosition){
         if(fetchedCategoryDataList !=null) {
-            for (CategoryData s : fetchedCategoryDataList) {
+            for (CategoriesData s : fetchedCategoryDataList) {
                 TabLayout.Tab tab = tabLayout.newTab();
-                tab.setText(s.getCategoryName());
+                tab.setText(s.category_name);
                 tabLayout.addTab(tab);
             }
 
@@ -113,8 +125,10 @@ public class Category extends BaseActivity implements View.OnClickListener {
             tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
                 @Override
                 public void onTabSelected(TabLayout.Tab tab) {
-                    CategoryData categoryData = fetchedCategoryDataList.get(tab.getPosition());
-                    categoryId= categoryData.getCategoryId();
+                    CategoriesData categoryData = fetchedCategoryDataList.get(tab.getPosition());
+                    String cat_data = categoryData.category_id;
+                    int foo = Integer.parseInt(cat_data);
+                    categoryId= foo;
                     fetchData(true);
                 }
 
@@ -165,15 +179,16 @@ public class Category extends BaseActivity implements View.OnClickListener {
         page=1;
         sortBy=0;
         productList.clear();
-        productsAdapter.notifyDataSetChanged();
+        // productsAdapter.notifyDataSetChanged();
     }
 
-    private void fetchData(final boolean reset){
+    private void fetchData(final boolean reset)
+    {
         if(reset){
             reset();
         }
-
-        //Post data to sever
+        load_refresh();
+       /* //Post data to sever
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("appTypeId", Constants.APP_TYPE_ID);
@@ -217,16 +232,77 @@ public class Category extends BaseActivity implements View.OnClickListener {
             AppController.getInstance().addToRequestQueue(gsonRequest, TAG);
         } catch (Exception e) {
             e.printStackTrace();
-        }
+        }*/
     }
 
 
-    private void processCategoryResponse(com.rentezee.pojos.mcategory.Response response){
+    private void processCategoryResponse(com.rentezee.pojos.mcategory.Response response)
+    {
         ArrayList<Product> list=response.getData().getProducts();
-        if(list!=null){
+        if(list!=null)
+        {
             layoutBottom.setVisibility(View.VISIBLE);
             productList.addAll(list);
             productsAdapter.notifyDataSetChanged();
         }
     }
+
+
+
+    private void load_refresh()
+    {
+        // recyclerView.setVisibility(View.GONE);
+
+        // homeDatas.clear();
+
+        showProgressBar(context);
+
+        Ion.with(this)
+                .load("http://netforce.biz/renteeze/webservice/products/product_list?cat_id=1")
+
+                .asJsonObject()
+                .setCallback(new FutureCallback<JsonObject>() {
+                    @Override
+                    public void onCompleted(Exception e, JsonObject result)
+                    {
+
+                        if (result != null)
+                        {
+
+                            JsonArray productListArray = result.getAsJsonArray("data");
+
+
+                            for (int i = 0; i < productListArray.size(); i++)
+                            {
+                                JsonObject jsonObject = (JsonObject) productListArray.get(i);
+                                JsonObject product = jsonObject.getAsJsonObject("Product");
+                                String id = product.get("id").getAsString();
+                                String name = product.get("name").getAsString();
+                                String price = product.get("price").getAsString();
+                                String special_price = product.get("special_price").getAsString();
+                                String image = "http://netforce.biz/renteeze/webservice/files/products/"+product.get("images").getAsString();
+                                productListDatas.add(new ProductListData(id, name, image,price,special_price));
+
+                            }
+
+                            productsAdapter=new ProductsAdapter(context, productListDatas);
+                            lvProducts.setAdapter(productsAdapter);
+
+
+
+                            dismissProgressBar();
+                        } else
+                        {
+
+                            dismissProgressBar();
+                            Log.e("error", e.toString());
+                        }
+                    }
+                });
+
+    }
+
+
+
+
 }

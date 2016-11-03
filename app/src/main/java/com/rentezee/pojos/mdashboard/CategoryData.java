@@ -8,21 +8,22 @@ import android.os.Parcelable;
  */
 
 public class CategoryData implements Parcelable {
-    private int categoryId;
-    private String categoryName;
-    private String imageUrl;
+    private int id;
+    private String name;
+    private String image;
 
     protected CategoryData(Parcel in) {
-        categoryId = in.readInt();
-        categoryName = in.readString();
-        imageUrl = in.readString();
+        id = in.readInt();
+        name = in.readString();
+        image = in.readString();
     }
 
     @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(categoryId);
-        dest.writeString(categoryName);
-        dest.writeString(imageUrl);
+    public void writeToParcel(Parcel dest, int flags)
+    {
+        dest.writeInt(id);
+        dest.writeString(name);
+        dest.writeString(image);
     }
 
     @Override
@@ -43,23 +44,23 @@ public class CategoryData implements Parcelable {
     };
 
     public int getCategoryId() {
-        return categoryId;
+        return id;
     }
 
     public String getCategoryName() {
-        return categoryName;
+        return name;
     }
 
     public String getImageUrl() {
-        return imageUrl;
+        return image;
     }
 
     @Override
     public String toString() {
         return "CategoryData{" +
-                "categoryId=" + categoryId +
-                ", categoryName='" + categoryName + '\'' +
-                ", imageUrl='" + imageUrl + '\'' +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", image='" + image + '\'' +
                 '}';
     }
 }

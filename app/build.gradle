@@ -61,5 +61,6 @@ dependencies {
     compile 'org.apache.httpcomponents:httpclient:4.5.2'
     compile 'org.apache.httpcomponents:httpcore:4.4.5'
     testCompile 'junit:junit:4.12'
+    compile 'com.koushikdutta.ion:ion:2.+'
 }
 apply plugin: 'com.google.gms.google-services'

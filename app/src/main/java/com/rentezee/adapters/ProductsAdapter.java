@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.rentezee.main.ProductListData;
 import com.rentezee.main.R;
 import com.rentezee.pojos.mcategory.Product;
 
@@ -21,10 +22,10 @@ import java.util.ArrayList;
 public class ProductsAdapter extends BaseAdapter {
 
     private Context context;
-    private ArrayList<Product> list;
+    private ArrayList<ProductListData> list;
     private String rs;
 
-    public ProductsAdapter(Context context, ArrayList<Product> list) {
+    public ProductsAdapter(Context context, ArrayList<ProductListData> list) {
         this.context = context;
         this.list = list;
         rs = context.getString(R.string.rs);
@@ -36,7 +37,7 @@ public class ProductsAdapter extends BaseAdapter {
     }
 
     @Override
-    public Product getItem(int position) {
+    public ProductListData getItem(int position) {
         return list.get(position);
     }
 
@@ -60,18 +61,17 @@ public class ProductsAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        Product product = getItem(position);
 
         Glide.with(context)
-                .load(product.getImageUrl())
+                .load(list.get(position).image_url)
                 .centerCrop()
                 //.placeholder(R.mipmap.ic_loading)
                 .crossFade()
                 .into(viewHolder.ivProductImage);
 
-        viewHolder.tvProductName.setText(product.getProductName());
-        viewHolder.tvProductCategoryName.setText(product.getProductName());
-        viewHolder.tvPrice.setText(rs + product.getPrice() + " per day");
+        viewHolder.tvProductName.setText(list.get(position).product_name);
+        viewHolder.tvProductCategoryName.setText(list.get(position).product_name);
+        viewHolder.tvPrice.setText(rs + list.get(position).price + " per day");
         return convertView;
     }
 

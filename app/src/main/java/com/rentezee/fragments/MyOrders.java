@@ -5,24 +5,23 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.ActionBar;
+import android.support.v7.widget.Toolbar;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.BackgroundColorSpan;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.rentezee.helpers.BaseActivity;
 import com.rentezee.helpers.Debugger;
 import com.rentezee.main.R;
 
 
-public class MyOrders1 extends Fragment {
+public class MyOrders extends BaseActivity {
 
-    private static final String TAG = MyOrders1.class.getSimpleName();
+    private static final String TAG = MyOrders.class.getSimpleName();
     private Context context;
     private TextView tvPoint1, tvPoint2, tvPoint3, tvPoint4;
     private TextView tvLine1, tvLine2, tvLine3;
@@ -31,22 +30,32 @@ public class MyOrders1 extends Fragment {
     private int activeColor;
 
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_my_orders, container, false);
-        context = getActivity();
+    protected  void  onCreate(Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_my_order);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        context=this;
+
+        ActionBar actionBar=getSupportActionBar();
+        if(actionBar!=null){
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setTitle("MY Order");
+        }
+
 
         activeColor= ContextCompat.getColor(context, android.R.color.holo_green_dark);
 
-        tvPoint1 = (TextView) view.findViewById(R.id.tvPoint1);
-        tvPoint2 = (TextView) view.findViewById(R.id.tvPoint2);
-        tvPoint3 = (TextView) view.findViewById(R.id.tvPoint3);
-        tvPoint4 = (TextView) view.findViewById(R.id.tvPoint4);
-        tvLine1 = (TextView) view.findViewById(R.id.tvLine1);
-        tvLine2 = (TextView) view.findViewById(R.id.tvLine2);
-        tvLine3 = (TextView) view.findViewById(R.id.tvLine3);
+        tvPoint1 = (TextView)findViewById(R.id.tvPoint1);
+        tvPoint2 = (TextView) findViewById(R.id.tvPoint2);
+        tvPoint3 = (TextView) findViewById(R.id.tvPoint3);
+        tvPoint4 = (TextView) findViewById(R.id.tvPoint4);
+        tvLine1 = (TextView) findViewById(R.id.tvLine1);
+        tvLine2 = (TextView) findViewById(R.id.tvLine2);
+        tvLine3 = (TextView) findViewById(R.id.tvLine3);
 
         /*int colorFrom = ContextCompat.getColor(context, android.R.color.holo_red_dark);
         int colorTo =  ContextCompat.getColor(context, android.R.color.black);
@@ -63,7 +72,7 @@ public class MyOrders1 extends Fragment {
         });
         colorAnimation.start();*/
 
-        lineWidth=(int)getActivity().getResources().getDimension(R.dimen.order_status_line_width);
+        lineWidth=(int)getApplicationContext().getResources().getDimension(R.dimen.order_status_line_width);
         Debugger.i("Width", lineWidth+"");
         lineWidth+=1;
         StringBuilder builder=new StringBuilder();
@@ -88,7 +97,7 @@ public class MyOrders1 extends Fragment {
             }
         }).start();
 
-        return view;
+
     }
 
 

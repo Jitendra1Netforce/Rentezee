@@ -24,6 +24,7 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -37,8 +38,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.facebook.FacebookSdk;
 import com.facebook.login.LoginManager;
 import com.google.android.gms.auth.api.Auth;
@@ -53,10 +52,16 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResult;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.koushikdutta.async.future.FutureCallback;
+import com.koushikdutta.ion.Ion;
 import com.rentezee.adapters.DashboardCategoriesAdapter;
 import com.rentezee.adapters.TrendingAdapter;
 import com.rentezee.adapters.ViewPagerAdapter;
+import com.rentezee.fragments.Cart;
 import com.rentezee.fragments.DashboardSliderImage;
+import com.rentezee.fragments.MyOrders;
 import com.rentezee.helpers.AppPreferenceManager;
 import com.rentezee.helpers.BaseActivity;
 import com.rentezee.helpers.Constants;
@@ -64,8 +69,6 @@ import com.rentezee.helpers.Debugger;
 import com.rentezee.helpers.LocationUtil;
 import com.rentezee.helpers.PreferenceKeys;
 import com.rentezee.helpers.Util;
-import com.rentezee.helpers.VolleyErrorHandler;
-import com.rentezee.helpers.VolleyGsonRequest;
 import com.rentezee.pojos.User;
 import com.rentezee.pojos.mdashboard.CategoryData;
 import com.rentezee.pojos.mdashboard.Slider;
@@ -73,20 +76,20 @@ import com.rentezee.pojos.mdashboard.Trending;
 import com.rentezee.services.GPSTracker;
 import com.rentezee.views.ExpandableHeightGridView;
 
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 
 import me.relex.circleindicator.CircleIndicator;
 
-public class DashboardContainer extends BaseActivity
-        implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener,
+public class DashboardContainer extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
         com.google.android.gms.location.LocationListener,
         ResultCallback<LocationSettingsResult>,
         DialogInterface.OnCancelListener {
 
+
+    ArrayList<CategoriesData> categoryDatas = new ArrayList<>();
+    ArrayList<TrendingData> trendingDatas = new ArrayList<>();
     private final static String TAG = DashboardContainer.class.getSimpleName();
     private static final int MY_PERMISSIONS_REQUEST = 1001;
     private Context context;
@@ -100,7 +103,6 @@ public class DashboardContainer extends BaseActivity
     private GoogleApiClient googleApiClient;
     private LocationSettingsRequest locationSettingsRequest;
     //private double latitude, longitude;
-
     private ViewPager viewPager;
     private CircleIndicator indicator;
     private ExpandableHeightGridView gvCategories;
@@ -109,7 +111,6 @@ public class DashboardContainer extends BaseActivity
     private TextView tvTrending;
     private ArrayList<CategoryData> fetchedCategoryDataList, categoryDataList;
     private DashboardCategoriesAdapter dashboardCategoriesAdapterAdapter;
-
     private ArrayList<Slider> fetchedSliderDataList;
     private ArrayList<Trending> fetchedTrendingList;
     private DisplayMetrics displayMetrics;
@@ -161,7 +162,10 @@ public class DashboardContainer extends BaseActivity
             @Override
             public void onClick(View view) {
                 DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-                if (drawer.isDrawerOpen(GravityCompat.START)) {
+
+
+                if (drawer.isDrawerOpen(GravityCompat.START))
+                {
                     drawer.closeDrawer(GravityCompat.START);
                 } else {
                     drawer.openDrawer(GravityCompat.START);
@@ -422,9 +426,24 @@ public class DashboardContainer extends BaseActivity
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
+    public boolean onNavigationItemSelected(MenuItem item)
+
+    {
+        switch (item.getItemId())
+        {
             case R.id.nav_orders:
+
+                Intent intent=new Intent(context, MyOrders.class);
+
+                gotoActivity(intent);
+
+                break;
+
+            case R.id.nav_cart:
+
+                Intent intent2=new Intent(context, Cart.class);
+
+                gotoActivity(intent2);
 
                 break;
         }
@@ -586,13 +605,17 @@ public class DashboardContainer extends BaseActivity
         double latitude = gpsTracker.getLatitude();
         double longitude = gpsTracker.getLongitude();
         //init(latitude, longitude);
-        fetchDashboardData(latitude, longitude);
+        //fetchDashboardData(latitude, longitude);
+         load_refresh();
+
+
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        if (googleApiClient != null) {
+        if (googleApiClient != null)
+        {
             googleApiClient.connect();
         }
         LocalBroadcastManager.getInstance(context)
@@ -619,7 +642,137 @@ public class DashboardContainer extends BaseActivity
     }
 
 
+    private void load_refresh()
+    {
+       // recyclerView.setVisibility(View.GONE);
+
+       // homeDatas.clear();
+
+        showProgressBar(context);
+
+        Ion.with(this)
+                .load("http://netforce.biz/renteeze/webservice/Pages/dashboard.json")
+
+                .asJsonObject()
+                .setCallback(new FutureCallback<JsonObject>() {
+                    @Override
+                    public void onCompleted(Exception e, JsonObject result)
+                    {
+
+                        if (result != null)
+                        {
+                            JsonObject v = result.getAsJsonObject("data");
+
+                            JsonArray sliderArray = v.getAsJsonArray("sliderData");
+
+                            JsonArray categoruArray = v.getAsJsonArray("categories");
+
+                            JsonArray trendingsArray = v.getAsJsonArray("trendings");
+
+                            ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+                            for (int i = 0; i < sliderArray.size(); i++)
+                            {
+                                JsonObject jsonObject = (JsonObject) sliderArray.get(i);
+                                JsonObject vo = jsonObject.getAsJsonObject("Slider");
+                                String id = vo.get("id").getAsString();
+                                String name = vo.get("title").getAsString();
+                                String image = vo.get("image").getAsString();
+                                System.out.println("imageurl ======================"  + name);
+
+                                Fragment fragment = new DashboardSliderImage();
+                                Bundle bundle = new Bundle();
+                                bundle.putString(Constants.URL, "http://netforce.biz/renteeze/webservice/images/slides/"+image);
+                                fragment.setArguments(bundle);
+                                adapter.addFragment(fragment, name);
+                            }
+                            viewPager.setAdapter(adapter);
+                            indicator.setViewPager(viewPager);
+
+
+                            for (int i = 0; i < categoruArray.size(); i++)
+                            {
+                                JsonObject jsonObject = (JsonObject) categoruArray.get(i);
+                                JsonObject category = jsonObject.getAsJsonObject("Category");
+                                String id = category.get("id").getAsString();
+
+                                String name = category.get("name").getAsString();
+                                String image = "http://netforce.biz/renteeze/webservice/images/"+category.get("image").getAsString();
+
+
+                                System.out.println("imageurl ======================" + name);
+                                categoryDatas.add(new CategoriesData(id, name, image));
+
+                            }
+                            dashboardCategoriesAdapterAdapter = new DashboardCategoriesAdapter(context, categoryDatas);
+
+                            gvCategories.setFocusable(false);
+                            gvCategories.setAdapter(dashboardCategoriesAdapterAdapter);
+                            gvCategories.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+                                {
+
+                                    Intent intent = new Intent(context, Category.class);
+                                    intent.putParcelableArrayListExtra(Constants.CATEGORIES, categoryDatas);
+                                    intent.putExtra(Constants.CATEGORY_ID, categoryDatas.get(position).category_id);
+                                    intent.putExtra(Constants.SELECTED_TAB_POSITION, position);
+                                    gotoActivity(intent);
+
+                                }
+                            });
+
+                            for (int i = 0; i < trendingsArray.size(); i++)
+                            {
+                                JsonObject jsonObject = (JsonObject) trendingsArray.get(i);
+                                JsonObject trenging = jsonObject.getAsJsonObject("Product");
+
+                                JsonObject category = jsonObject.getAsJsonObject("Category");
+
+                                String category_name = category.get("name").getAsString();
+
+                                String id = trenging.get("id").getAsString();
+                                String name = trenging.get("name").getAsString();
+                                String price = trenging.get("price").getAsString();
+                                String special_price = trenging.get("special_price").getAsString();
+                                String image = "http://netforce.biz/renteeze/webservice/files/products/"+trenging.get("images").getAsString();
+
+                                System.out.println("imageurl ======================" + name);
+                                trendingDatas.add(new TrendingData(id, name, image,price,special_price,category_name));
+
+                            }
+
+                            if (trendingDatas != null) {
+                                tvTrending.setVisibility(View.VISIBLE);
+                                int width=displayMetrics.widthPixels-(int)getResources().getDimension(R.dimen.ten);
+                                TrendingAdapter trendingAdapter = new TrendingAdapter(context, trendingDatas, width);
+                                gvTrending.setFocusable(false);
+                                gvTrending.setAdapter(trendingAdapter);
+                            }else{
+                                tvTrending.setVisibility(View.GONE);
+                            }
+
+
+                            dismissProgressBar();
+                        } else
+                        {
+
+                            dismissProgressBar();
+                            Log.e("error", e.toString());
+                        }
+                    }
+                });
+
+    }
+
+
+
+/*
+
     private void fetchDashboardData(double lat, double lng) {
+
+
+        load_refresh();
+
         //Post data to sever
         JSONObject jsonObject = new JSONObject();
         try {
@@ -627,30 +780,42 @@ public class DashboardContainer extends BaseActivity
             jsonObject.put("versionName", Util.getVersionName(context));
             jsonObject.put("lat", lat);
             jsonObject.put("lng", lng);
-            String url = Constants.API + "dashboard"; //URL to hit
+            String url = "http://netforce.biz/renteeze/webservice/Pages/dashboard.json"; //URL to hit
+
+
             showProgressBar(context);
             VolleyGsonRequest<com.rentezee.pojos.mdashboard.Response> gsonRequest = new VolleyGsonRequest<>(url,
                     jsonObject,
-                    new Response.Listener<com.rentezee.pojos.mdashboard.Response>() {
+                    new Response.Listener<com.rentezee.pojos.mdashboard.Response>()
+                    {
                         @Override
-                        public void onResponse(com.rentezee.pojos.mdashboard.Response response) {
+                        public void onResponse(com.rentezee.pojos.mdashboard.Response response)
+                        {
                             dismissProgressBar();
                             Debugger.i(TAG, "Response " + response);
-                            if (response != null) {
-                                if (response.isSuccess()) {
+                            if (response != null)
+                            {
+                                if (response.isSuccess())
+                                {
                                     processDashboardResponse(response);
-                                } else {
+                                }
+                                else
+                                {
                                     showSnackBar(coordinatorLayout, response.getMessage());
                                 }
-                            } else {
+                            }
+                            else
+                            {
                                 showSnackBar(coordinatorLayout, getString(R.string.generic_error));
                             }
                         }
                     },
 
-                    new Response.ErrorListener() {
+                    new Response.ErrorListener()
+                    {
                         @Override
-                        public void onErrorResponse(VolleyError error) {
+                        public void onErrorResponse(VolleyError error)
+                        {
                             dismissProgressBar();
                             error.printStackTrace();
                             showSnackBar(coordinatorLayout, VolleyErrorHandler.getMessage(context, error));
@@ -664,12 +829,16 @@ public class DashboardContainer extends BaseActivity
             e.printStackTrace();
         }
     }
+*/
 
-    private void processDashboardResponse(com.rentezee.pojos.mdashboard.Response response) {
+    private void processDashboardResponse(com.rentezee.pojos.mdashboard.Response response)
+    {
         fetchedSliderDataList = response.getData().getSliderData();
-        if (fetchedSliderDataList != null) {
+        if (fetchedSliderDataList != null)
+        {
             ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-            for (Slider sliderData : fetchedSliderDataList) {
+            for (Slider sliderData : fetchedSliderDataList)
+            {
                 Fragment fragment = new DashboardSliderImage();
                 Bundle bundle = new Bundle();
                 bundle.putString(Constants.URL, sliderData.getImageUrl());
@@ -682,22 +851,25 @@ public class DashboardContainer extends BaseActivity
 
         //Categories
         fetchedCategoryDataList = response.getData().getCategories();
-        if (fetchedCategoryDataList.size() > 6) {
+
+        if (fetchedCategoryDataList.size() > 6)
+        {
             categoryDataList = new ArrayList<>();
             for (int i = 0; i < 6; i++) {
                 categoryDataList.add(fetchedCategoryDataList.get(i));
             }
-            dashboardCategoriesAdapterAdapter = new DashboardCategoriesAdapter(context, categoryDataList);
+           // dashboardCategoriesAdapterAdapter = new DashboardCategoriesAdapter(context, categoryDataList);
             ivMore.setVisibility(View.VISIBLE);
         } else {
             ivMore.setVisibility(View.GONE);
-            dashboardCategoriesAdapterAdapter = new DashboardCategoriesAdapter(context, fetchedCategoryDataList);
+           // dashboardCategoriesAdapterAdapter = new DashboardCategoriesAdapter(context, fetchedCategoryDataList);
         }
         gvCategories.setFocusable(false);
         gvCategories.setAdapter(dashboardCategoriesAdapterAdapter);
         gvCategories.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+            {
                 Intent intent=new Intent(context, Category.class);
                 intent.putParcelableArrayListExtra(Constants.CATEGORIES, fetchedCategoryDataList);
                 intent.putExtra(Constants.CATEGORY_ID, fetchedCategoryDataList.get(position).getCategoryId());
@@ -711,9 +883,9 @@ public class DashboardContainer extends BaseActivity
         if (fetchedTrendingList != null) {
             tvTrending.setVisibility(View.VISIBLE);
             int width=displayMetrics.widthPixels-(int)getResources().getDimension(R.dimen.ten);
-            TrendingAdapter trendingAdapter = new TrendingAdapter(context, fetchedTrendingList, width);
-            gvTrending.setFocusable(false);
-            gvTrending.setAdapter(trendingAdapter);
+           // TrendingAdapter trendingAdapter = new TrendingAdapter(context, fetchedTrendingList, width);
+          //  gvTrending.setFocusable(false);
+          //  gvTrending.setAdapter(trendingAdapter);
         }else{
             tvTrending.setVisibility(View.GONE);
         }

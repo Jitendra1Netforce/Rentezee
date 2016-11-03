@@ -25,7 +25,7 @@ public class DashboardData {
 
     @Override
     public String toString() {
-        return "DashboardData{" +
+        return "{" +
                 "categories=" + categories +
                 ", sliderData=" + sliderData +
                 ", trendings=" + trendings +

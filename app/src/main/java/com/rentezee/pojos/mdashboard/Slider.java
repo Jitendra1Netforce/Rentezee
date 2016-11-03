@@ -8,23 +8,23 @@ import android.os.Parcelable;
  */
 
 public class Slider implements Parcelable {
-    private int categoryId;
-    private String categoryName;
-    private String imageUrl;
+    private int id;
+    private String title;
+    private String image;
     private int productId;
 
     protected Slider(Parcel in) {
-        categoryId = in.readInt();
-        categoryName = in.readString();
-        imageUrl = in.readString();
+        id = in.readInt();
+        title = in.readString();
+        image = in.readString();
         productId = in.readInt();
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(categoryId);
-        dest.writeString(categoryName);
-        dest.writeString(imageUrl);
+        dest.writeInt(id);
+        dest.writeString(title);
+        dest.writeString(image);
         dest.writeInt(productId);
     }
 
@@ -46,15 +46,15 @@ public class Slider implements Parcelable {
     };
 
     public int getCategoryId() {
-        return categoryId;
+        return id;
     }
 
     public String getCategoryName() {
-        return categoryName;
+        return title;
     }
 
     public String getImageUrl() {
-        return imageUrl;
+        return image;
     }
 
     public int getProductId() {
@@ -64,10 +64,9 @@ public class Slider implements Parcelable {
     @Override
     public String toString() {
         return "Slider{" +
-                "categoryId=" + categoryId +
-                ", categoryName='" + categoryName + '\'' +
-                ", imageUrl='" + imageUrl + '\'' +
-                ", productId=" + productId +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", image='" + image + '\'' +
                 '}';
     }
 }

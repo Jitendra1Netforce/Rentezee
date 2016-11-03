@@ -5,31 +5,31 @@ package com.rentezee.pojos.mdashboard;
  */
 
 public class Trending {
-    private int categoryId;
-    private String categoryName;
-    private String imageUrl;
-    private int productId;
-    private String productName;
+    private int category_id;
+    private String name;
+    private String images;
+    private int id;
+
     private int price;
 
     public int getCategoryId() {
-        return categoryId;
+        return category_id;
     }
 
     public String getCategoryName() {
-        return categoryName;
+        return name;
     }
 
     public String getImageUrl() {
-        return imageUrl;
+        return images;
     }
 
     public int getProductId() {
-        return productId;
+        return id;
     }
 
     public String getProductName() {
-        return productName;
+        return name;
     }
 
     public int getPrice() {
@@ -39,11 +39,11 @@ public class Trending {
     @Override
     public String toString() {
         return "Trending{" +
-                "categoryId=" + categoryId +
-                ", categoryName='" + categoryName + '\'' +
-                ", imageUrl='" + imageUrl + '\'' +
-                ", productId=" + productId +
-                ", productName='" + productName + '\'' +
+                "category_id=" + category_id +
+                ", name='" + name + '\'' +
+                ", images='" + images + '\'' +
+                ", id=" + id +
+                ", name='" + name + '\'' +
                 ", price=" + price +
                 '}';
     }

@@ -20,14 +20,16 @@ public class DashboardSliderImage extends Fragment {
 
     private Context context;
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_dashboard_slider_image, container, false);
 
         context=getActivity();
 
         ImageView ivSliderImage = (ImageView) view.findViewById(R.id.ivSliderImage);
+
+        System.out.println("image============="+getArguments().getString(Constants.URL));
 
         Glide.with(context)
                 .load(getArguments().getString(Constants.URL))

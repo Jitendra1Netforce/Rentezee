@@ -9,9 +9,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.rentezee.main.CategoriesData;
 import com.rentezee.main.R;
 import com.rentezee.pojos.mdashboard.CategoryData;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,8 +23,8 @@ import java.util.List;
 public class DashboardCategoriesAdapter extends BaseAdapter {
 
     private Context context;
-    private List<CategoryData> list;
-    public DashboardCategoriesAdapter(Context context, List<CategoryData> list) {
+    private ArrayList<CategoriesData> list;
+    public DashboardCategoriesAdapter(Context context, ArrayList<CategoriesData> list) {
         this.context = context;
         this.list = list;
 
@@ -34,7 +36,7 @@ public class DashboardCategoriesAdapter extends BaseAdapter {
     }
 
     @Override
-    public CategoryData getItem(int position) {
+    public CategoriesData getItem(int position) {
         return list.get(position);
     }
 
@@ -56,14 +58,14 @@ public class DashboardCategoriesAdapter extends BaseAdapter {
             viewHolder= (DashboardCategoryViewHolder) convertView.getTag();
         }
 
-        CategoryData categoryData =getItem(position);
+
         Glide.with(context)
-                .load(categoryData.getImageUrl())
+                .load(list.get(position).image_url)
                 .centerCrop()
                 //.placeholder(R.mipmap.ic_loading)
                 .crossFade()
                 .into(viewHolder.ivDashboardCategory);
-        viewHolder.tvDashboardCategoryText.setText(categoryData.getCategoryName());
+        viewHolder.tvDashboardCategoryText.setText(list.get(position).category_name);
 
         return convertView;
     }
