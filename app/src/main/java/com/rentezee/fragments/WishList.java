@@ -1,20 +1,11 @@
-package com.rentezee.main;
+package com.rentezee.fragments;
 
-import android.app.SearchManager;
+
 import android.content.Context;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.ListView;
 
 import com.google.gson.JsonArray;
@@ -22,80 +13,56 @@ import com.google.gson.JsonObject;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 import com.rentezee.adapters.WishListAdapter;
-import com.rentezee.fragments.WishListData;
 import com.rentezee.helpers.BaseActivity;
-import com.rentezee.helpers.Debugger;
+import com.rentezee.main.R;
 
 import java.util.ArrayList;
 
-public class Search extends BaseActivity {
+public class WishList extends BaseActivity {
 
-    private static final String TAG=Search.class.getSimpleName();
+    private final static String TAG = WishList.class.getSimpleName();
     private Context context;
-    private SearchView searchView;
-    ArrayList<SearchData> searchDatas = new ArrayList<>();
-    SearchAdapter searchAdapter;
     ListView lvProducts;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    ArrayList<WishListData> wishListDatas = new ArrayList<>();
+    WishListAdapter wishListAdapter;
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search);
+        setContentView(R.layout.activity_my_wishlist);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        context=this;
+        context = this;
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setTitle("My Wishlist");
         }
+
+
 
         lvProducts=(ListView)findViewById(R.id.lvProducts);
 
-
-
-
-
-    }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
-        getMenuInflater().inflate(R.menu.search, menu);
-        // Associate searchable configuration with the SearchView
-        //SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        searchView = (SearchView) menu.findItem(R.id.search).getActionView();
-        //searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-        searchView.setIconified(false);
-        searchView.requestFocus();
-
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+        load_refresh();
+       /* lvProducts.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        {
             @Override
-            public boolean onQueryTextSubmit(String query) {
-                Debugger.i(TAG,"onQueryTextSubmit "+ query);
-
-
-                load_refresh();
-                return true;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                Debugger.i(TAG,"onQueryTextChange "+ newText);
-                return false;
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(context, Detail.class);
+                intent.putExtra(Constants.PRODUCT_ID, productListDatas.get(position).product_id);
+                gotoActivity(intent);
             }
         });
-        return true;
+*/
     }
+
 
     private void load_refresh()
     {
         // recyclerView.setVisibility(View.GONE);
 
-        searchDatas.clear();
+        wishListDatas.clear();
 
         showProgressBar(context);
 
@@ -113,7 +80,8 @@ public class Search extends BaseActivity {
 
                             System.out.println("data=====");
 
-                            for (int i = 0; i < productListArray.size(); i++) {
+                            for (int i = 0; i < productListArray.size(); i++)
+                            {
                                 JsonObject jsonObject = (JsonObject) productListArray.get(i);
                                 JsonObject product = jsonObject.getAsJsonObject("Product");
                                 String id = product.get("id").getAsString();
@@ -121,12 +89,12 @@ public class Search extends BaseActivity {
                                 String price = product.get("price").getAsString();
                                 String category_name = product.get("special_price").getAsString();
                                 String image = "http://netforce.biz/renteeze/webservice/files/products/" + product.get("images").getAsString();
-                                searchDatas.add(new SearchData(id, name, image, price, category_name));
+                                wishListDatas.add(new WishListData(id, name, image, price, category_name));
 
                             }
-                            searchAdapter = new SearchAdapter(context, searchDatas);
-                            lvProducts.setAdapter(searchAdapter);
-                            searchAdapter.notifyDataSetChanged();
+                            wishListAdapter = new WishListAdapter(context, wishListDatas);
+                            lvProducts.setAdapter(wishListAdapter);
+                            wishListAdapter.notifyDataSetChanged();
 
                             dismissProgressBar();
 

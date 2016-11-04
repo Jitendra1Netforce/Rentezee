@@ -59,7 +59,7 @@ import com.koushikdutta.ion.Ion;
 import com.rentezee.adapters.DashboardCategoriesAdapter;
 import com.rentezee.adapters.TrendingAdapter;
 import com.rentezee.adapters.ViewPagerAdapter;
-import com.rentezee.fragments.Cart;
+import com.rentezee.fragments.WishList;
 import com.rentezee.fragments.DashboardSliderImage;
 import com.rentezee.fragments.MyOrders;
 import com.rentezee.helpers.AppPreferenceManager;
@@ -439,9 +439,9 @@ public class DashboardContainer extends BaseActivity implements NavigationView.O
 
                 break;
 
-            case R.id.nav_cart:
+            case R.id.nav_wishlist:
 
-                Intent intent2=new Intent(context, Cart.class);
+                Intent intent2=new Intent(context, WishList.class);
 
                 gotoActivity(intent2);
 

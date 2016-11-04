@@ -111,7 +111,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
-            android:name="com.rentezee.fragments.Cart"
+            android:name="com.rentezee.fragments.WishList"
             android:label="@string/title_activity_category"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />

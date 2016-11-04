@@ -1,7 +1,10 @@
 package com.rentezee.main;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.provider.Settings;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -12,11 +15,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.koushikdutta.async.future.FutureCallback;
+import com.koushikdutta.ion.Ion;
+import com.rentezee.adapters.ProductsAdapter;
 import com.rentezee.adapters.ViewPagerAdapter;
 import com.rentezee.fragments.DashboardSliderImage;
 import com.rentezee.helpers.BaseActivity;
@@ -42,11 +51,17 @@ public class Detail extends BaseActivity
     private CoordinatorLayout coordinatorLayout;
     private ViewPager viewPager;
     private CircleIndicator indicator;
-    private TextView tvProductName, tvProductCategoryName, tvDescription;
+    private TextView tvProductName, tvProductCategoryName, tvDescription,tvProductID;
     private TextView tvSecurityMoney, tvPerDayRent;
     private CardView cardViewDescription;
     private LinearLayout layoutPrice, layoutBottom;
     ActionBar actionBar;
+    LinearLayout layoutAddToWishlist,layoutAddToCart;
+    String device_id;
+
+    public static final String PREFERENCES = "WishListPrefs";
+    SharedPreferences settings;
+    SharedPreferences.Editor prefEditor;
 
 
     @Override
@@ -57,11 +72,21 @@ public class Detail extends BaseActivity
         setSupportActionBar(toolbar);
 
         context=this;
-
          actionBar=getSupportActionBar();
+
+        settings = getSharedPreferences(PREFERENCES, MODE_PRIVATE);
+        prefEditor = settings.edit();
+
+
+        device_id = Settings.Secure.getString(getApplicationContext().getContentResolver(),
+                  Settings.Secure.ANDROID_ID);
+
+         System.out.println("android_id=================="+ device_id);
+
         if(actionBar!=null)
         {
             actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setTitle("");
 
         }
 
@@ -69,11 +94,17 @@ public class Detail extends BaseActivity
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
 
+        layoutAddToWishlist = (LinearLayout) findViewById(R.id.layoutAddToWishlist);
+
+        layoutAddToCart = (LinearLayout) findViewById(R.id.layoutAddToCart);
+
         //find views
         coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinatorLayout);
         viewPager = (ViewPager) findViewById(R.id.viewPager);
         viewPager.getLayoutParams().height = (int) (displayMetrics.widthPixels * .719);
         indicator = (CircleIndicator) findViewById(R.id.indicator);
+
+        tvProductID = (TextView) findViewById(R.id.tvProductID);
 
         tvProductName=(TextView)findViewById(R.id.tvProductName);
         tvProductCategoryName=(TextView)findViewById(R.id.tvProductCategoryName);
@@ -85,11 +116,48 @@ public class Detail extends BaseActivity
         layoutPrice=(LinearLayout)findViewById(R.id.layoutPrice);
         layoutBottom=(LinearLayout)findViewById(R.id.layoutBottom);
 
-        fetchDetail(getIntent().getIntExtra(Constants.PRODUCT_ID, 0));
+        String cat_id = getIntent().getStringExtra(Constants.PRODUCT_ID);
+
+
+        layoutAddToWishlist.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+
+                String product_id = tvProductID.getText().toString();
+                prefEditor.putBoolean(product_id, true);
+                prefEditor.commit();
+
+
+
+            }
+        });
+
+
+
+        layoutAddToCart.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+
+            }
+        });
+
+
+
+        // fetchDetail(Integer.parseInt(cat_id));
+
+        load_refresh(Integer.parseInt(cat_id));
     }
 
-    private void fetchDetail(int productId){
-        try {
+    private void fetchDetail(int productId)
+    {
+
+
+        try
+        {
             String url = Constants.API + "product/"+String.valueOf(productId); //URL to hit
             showProgressBar(context);
             AppController.getInstance().cancelPendingRequest(TAG);
@@ -145,7 +213,7 @@ public class Detail extends BaseActivity
         }
         viewPager.setAdapter(adapter);
         indicator.setViewPager(viewPager);
-        actionBar.setTitle(productDetail.getProductName());
+
         tvProductName.setText(productDetail.getProductName());
         tvProductCategoryName.setText(productDetail.getProductName());
         tvDescription.setText(productDetail.getDescription());
@@ -159,4 +227,155 @@ public class Detail extends BaseActivity
 
         layoutBottom.setVisibility(View.VISIBLE);
     }
+
+
+    private void add_wish_list(String productId,String user_id)
+    {
+
+        showProgressBar(context);
+
+        Ion.with(this)
+                .load("http://netforce.biz/renteeze/webservice/products/product_details?action=details&id="+productId)
+                .asJsonObject()
+                .setCallback(new FutureCallback<JsonObject>() {
+                    @Override
+                    public void onCompleted(Exception e, JsonObject result)
+                    {
+
+                        if (result != null)
+                        {
+                            JsonObject data = result.getAsJsonObject("data");
+
+                            JsonArray productImage = data.getAsJsonArray("ProductImage");
+
+                            ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+                            for (int i = 0; i < productImage.size(); i++)
+                            {
+                                JsonObject jsonObject = (JsonObject) productImage.get(i);
+
+                                String id = jsonObject.get("product_id").getAsString();
+
+                                String image = jsonObject.get("image").getAsString();
+
+                                Fragment fragment = new DashboardSliderImage();
+                                Bundle bundle = new Bundle();
+                                bundle.putString(Constants.URL, "http://netforce.biz/renteeze/webservice/files/products/"+image);
+                                fragment.setArguments(bundle);
+                                adapter.addFragment(fragment, "");
+                            }
+
+                            viewPager.setAdapter(adapter);
+                            indicator.setViewPager(viewPager);
+
+                            JsonObject category = data.getAsJsonObject("Category");
+
+                            String category_name = category.get("name").getAsString();
+                            JsonObject product = data.getAsJsonObject("Product");
+                            String id = product.get("id").getAsString();
+                            String name = product.get("name").getAsString();
+                            String price = product.get("price").getAsString();
+                            String security_price = product.get("security_price").getAsString();
+                            String description = product.get("description").getAsString();
+
+                            tvProductID.setText(id);
+                            tvProductName.setText(name);
+                            tvProductCategoryName.setText(category_name);
+                            tvDescription.setText(description);
+                            cardViewDescription.setVisibility(View.VISIBLE);
+
+                            String rs = getString(R.string.rs);
+                            tvSecurityMoney.setText(String.format(Locale.ENGLISH, "%s%s", rs, security_price));
+                            tvPerDayRent.setText(String.format(Locale.ENGLISH, "%s%s", rs, price));
+                            layoutPrice.setVisibility(View.VISIBLE);
+
+                            layoutBottom.setVisibility(View.VISIBLE);
+
+                            dismissProgressBar();
+
+                        } else {
+
+                            dismissProgressBar();
+                            Log.e("error", e.toString());
+                        }
+                    }
+                }) ;
+
+    }
+
+
+
+
+    private void load_refresh(int productId)
+    {
+
+        showProgressBar(context);
+
+        Ion.with(this)
+                .load("http://netforce.biz/renteeze/webservice/products/product_details?action=details&id="+productId)
+                .asJsonObject()
+                .setCallback(new FutureCallback<JsonObject>() {
+                    @Override
+                    public void onCompleted(Exception e, JsonObject result)
+                    {
+
+                        if (result != null)
+                        {
+                            JsonObject data = result.getAsJsonObject("data");
+
+                            JsonArray productImage = data.getAsJsonArray("ProductImage");
+
+                            ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+                            for (int i = 0; i < productImage.size(); i++)
+                            {
+                                JsonObject jsonObject = (JsonObject) productImage.get(i);
+
+                                String id = jsonObject.get("product_id").getAsString();
+
+                                String image = jsonObject.get("image").getAsString();
+
+                                Fragment fragment = new DashboardSliderImage();
+                                Bundle bundle = new Bundle();
+                                bundle.putString(Constants.URL, "http://netforce.biz/renteeze/webservice/files/products/"+image);
+                                fragment.setArguments(bundle);
+                                adapter.addFragment(fragment, "");
+                            }
+
+                            viewPager.setAdapter(adapter);
+                            indicator.setViewPager(viewPager);
+
+                            JsonObject category = data.getAsJsonObject("Category");
+
+                            String category_name = category.get("name").getAsString();
+                            JsonObject product = data.getAsJsonObject("Product");
+                            String id = product.get("id").getAsString();
+                            String name = product.get("name").getAsString();
+                            String price = product.get("price").getAsString();
+                            String security_price = product.get("security_price").getAsString();
+                            String description = product.get("description").getAsString();
+
+                            tvProductID.setText(id);
+                            tvProductName.setText(name);
+                            tvProductCategoryName.setText(category_name);
+                            tvDescription.setText(description);
+                            cardViewDescription.setVisibility(View.VISIBLE);
+
+                            String rs = getString(R.string.rs);
+                            tvSecurityMoney.setText(String.format(Locale.ENGLISH, "%s%s", rs, security_price));
+                            tvPerDayRent.setText(String.format(Locale.ENGLISH, "%s%s", rs, price));
+                            layoutPrice.setVisibility(View.VISIBLE);
+
+                            layoutBottom.setVisibility(View.VISIBLE);
+
+                            dismissProgressBar();
+
+                        } else {
+
+                            dismissProgressBar();
+                            Log.e("error", e.toString());
+                        }
+                    }
+                }) ;
+
+    }
+
 }

@@ -2,6 +2,7 @@ package com.rentezee.main;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
@@ -64,6 +65,9 @@ public class SignUp extends BaseActivity implements View.OnClickListener{
     private Context context;
     private CoordinatorLayout coordinatorLayout;
     private EditText etName, etEmail, etPhone, etPassword;
+    public static final String PREFERENCES = "WishListPrefs";
+    SharedPreferences settings;
+    SharedPreferences.Editor prefEditor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -187,16 +191,27 @@ public class SignUp extends BaseActivity implements View.OnClickListener{
                             dismissProgressBar();
                             Debugger.i(TAG, "Response " + response);
                             if(response!=null){
-                                if(response.isSuccess()){
+                                if(response.isSuccess())
+                                {
+
                                     User user=new User(name, email, mobile);
                                     user.setUserId(response.getUserId());
+
+                                    System.out.println("response=============" + response.getUserId());
+
+                                    long user_id = response.getUserId();
+
+                                    prefEditor.putLong("user_id",user_id);
+                                    prefEditor.commit();
 
                                     new AppPreferenceManager(context).putObject(PreferenceKeys.savedUser, user);
                                     gotoActivityByClearingBackStack(DashboardContainer.class);
                                 }else{
                                     showSnackBar(coordinatorLayout, response.getMessage());
                                 }
-                            }else{
+                            }
+                            else
+                            {
                                 showSnackBar(coordinatorLayout, getString(R.string.generic_error));
                             }
                         }

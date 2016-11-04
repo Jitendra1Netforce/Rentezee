@@ -61,9 +61,7 @@ public class DashboardCategoriesAdapter extends BaseAdapter {
 
         Glide.with(context)
                 .load(list.get(position).image_url)
-                .centerCrop()
-                //.placeholder(R.mipmap.ic_loading)
-                .crossFade()
+
                 .into(viewHolder.ivDashboardCategory);
         viewHolder.tvDashboardCategoryText.setText(list.get(position).category_name);
 
