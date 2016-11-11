@@ -211,9 +211,11 @@ public class Login extends BaseActivity implements View.OnClickListener {
      *
      * @param result GoogleSignInResult
      */
-    private void handleSignInResult(GoogleSignInResult result) {
+    private void handleSignInResult(GoogleSignInResult result)
+    {
         Debugger.i(TAG, "handleSignInResult:" + result.isSuccess());
-        if (result.isSuccess()) {
+        if (result.isSuccess())
+        {
             // Signed in successfully, show authenticated UI.
             GoogleSignInAccount acct = result.getSignInAccount();
             assert acct != null;
@@ -224,7 +226,9 @@ public class Login extends BaseActivity implements View.OnClickListener {
             socialLogin(name, email, RegisterVia.google);
 
             Debugger.i(TAG, "Name " + acct.getDisplayName() + ", Email " + acct.getEmail());
-        } else {
+        }
+        else
+        {
             // Signed out, show unauthenticated UI.
             Debugger.i(TAG, "Google Sign in not authenticated");
             showSnackBar(coordinatorLayout, "Google Sign in not authenticated");
@@ -292,10 +296,17 @@ public class Login extends BaseActivity implements View.OnClickListener {
                             dismissProgressBar();
                             Debugger.i(TAG, "Response " + response);
                             if (response != null) {
-                                if (response.isSuccess()) {
+                                if (response.isSuccess())
+                                {
+
+                                    System.out.println("some data ========="+  response.getData().toString());
                                     new AppPreferenceManager(context).putObject(PreferenceKeys.savedUser, response.getData());
                                     gotoActivityByClearingBackStack(DashboardContainer.class);
-                                } else {
+
+
+                                }
+                                else
+                                {
                                     showSnackBar(coordinatorLayout, response.getMessage());
                                 }
                             } else {
@@ -353,6 +364,9 @@ public class Login extends BaseActivity implements View.OnClickListener {
         stringBuilder.append("/").append(email);
         stringBuilder.append("/").append(password);
         String url = stringBuilder.toString();
+
+        System.out.println("url==========="+url);
+
         showProgressBar(context);
         VolleyGsonRequest<LoginResponse> gsonRequest = new VolleyGsonRequest<>(url,
                 null,

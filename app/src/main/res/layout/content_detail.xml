@@ -180,7 +180,7 @@
     </ScrollView>
 
     <LinearLayout
-        android:visibility="gone"
+
         android:id="@+id/layoutBottom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -227,11 +227,24 @@
             android:gravity="center"
             android:orientation="horizontal">
 
-            <ImageView
+
+            <com.github.ivbaranov.mfb.MaterialFavoriteButton
+                android:id="@+id/payment_salon_material_button"
                 android:layout_width="16dp"
                 android:layout_height="16dp"
-                android:layout_gravity="center_vertical"
-                android:src="@mipmap/ic_add_to_wishlist" />
+                android:layout_alignParentRight="true"
+                app:mfb_animate_favorite="true"
+                app:mfb_animate_unfavorite="true"
+                app:mfb_rotation_duration="100"
+                app:mfb_rotation_angle="360"
+                app:mfb_bounce_duration="300"
+                app:mfb_color="black"
+                app:mfb_type="star"
+                app:mfb_not_favorite_image="@mipmap/ic_add_to_wishlist"
+                android:layout_below="@+id/payonline_txt"
+
+                />
+
 
             <TextView
                 android:layout_width="wrap_content"

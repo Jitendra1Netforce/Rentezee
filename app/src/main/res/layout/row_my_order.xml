@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+  <RelativeLayout
+      android:id="@+id/relative_layout_container"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:padding="15dp"
+      >
+
+
+      <TextView
+          android:id="@+id/tv_first_date"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="Order Date"
+          android:layout_alignParentLeft="true"
+          android:textColor="@color/black"
+          android:textStyle="bold"
+          />
+
+
+      <TextView
+          android:id="@+id/second_date"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="Order Date"
+          android:layout_alignParentRight="true"
+          android:textColor="@color/black"
+          android:textStyle="bold"
+          />
+
+
+      <TextView
+          android:id="@+id/tv_f_date"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="25-06-2015"
+          android:layout_alignParentLeft="true"
+          android:layout_below="@+id/tv_first_date"
+          android:layout_marginTop="5dp"
+          android:textColor="@color/black"
+          />
+
+      <TextView
+          android:id="@+id/tv_time"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="12:53 PM"
+          android:layout_centerHorizontal="true"
+          android:layout_below="@+id/tv_first_date"
+          android:layout_marginTop="5dp"
+          android:textColor="@color/black"
+          />
+
+
+
+      <TextView
+          android:id="@+id/tv_l_date"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="25-06-2015"
+          android:layout_alignParentRight="true"
+          android:layout_below="@+id/tv_first_date"
+          android:layout_marginTop="5dp"
+          android:textColor="@color/black"
+          />
+
+      <LinearLayout
+          android:layout_marginTop="20dp"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:gravity="center"
+          android:layout_below="@+id/tv_f_date"
+          android:id="@+id/materialSeekBar"
+          >
+
+          <TextView
+              android:id="@+id/tvPoint1"
+              android:layout_width="20dp"
+              android:layout_height="20dp"
+              android:background="@drawable/order_status_circle_reached" />
+
+          <TextView
+              android:id="@+id/tvLine1"
+              android:layout_width="@dimen/order_status_line_width"
+              android:layout_height="2dp"
+              android:background="@color/hintColor" />
+          <TextView
+              android:id="@+id/tvPoint2"
+              android:layout_width="20dp"
+              android:layout_height="20dp"
+              android:background="@drawable/order_status_circle_unreached" />
+
+          <TextView
+              android:id="@+id/tvLine2"
+              android:layout_width="@dimen/order_status_line_width"
+              android:layout_height="2dp"
+              android:background="@color/hintColor" />
+          <TextView
+              android:id="@+id/tvPoint3"
+              android:layout_width="20dp"
+              android:layout_height="20dp"
+              android:background="@drawable/order_status_circle_unreached" />
+
+          <TextView
+              android:id="@+id/tvLine3"
+              android:layout_width="@dimen/order_status_line_width"
+              android:layout_height="2dp"
+              android:background="@color/hintColor" />
+          <TextView
+              android:id="@+id/tvPoint4"
+              android:layout_width="20dp"
+              android:layout_height="20dp"
+              android:background="@drawable/order_status_circle_unreached" />
+
+      </LinearLayout>
+
+
+
+      <TextView
+          android:id="@+id/tv_product_condition"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="Your Order has been processing!"
+          android:textColor="@color/green"
+          android:layout_centerHorizontal="true"
+          android:layout_below="@+id/materialSeekBar"
+          android:layout_marginTop="15dp"
+          />
+
+      <Button
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="View Detail"
+          android:drawableRight="@mipmap/f_hdpi"
+          android:layout_below="@+id/tv_product_condition"
+          android:layout_marginTop="15dp"
+          android:textColor="@color/black"
+          android:background="?android:attr/selectableItemBackground"
+          />
+
+
+      <Button
+          android:layout_width="wrap_content"
+          android:layout_height="40dp"
+          android:text="View Detail"
+          android:layout_below="@+id/tv_product_condition"
+          android:layout_marginTop="15dp"
+          android:textColor="@color/white"
+          android:background="@color/orange"
+          android:layout_centerHorizontal="true"
+         android:padding="5dp"
+
+          />
+
+      <Button
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="3000:00"
+          android:layout_below="@+id/tv_product_condition"
+          android:layout_marginTop="15dp"
+          android:textColor="@color/black"
+          android:layout_alignParentRight="true"
+          android:textAlignment="textEnd"
+          android:background="?android:attr/selectableItemBackground"
+          />
+
+
+  </RelativeLayout>
+
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/black"
+        android:layout_below="@+id/relative_layout_container"
+        ></View>
+
+</RelativeLayout>

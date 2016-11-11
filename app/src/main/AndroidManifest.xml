@@ -103,21 +103,16 @@
             android:label="@string/title_activity_category"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
-            android:name="com.rentezee.fragments.MyOrders"
+            android:name="com.rentezee.fragments.myorder.MyOrders"
             android:label="@string/title_activity_category"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name="com.rentezee.fragments.WishList"
             android:label="@string/title_activity_category"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-
-
-
         <activity
             android:name=".Detail"
             android:label="@string/title_activity_detail"
@@ -131,6 +126,14 @@
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
         </activity>
+        <activity
+            android:name="com.rentezee.fragments.my_cart.MyCart"
+            android:label="@string/title_activity_my_cart"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="com.rentezee.fragments.notification.NotificationActivity"
+            android:label="@string/title_activity_my_cart"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

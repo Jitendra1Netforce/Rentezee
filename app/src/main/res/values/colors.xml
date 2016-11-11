@@ -12,4 +12,8 @@
 
     <color name="orange">#EF7609</color>
     <color name="orangeDark">#ac5406</color>
+    <color name="black">#000000</color>
+    <color name="green">#079E01</color>
+    <color name="white">#FFFFFF</color>
+    <color name="viewpager">#A9A8A8</color>
 </resources>

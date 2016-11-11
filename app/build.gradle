@@ -35,6 +35,12 @@ android {
         exclude 'META-INF/LICENSE.txt'
         exclude 'META-INF/NOTICE.txt'
     }
+
+    repositories {
+        maven {
+            url  "http://dl.bintray.com/ahmedrizwan/maven"
+        }
+    }
 }
 
 dependencies {
@@ -62,5 +68,9 @@ dependencies {
     compile 'org.apache.httpcomponents:httpcore:4.4.5'
     testCompile 'junit:junit:4.12'
     compile 'com.koushikdutta.ion:ion:2.+'
+    compile 'de.hdodenhof:circleimageview:2.1.0'
+    compile 'com.github.ivbaranov:materialfavoritebutton:0.1.2'
+    compile 'com.minimize.library:seekbar-compat:0.2.5'
+
 }
 apply plugin: 'com.google.gms.google-services'

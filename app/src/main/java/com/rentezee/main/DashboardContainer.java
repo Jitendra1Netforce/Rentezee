@@ -61,7 +61,9 @@ import com.rentezee.adapters.TrendingAdapter;
 import com.rentezee.adapters.ViewPagerAdapter;
 import com.rentezee.fragments.WishList;
 import com.rentezee.fragments.DashboardSliderImage;
-import com.rentezee.fragments.MyOrders;
+import com.rentezee.fragments.myorder.MyOrders;
+import com.rentezee.fragments.my_cart.MyCart;
+import com.rentezee.fragments.notification.NotificationActivity;
 import com.rentezee.helpers.AppPreferenceManager;
 import com.rentezee.helpers.BaseActivity;
 import com.rentezee.helpers.Constants;
@@ -432,10 +434,15 @@ public class DashboardContainer extends BaseActivity implements NavigationView.O
         switch (item.getItemId())
         {
             case R.id.nav_orders:
-
                 Intent intent=new Intent(context, MyOrders.class);
-
                 gotoActivity(intent);
+
+                break;
+
+            case R.id.nav_cart:
+                Intent cart=new Intent(context, MyCart.class);
+
+                gotoActivity(cart);
 
                 break;
 
@@ -446,6 +453,15 @@ public class DashboardContainer extends BaseActivity implements NavigationView.O
                 gotoActivity(intent2);
 
                 break;
+
+            case R.id.nav_notifications:
+
+                Intent notification=new Intent(context, NotificationActivity.class);
+
+                gotoActivity(notification);
+
+                break;
+
         }
 
         /*if (id == R.id.nav_cart) {

@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+   android:background="#FFFFFF"
+   >
+
+<LinearLayout
+    android:id="@+id/linear_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_alignParentTop="true"
+    android:layout_above="@+id/layoutBottom"
+    >
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+    <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    >
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/lvMyCart"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="60dp"
+
+            />
+
+
+        <RelativeLayout
+            android:id="@+id/relativeTotal"
+            android:layout_below="@+id/lvMyCart"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            >
+
+            <TextView
+                android:id="@+id/tv_discount_heading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="DISCOUNT (COUPON SAVE10)"
+                android:layout_alignParentLeft="true"
+                android:textColor="@color/black"
+                />
+
+            <TextView
+                android:id="@+id/tv_discount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="-5820:00"
+                android:layout_alignParentRight="true"
+                android:textColor="@color/green"
+                />
+
+
+            <TextView
+                android:id="@+id/tv_credit_heading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="CREDITS"
+                android:layout_below="@+id/tv_discount_heading"
+
+                android:layout_alignParentLeft="true"
+                android:textColor="@color/black"
+                />
+
+            <TextView
+                android:id="@+id/tv_credit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="28000"
+                android:layout_below="@+id/tv_discount_heading"
+                android:textColor="@color/green"
+                android:layout_alignParentRight="true"
+                />
+
+            <TextView
+                android:id="@+id/tv_servicetax_heading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="SERVICE TAX(15%)"
+                android:layout_below="@+id/tv_credit_heading"
+                android:layout_alignParentLeft="true"
+                android:textColor="@color/black"
+                />
+
+
+            <TextView
+                android:id="@+id/tv_servicetax"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="+8730"
+                android:layout_below="@+id/tv_credit_heading"
+                android:layout_alignParentRight="true"
+                android:textColor="@color/orange"
+                />
+
+
+            <TextView
+                android:id="@+id/tv_othertax_heading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="OTHER TAXES:"
+                android:layout_below="@+id/tv_servicetax_heading"
+                android:layout_alignParentLeft="true"
+                android:textColor="@color/black"
+                />
+
+
+            <TextView
+                android:id="@+id/tv_othertax"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="N/A"
+                android:layout_below="@+id/tv_servicetax_heading"
+                android:layout_alignParentRight="true"
+                android:textColor="@color/black"
+                />
+
+            <TextView
+                android:id="@+id/tv_services_charges_heading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="SERVICES CHARGES"
+                android:layout_below="@+id/tv_othertax_heading"
+                android:layout_alignParentLeft="true"
+                android:textColor="@color/black"
+                />
+
+
+            <TextView
+                android:id="@+id/tv_services_charges"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="+200:00"
+                android:layout_below="@+id/tv_othertax_heading"
+                android:layout_alignParentRight="true"
+                android:textColor="@color/orange"
+                />
+
+
+
+            <TextView
+                android:id="@+id/tv_total_heading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TOTAL"
+                android:layout_below="@+id/tv_services_charges_heading"
+                android:layout_alignParentLeft="true"
+                android:textColor="@color/black"
+                android:layout_marginTop="30dp"
+                android:textStyle="bold"
+                />
+
+
+            <TextView
+                android:id="@+id/tv_total"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="58200:00"
+                android:layout_below="@+id/tv_services_charges_heading"
+                android:layout_alignParentRight="true"
+                android:textColor="@color/black"
+                android:layout_marginTop="30dp"
+                android:textStyle="bold"
+                />
+
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+
+
+
+    </android.support.v4.widget.NestedScrollView>
+
+</LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layoutBottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@android:color/black"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/layoutSort"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_gravity="center_vertical"
+                android:src="@mipmap/ic_sort" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:padding="10dp"
+                android:text="Continue"
+                android:textColor="@color/hintColor"
+                android:theme="@style/MyTextViewNormal" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
+            android:background="@color/hintColor" />
+
+        <LinearLayout
+            android:id="@+id/layoutFilter"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_gravity="center_vertical"
+                android:src="@mipmap/ic_filter" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:padding="10dp"
+                android:text="@string/Checkout"
+                android:textColor="@color/hintColor"
+                android:theme="@style/MyTextViewNormal" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
+
+</RelativeLayout>

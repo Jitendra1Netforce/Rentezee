@@ -21,6 +21,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
+import com.github.ivbaranov.mfb.MaterialFavoriteButton;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.koushikdutta.async.future.FutureCallback;
@@ -58,24 +59,24 @@ public class Detail extends BaseActivity
     ActionBar actionBar;
     LinearLayout layoutAddToWishlist,layoutAddToCart;
     String device_id;
-
+    MaterialFavoriteButton materialFavoriteButton;
     public static final String PREFERENCES = "WishListPrefs";
     SharedPreferences settings;
-    SharedPreferences.Editor prefEditor;
 
+    String id;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         context=this;
-         actionBar=getSupportActionBar();
+        actionBar=getSupportActionBar();
 
-        settings = getSharedPreferences(PREFERENCES, MODE_PRIVATE);
-        prefEditor = settings.edit();
+        settings = getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE);
 
 
         device_id = Settings.Secure.getString(getApplicationContext().getContentResolver(),
@@ -112,6 +113,8 @@ public class Detail extends BaseActivity
         tvSecurityMoney=(TextView)findViewById(R.id.tvSecurityMoney);
         tvPerDayRent=(TextView)findViewById(R.id.tvPerDayRent);
 
+        materialFavoriteButton = (MaterialFavoriteButton) findViewById(R.id.payment_salon_material_button);
+
         cardViewDescription=(CardView) findViewById(R.id.cardViewDescription);
         layoutPrice=(LinearLayout)findViewById(R.id.layoutPrice);
         layoutBottom=(LinearLayout)findViewById(R.id.layoutBottom);
@@ -119,15 +122,46 @@ public class Detail extends BaseActivity
         String cat_id = getIntent().getStringExtra(Constants.PRODUCT_ID);
 
 
+
         layoutAddToWishlist.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View view)
             {
+                SharedPreferences.Editor editor = settings.edit();
 
-                String product_id = tvProductID.getText().toString();
-                prefEditor.putBoolean(product_id, true);
-                prefEditor.commit();
+
+                System.out.println("material favorite status========"+ materialFavoriteButton.isFavorite());
+
+                if(materialFavoriteButton.isFavorite() )
+                {
+
+                    materialFavoriteButton.setAnimateFavorite(true);
+                    materialFavoriteButton.setBounceDuration(300);
+                    materialFavoriteButton.setRotationAngle(360);
+                    materialFavoriteButton.setRotationDuration(100);
+                    materialFavoriteButton.setNotFavoriteResource(R.mipmap.ic_add_to_wishlist);
+                    materialFavoriteButton.setFavorite(false);
+                    System.out.println("favorite============" + materialFavoriteButton.isFavorite());
+                    editor.putBoolean(id, false);
+                    editor.commit();
+
+                }
+                else
+                {
+
+
+                    System.out.println(" not favorite============"+materialFavoriteButton.isFavorite());
+                    materialFavoriteButton.setAnimateUnfavorite(true);
+                    materialFavoriteButton.setBounceDuration(300);
+                    materialFavoriteButton.setRotationAngle(360);
+                    materialFavoriteButton.setRotationDuration(100);
+                    materialFavoriteButton.setFavoriteResource(R.mipmap.ic_favorite_hdpi);
+                    materialFavoriteButton.setFavorite(true);
+                    editor.putBoolean(id, true);
+                    editor.commit();
+
+                }
 
 
 
@@ -271,7 +305,7 @@ public class Detail extends BaseActivity
 
                             String category_name = category.get("name").getAsString();
                             JsonObject product = data.getAsJsonObject("Product");
-                            String id = product.get("id").getAsString();
+                             id = product.get("id").getAsString();
                             String name = product.get("name").getAsString();
                             String price = product.get("price").getAsString();
                             String security_price = product.get("security_price").getAsString();
@@ -289,6 +323,8 @@ public class Detail extends BaseActivity
                             layoutPrice.setVisibility(View.VISIBLE);
 
                             layoutBottom.setVisibility(View.VISIBLE);
+
+
 
                             dismissProgressBar();
 
@@ -347,7 +383,7 @@ public class Detail extends BaseActivity
 
                             String category_name = category.get("name").getAsString();
                             JsonObject product = data.getAsJsonObject("Product");
-                            String id = product.get("id").getAsString();
+                            id = product.get("id").getAsString();
                             String name = product.get("name").getAsString();
                             String price = product.get("price").getAsString();
                             String security_price = product.get("security_price").getAsString();
@@ -365,6 +401,33 @@ public class Detail extends BaseActivity
                             layoutPrice.setVisibility(View.VISIBLE);
 
                             layoutBottom.setVisibility(View.VISIBLE);
+
+                            if(settings.getBoolean(id,true))
+                            {
+
+                                System.out.println("data============" + settings.getBoolean(id, true));
+
+                                materialFavoriteButton.setFavoriteResource(R.mipmap.ic_favorite_hdpi);
+                                materialFavoriteButton.setAnimateFavorite(true);
+                                materialFavoriteButton.setBounceDuration(300);
+                                materialFavoriteButton.setRotationAngle(360);
+                                materialFavoriteButton.setRotationDuration(100);
+                                materialFavoriteButton.setFavorite(true);
+
+                            }
+                            else
+                            {
+
+                                materialFavoriteButton.setAnimateUnfavorite(true);
+                                materialFavoriteButton.setBounceDuration(300);
+                                materialFavoriteButton.setRotationAngle(360);
+                                materialFavoriteButton.setRotationDuration(100);
+                                materialFavoriteButton.setFavoriteResource(R.mipmap.ic_add_to_wishlist);
+                                materialFavoriteButton.setFavorite(false);
+                                System.out.println("not favo============" + settings.getBoolean(id, true));
+
+                            }
+
 
                             dismissProgressBar();
 
