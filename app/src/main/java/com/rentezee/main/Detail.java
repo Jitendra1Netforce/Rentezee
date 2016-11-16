@@ -29,15 +29,23 @@ import com.koushikdutta.ion.Ion;
 import com.rentezee.adapters.ProductsAdapter;
 import com.rentezee.adapters.ViewPagerAdapter;
 import com.rentezee.fragments.DashboardSliderImage;
+import com.rentezee.helpers.AppPreferenceManager;
 import com.rentezee.helpers.BaseActivity;
 import com.rentezee.helpers.Constants;
 import com.rentezee.helpers.Debugger;
+import com.rentezee.helpers.PreferenceKeys;
 import com.rentezee.helpers.Util;
 import com.rentezee.helpers.VolleyErrorHandler;
 import com.rentezee.helpers.VolleyGsonRequest;
+import com.rentezee.pojos.GenericResponse;
+import com.rentezee.pojos.LoginResponse;
+import com.rentezee.pojos.User;
 import com.rentezee.pojos.mdashboard.Slider;
 import com.rentezee.pojos.mdetail.ProductDetail;
 import com.rentezee.pojos.mdetail.Response;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -46,6 +54,7 @@ import me.relex.circleindicator.CircleIndicator;
 
 public class Detail extends BaseActivity
 {
+
 
     private static  final String TAG=Detail.class.getSimpleName();
     private Context context;
@@ -62,25 +71,28 @@ public class Detail extends BaseActivity
     MaterialFavoriteButton materialFavoriteButton;
     public static final String PREFERENCES = "WishListPrefs";
     SharedPreferences settings;
+    String id,user_id;
+    long  userId;
 
-    String id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_detail);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
         setSupportActionBar(toolbar);
 
         context=this;
+
         actionBar=getSupportActionBar();
 
         settings = getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE);
 
-
-        device_id = Settings.Secure.getString(getApplicationContext().getContentResolver(),
-                  Settings.Secure.ANDROID_ID);
+        device_id = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
 
          System.out.println("android_id=================="+ device_id);
 
@@ -90,7 +102,6 @@ public class Detail extends BaseActivity
             actionBar.setTitle("");
 
         }
-
         //Screen height and width
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
@@ -121,6 +132,16 @@ public class Detail extends BaseActivity
 
         String cat_id = getIntent().getStringExtra(Constants.PRODUCT_ID);
 
+         User user = (User) new AppPreferenceManager(context).getObject(PreferenceKeys.savedUser, User.class);
+
+        if(user != null){
+
+            userId = user.getUserId();
+
+        }
+
+         user_id = Long.toString(userId);
+
 
 
         layoutAddToWishlist.setOnClickListener(new View.OnClickListener()
@@ -130,28 +151,27 @@ public class Detail extends BaseActivity
             {
                 SharedPreferences.Editor editor = settings.edit();
 
-
                 System.out.println("material favorite status========"+ materialFavoriteButton.isFavorite());
 
                 if(materialFavoriteButton.isFavorite() )
                 {
-
+                    System.out.println("favorite============" + materialFavoriteButton.isFavorite());
                     materialFavoriteButton.setAnimateFavorite(true);
                     materialFavoriteButton.setBounceDuration(300);
                     materialFavoriteButton.setRotationAngle(360);
                     materialFavoriteButton.setRotationDuration(100);
                     materialFavoriteButton.setNotFavoriteResource(R.mipmap.ic_add_to_wishlist);
                     materialFavoriteButton.setFavorite(false);
-                    System.out.println("favorite============" + materialFavoriteButton.isFavorite());
                     editor.putBoolean(id, false);
                     editor.commit();
 
                 }
                 else
                 {
+                    System.out.println(" product_id============" +id);
+                    add_wish_list(id, user_id);
 
 
-                    System.out.println(" not favorite============"+materialFavoriteButton.isFavorite());
                     materialFavoriteButton.setAnimateUnfavorite(true);
                     materialFavoriteButton.setBounceDuration(300);
                     materialFavoriteButton.setRotationAngle(360);
@@ -162,6 +182,8 @@ public class Detail extends BaseActivity
                     editor.commit();
 
                 }
+
+
 
 
 
@@ -266,75 +288,56 @@ public class Detail extends BaseActivity
     private void add_wish_list(String productId,String user_id)
     {
 
-        showProgressBar(context);
+       JSONObject jsonObject = new JSONObject();
 
-        Ion.with(this)
-                .load("http://netforce.biz/renteeze/webservice/products/product_details?action=details&id="+productId)
-                .asJsonObject()
-                .setCallback(new FutureCallback<JsonObject>() {
-                    @Override
-                    public void onCompleted(Exception e, JsonObject result)
-                    {
+        try {
+            jsonObject.put("product_id",productId);
+            jsonObject.put("user_id", user_id);
+            //registerViaId: 1 -> Normal, 2 -> Facebook, 3 -> Google
 
-                        if (result != null)
-                        {
-                            JsonObject data = result.getAsJsonObject("data");
+            showProgressBar(context);
 
-                            JsonArray productImage = data.getAsJsonArray("ProductImage");
+            VolleyGsonRequest<GenericResponse> gsonRequest = new VolleyGsonRequest<>("http://netforce.biz/renteeze/webservice/Users/add_wishlist",
+                    jsonObject,
+                    new com.android.volley.Response.Listener<GenericResponse>() {
+                        @Override
+                        public void onResponse(GenericResponse response) {
+                            dismissProgressBar();
+                            Debugger.i(TAG, "Response " + response);
+                            if (response != null) {
+                                if (response.isSuccess())
+                                {
 
-                            ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-                            for (int i = 0; i < productImage.size(); i++)
-                            {
-                                JsonObject jsonObject = (JsonObject) productImage.get(i);
-
-                                String id = jsonObject.get("product_id").getAsString();
-
-                                String image = jsonObject.get("image").getAsString();
-
-                                Fragment fragment = new DashboardSliderImage();
-                                Bundle bundle = new Bundle();
-                                bundle.putString(Constants.URL, "http://netforce.biz/renteeze/webservice/files/products/"+image);
-                                fragment.setArguments(bundle);
-                                adapter.addFragment(fragment, "");
+                                    System.out.println("some data =========" + response.toString());
+                                }
+                                else
+                                {
+                                    showSnackBar(coordinatorLayout, response.getMessage());
+                                }
+                            } else {
+                                showSnackBar(coordinatorLayout, getString(R.string.generic_error));
                             }
-
-                            viewPager.setAdapter(adapter);
-                            indicator.setViewPager(viewPager);
-
-                            JsonObject category = data.getAsJsonObject("Category");
-
-                            String category_name = category.get("name").getAsString();
-                            JsonObject product = data.getAsJsonObject("Product");
-                             id = product.get("id").getAsString();
-                            String name = product.get("name").getAsString();
-                            String price = product.get("price").getAsString();
-                            String security_price = product.get("security_price").getAsString();
-                            String description = product.get("description").getAsString();
-
-                            tvProductID.setText(id);
-                            tvProductName.setText(name);
-                            tvProductCategoryName.setText(category_name);
-                            tvDescription.setText(description);
-                            cardViewDescription.setVisibility(View.VISIBLE);
-
-                            String rs = getString(R.string.rs);
-                            tvSecurityMoney.setText(String.format(Locale.ENGLISH, "%s%s", rs, security_price));
-                            tvPerDayRent.setText(String.format(Locale.ENGLISH, "%s%s", rs, price));
-                            layoutPrice.setVisibility(View.VISIBLE);
-
-                            layoutBottom.setVisibility(View.VISIBLE);
-
-
-
-                            dismissProgressBar();
-
-                        } else {
-
-                            dismissProgressBar();
-                            Log.e("error", e.toString());
                         }
-                    }
-                }) ;
+                    },
+
+                    new com.android.volley.Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            dismissProgressBar();
+                            error.printStackTrace();
+                            showSnackBar(coordinatorLayout, VolleyErrorHandler.getMessage(context, error));
+                        }
+                    },
+                    GenericResponse.class,
+                    null
+            );
+            AppController.getInstance().addToRequestQueue(gsonRequest);
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
 
     }
 
@@ -402,7 +405,11 @@ public class Detail extends BaseActivity
 
                             layoutBottom.setVisibility(View.VISIBLE);
 
-                            if(settings.getBoolean(id,true))
+                            Boolean yourLocked = settings.getBoolean(id, false);
+
+                            System.out.println("yourloocked=============="+ yourLocked);
+
+                            if(yourLocked)
                             {
 
                                 System.out.println("data============" + settings.getBoolean(id, true));
@@ -414,17 +421,18 @@ public class Detail extends BaseActivity
                                 materialFavoriteButton.setRotationDuration(100);
                                 materialFavoriteButton.setFavorite(true);
 
+
                             }
                             else
                             {
-
+                                System.out.println("not favo============" + settings.getBoolean(id, true));
                                 materialFavoriteButton.setAnimateUnfavorite(true);
                                 materialFavoriteButton.setBounceDuration(300);
                                 materialFavoriteButton.setRotationAngle(360);
                                 materialFavoriteButton.setRotationDuration(100);
                                 materialFavoriteButton.setFavoriteResource(R.mipmap.ic_add_to_wishlist);
                                 materialFavoriteButton.setFavorite(false);
-                                System.out.println("not favo============" + settings.getBoolean(id, true));
+
 
                             }
 

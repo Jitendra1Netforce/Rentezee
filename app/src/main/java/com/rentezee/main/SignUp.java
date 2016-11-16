@@ -66,7 +66,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
 
-public class SignUp extends BaseActivity implements View.OnClickListener{
+public class SignUp extends BaseActivity implements View.OnClickListener
+{
 
     private static final String TAG = SignUp.class.getSimpleName();
     private Context context;
@@ -175,7 +176,6 @@ public class SignUp extends BaseActivity implements View.OnClickListener{
         }
 
 
-
      /*   JsonObject json = new JsonObject();
         json.addProperty("name", name);
         json.addProperty("email", email);
@@ -196,7 +196,6 @@ public class SignUp extends BaseActivity implements View.OnClickListener{
                         // do stuff with the result or error
                     }
                 });*/
-
 
 
      /* Ion.with(context)
@@ -243,7 +242,7 @@ public class SignUp extends BaseActivity implements View.OnClickListener{
 */
 
        //Post data to sever
-      /*  JSONObject jsonObject = new JSONObject();
+       JSONObject jsonObject = new JSONObject();
         try {
 
             jsonObject.put("name", name);
@@ -258,13 +257,16 @@ public class SignUp extends BaseActivity implements View.OnClickListener{
             Debugger.i(TAG, "post data " + jsonObject.toString());
             String url = "http://netforce.biz/renteeze/webservice/users/signup"; //URL to hit
             showProgressBar(context);
-            VolleyGsonRequest<SignUpResponse> gsonRequest = new VolleyGsonRequest<>(url,
-                    jsonObject,
-                    new Response.Listener<SignUpResponse>() {
+            VolleyGsonRequest<SignUpResponse> gsonRequest = new VolleyGsonRequest<>(url, jsonObject,
+                    new Response.Listener<SignUpResponse>()
+                    {
+
+
+
                         @Override
                         public void onResponse(SignUpResponse response) {
 
-                            System.out.println("arvind=============" + response.toString());
+                            System.out.println("arvind=============" + response);
                             dismissProgressBar();
                             Debugger.i(TAG, "Response " + response);
                             if (response != null) {
@@ -276,13 +278,11 @@ public class SignUp extends BaseActivity implements View.OnClickListener{
 
                                     System.out.println("response=============" + response.toString());
 
-                                   *//* long user_id = response.getUserId();
-
-                                    prefEditor.putLong("user_id",user_id);
-                                    prefEditor.commit();*//*
-
                                     new AppPreferenceManager(context).putObject(PreferenceKeys.savedUser, user);
                                     gotoActivityByClearingBackStack(DashboardContainer.class);
+
+
+
                                 } else {
                                     showSnackBar(coordinatorLayout, response.getMessage());
                                 }
@@ -310,11 +310,11 @@ public class SignUp extends BaseActivity implements View.OnClickListener{
 
         } catch (Exception e) {
             e.printStackTrace();
-        }*/
+        }
 
-        
 
-        JSONObject jsonObject = new JSONObject();
+
+       /* JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("name", name);
             jsonObject.put("email", email);
@@ -368,6 +368,7 @@ public class SignUp extends BaseActivity implements View.OnClickListener{
         } catch (JSONException e) {
             e.printStackTrace();
         }
+*/
 
 
 

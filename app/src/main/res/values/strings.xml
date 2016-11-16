@@ -80,4 +80,7 @@
     <string name="title_activity_my_cart">MyCart</string>
     <string name="Checkout">Checkout</string>
     <string name="notification_description">Lorem Ipsum is simply dummy text of the  printing and type setting industry. Lorem Ipsum has been the indus standard dummy</string>
+    <string name="title_activity_profile_setting">ProfileSetting</string>
+    <string name="mobile">Mobile Number</string>
+    <string name="delete">Delete</string>
 </resources>

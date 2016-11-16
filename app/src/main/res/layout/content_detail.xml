@@ -241,6 +241,7 @@
                 app:mfb_color="black"
                 app:mfb_type="star"
                 app:mfb_not_favorite_image="@mipmap/ic_add_to_wishlist"
+                app:mfb_favorite_image="@mipmap/ic_favorite_hdpi"
                 android:layout_below="@+id/payonline_txt"
 
                 />

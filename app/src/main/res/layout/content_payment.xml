@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="60dp"
+    >
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:id="@+id/relative_layout_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            >
+
+            <RelativeLayout
+                android:id="@+id/relativeLayout_delivery"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                >
+
+                <ImageView
+                    android:id="@+id/imageview_payment1"
+                    android:layout_width="15dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_delivery"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Delivery"
+                    android:layout_toRightOf="@+id/imageview_payment1"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+
+                    />
+
+                <RadioGroup
+                    android:id="@+id/radioGroup"
+                    android:layout_toRightOf="@+id/imageview_payment1"
+                    android:layout_below="@+id/imageview_payment1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    >
+
+                    <RadioButton
+                        android:textColor="@color/black"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Rentezee credit"
+                        />
+
+                    <RadioButton
+                        android:textColor="@color/black"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Rentezee credit" />
+
+
+                    <RadioButton
+                        android:textColor="@color/black"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Rentezee credit" />
+
+
+                </RadioGroup>
+
+
+
+
+
+            </RelativeLayout>
+
+            <View
+                android:id="@+id/view_delivery"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/black"
+                android:layout_below="@+id/relativeLayout_delivery"
+                ></View>
+
+
+
+            <RelativeLayout
+                android:id="@+id/relativeLayout_security"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/view_delivery"
+                android:padding="10dp"
+                >
+
+                <ImageView
+                    android:id="@+id/imageview_payment2"
+
+                    android:layout_width="15dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_delivery"
+
+                    />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Security"
+                    android:layout_toRightOf="@+id/imageview_payment2"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+
+
+                    />
+
+
+                <RadioGroup
+                    android:id="@+id/radioGroup2"
+                    android:layout_toRightOf="@+id/imageview_payment2"
+                    android:layout_below="@+id/imageview_payment2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    >
+
+
+                    <RadioButton
+                        android:textColor="@color/black"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="CC Avenue"
+                        />
+
+                    <RadioButton
+                        android:textColor="@color/black"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Paytm" />
+
+
+                    <RadioButton
+                        android:textColor="@color/black"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="At time of delivery(DD/CC/Post Dated Cheque)" />
+
+
+                </RadioGroup>
+
+
+            </RelativeLayout>
+
+            <View
+                android:id="@+id/view_security"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/black"
+                android:layout_below="@+id/relativeLayout_security"
+                ></View>
+
+            <RelativeLayout
+                android:id="@+id/relativeLayout_rent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:layout_below="@+id/view_security"
+
+                >
+
+
+                <ImageView
+                    android:id="@+id/imageview_payment3"
+
+                    android:layout_width="15dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_delivery"
+
+                    />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Rent"
+                    android:layout_toRightOf="@+id/imageview_payment3"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+
+                    />
+
+
+                <RadioGroup
+                    android:id="@+id/radioGroup3"
+                    android:layout_toRightOf="@+id/imageview_payment3"
+                    android:layout_below="@+id/imageview_payment3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    >
+
+                    <RadioButton
+                        android:textColor="@color/black"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Internet Banking"
+                        />
+
+                    <RadioButton
+                        android:textColor="@color/black"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Credit Card" />
+
+
+                    <RadioButton
+                        android:textColor="@color/black"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Debit Card" />
+
+
+                </RadioGroup>
+
+
+
+
+
+                <TextView
+                    android:id="@+id/textview_note"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Note: Method of Payment for Delivery and Rent Must be same"
+                    android:layout_below="@+id/radioGroup3"
+                    android:layout_marginTop="10dp"
+                    android:textColor="@color/red_color"
+                    android:textStyle="bold"
+                    />
+
+                <RelativeLayout
+                    android:id="@+id/relativelayout_total_data"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/textview_note"
+                    android:layout_marginTop="10dp"
+                    >
+
+
+                    <CheckBox
+                        android:id="@+id/checkBox1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Redeem Credits?"
+                        android:textColor="@color/colorPrimary"
+                        />
+
+                    <TextView
+                        android:id="@+id/textviewTotal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Total:55,555.66"
+                        android:layout_alignParentRight="true"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        android:layout_marginTop="10dp"
+                        />
+
+                    <TextView
+                        android:id="@+id/textviewCreditRedeemed"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Total:55,555.66"
+                        android:layout_alignParentRight="true"
+                        android:layout_below="@+id/textviewTotal"
+                        android:textColor="@color/green"
+                        android:textStyle="bold"
+
+                        />
+
+
+                </RelativeLayout>
+
+
+
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:background="@color/colorPrimary"
+                android:layout_marginTop="30dp"
+                android:layout_below="@+id/relativeLayout_rent"
+                >
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Proceed to Payment"
+                    android:layout_centerHorizontal="true"
+                    android:textColor="@color/white"
+                    android:drawableLeft="@drawable/ic_proceed_payment"
+                    android:background="?android:attr/selectableItemBackground"
+                    />
+
+
+
+            </RelativeLayout>
+
+
+
+
+
+        </RelativeLayout>
+
+
+
+    </ScrollView>
+
+</RelativeLayout>

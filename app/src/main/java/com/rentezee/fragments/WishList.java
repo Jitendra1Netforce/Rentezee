@@ -65,10 +65,12 @@ public class WishList extends BaseActivity {
         wishListDatas.clear();
 
         showProgressBar(context);
+        JsonObject json = new JsonObject();
+        json.addProperty("user_id", "41");
 
         Ion.with(this)
-                .load("http://netforce.biz/renteeze/webservice/products/product_list?cat_id=1")
-
+                .load("http://netforce.biz/renteeze/webservice/Users/wishlists")
+                .setJsonObjectBody(json)
                 .asJsonObject()
                 .setCallback(new FutureCallback<JsonObject>() {
                     @Override
@@ -78,23 +80,24 @@ public class WishList extends BaseActivity {
 
                             JsonArray productListArray = result.getAsJsonArray("data");
 
-                            System.out.println("data=====");
+                            System.out.println("data====="+result);
 
                             for (int i = 0; i < productListArray.size(); i++)
                             {
                                 JsonObject jsonObject = (JsonObject) productListArray.get(i);
-                                JsonObject product = jsonObject.getAsJsonObject("Product");
-                                String id = product.get("id").getAsString();
-                                String name = product.get("name").getAsString();
-                                String price = product.get("price").getAsString();
-                                String category_name = product.get("special_price").getAsString();
-                                String image = "http://netforce.biz/renteeze/webservice/files/products/" + product.get("images").getAsString();
+
+                                String id = jsonObject.get("product_id").getAsString();
+                                String name = jsonObject.get("name").getAsString();
+                                String price = jsonObject.get("price").getAsString();
+                                String category_name = jsonObject.get("categories_name").getAsString();
+                                String image = "http://netforce.biz/renteeze/webservice/files/products/" + jsonObject.get("image").getAsString();
                                 wishListDatas.add(new WishListData(id, name, image, price, category_name));
 
                             }
                             wishListAdapter = new WishListAdapter(context, wishListDatas);
                             lvProducts.setAdapter(wishListAdapter);
                             wishListAdapter.notifyDataSetChanged();
+
 
                             dismissProgressBar();
 

@@ -5,6 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
+
+    <android.support.v7.widget.CardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:elevation="8dp"
+        >
+
   <RelativeLayout
       android:id="@+id/relative_layout_container"
       android:layout_width="match_parent"
@@ -137,7 +147,7 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:text="View Detail"
-          android:drawableRight="@mipmap/f_hdpi"
+          android:drawableRight="@mipmap/f_xhdpi"
           android:layout_below="@+id/tv_product_condition"
           android:layout_marginTop="15dp"
           android:textColor="@color/black"
@@ -154,14 +164,14 @@
           android:textColor="@color/white"
           android:background="@color/orange"
           android:layout_centerHorizontal="true"
-         android:padding="5dp"
+          android:padding="5dp"
 
           />
 
       <Button
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:text="3000:00"
+          android:text="\u20B9 3000:00"
           android:layout_below="@+id/tv_product_condition"
           android:layout_marginTop="15dp"
           android:textColor="@color/black"
@@ -174,12 +184,8 @@
   </RelativeLayout>
 
 
+</android.support.v7.widget.CardView>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/black"
-        android:layout_below="@+id/relative_layout_container"
-        ></View>
+
 
 </RelativeLayout>

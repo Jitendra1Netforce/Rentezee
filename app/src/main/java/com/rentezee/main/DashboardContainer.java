@@ -64,6 +64,9 @@ import com.rentezee.fragments.DashboardSliderImage;
 import com.rentezee.fragments.myorder.MyOrders;
 import com.rentezee.fragments.my_cart.MyCart;
 import com.rentezee.fragments.notification.NotificationActivity;
+import com.rentezee.fragments.payment.PaymentActivity;
+import com.rentezee.fragments.payment.PaymentOptionActivity;
+import com.rentezee.fragments.profile.ProfileSetting;
 import com.rentezee.helpers.AppPreferenceManager;
 import com.rentezee.helpers.BaseActivity;
 import com.rentezee.helpers.Constants;
@@ -212,6 +215,7 @@ public class DashboardContainer extends BaseActivity implements NavigationView.O
             tvNavName.setText("Welcome " + user.getName());
             tvNavEmail.setText(user.getEmail());
             tvNavMobile.setText(user.getMobile());
+
             headerLayout.findViewById(R.id.ivArrow).setOnClickListener(this);
         } else {
             layoutLogout.setVisibility(View.GONE);
@@ -896,13 +900,16 @@ public class DashboardContainer extends BaseActivity implements NavigationView.O
 
         //trending data
         fetchedTrendingList = response.getData().getTrendings();
-        if (fetchedTrendingList != null) {
+        if (fetchedTrendingList != null)
+        {
             tvTrending.setVisibility(View.VISIBLE);
             int width=displayMetrics.widthPixels-(int)getResources().getDimension(R.dimen.ten);
            // TrendingAdapter trendingAdapter = new TrendingAdapter(context, fetchedTrendingList, width);
           //  gvTrending.setFocusable(false);
           //  gvTrending.setAdapter(trendingAdapter);
-        }else{
+        }
+        else
+        {
             tvTrending.setVisibility(View.GONE);
         }
     }

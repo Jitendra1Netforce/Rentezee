@@ -26,7 +26,7 @@ public class WishListAdapter extends BaseAdapter {
     public WishListAdapter(Context context, ArrayList<WishListData> list) {
         this.context = context;
         this.list = list;
-        rs = context.getString(R.string.rs);
+        rs = "Rs";
     }
 
     @Override
@@ -68,7 +68,7 @@ public class WishListAdapter extends BaseAdapter {
                 .into(viewHolder.ivProductImage);
 
         viewHolder.tvProductName.setText(list.get(position).product_name);
-        viewHolder.tvProductCategoryName.setText(list.get(position).product_name);
+        viewHolder.tvProductCategoryName.setText(list.get(position).category_name);
         viewHolder.tvPrice.setText(rs + list.get(position).price + " per day");
         return convertView;
     }

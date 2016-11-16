@@ -16,4 +16,6 @@
     <color name="green">#079E01</color>
     <color name="white">#FFFFFF</color>
     <color name="viewpager">#A9A8A8</color>
+    <color name="red_color">#DC2816</color>
+    <color name="screenbackground">#F1F5F7</color>
 </resources>
