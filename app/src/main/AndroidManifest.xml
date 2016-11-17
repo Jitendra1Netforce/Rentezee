@@ -85,7 +85,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden" />
-
         <activity
             android:name=".ForgetPassword"
             android:label="Password Recovery"
@@ -93,38 +92,32 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden" />
-
         <activity
             android:name=".EditProfileAddress"
             android:label="@string/profile_settings"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden" />
-
         <activity
             android:name=".Category"
             android:label="@string/title_activity_category"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name="com.rentezee.fragments.myorder.MyOrders"
             android:label="@string/title_activity_category"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name="com.rentezee.fragments.WishList"
             android:label="@string/title_activity_category"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".Detail"
             android:label="@string/title_activity_detail"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".Search"
             android:label="@string/title_activity_search"
@@ -133,33 +126,25 @@
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
         </activity>
-
         <activity
             android:name="com.rentezee.fragments.my_cart.MyCart"
             android:label="@string/title_activity_my_cart"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name="com.rentezee.fragments.notification.NotificationActivity"
             android:label="@string/title_activity_my_cart"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name="com.rentezee.fragments.payment.PaymentActivity"
             android:label="Payment Option"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name="com.rentezee.fragments.profile.ProfileSetting"
             android:label="@string/title_activity_profile_setting"
             android:theme="@style/AppTheme.NoActionBar" />
-
-
         <activity
             android:name="com.rentezee.fragments.payment.PaymentOptionActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

@@ -444,7 +444,7 @@ public class DashboardContainer extends BaseActivity implements NavigationView.O
                 break;
 
             case R.id.nav_cart:
-                Intent cart=new Intent(context, MyCart.class);
+                Intent cart=new Intent(context, ProfileSetting.class);
 
                 gotoActivity(cart);
 

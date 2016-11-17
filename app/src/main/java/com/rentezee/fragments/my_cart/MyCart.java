@@ -3,6 +3,7 @@ package com.rentezee.fragments.my_cart;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -23,6 +24,8 @@ import com.google.gson.JsonObject;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 import com.rentezee.adapters.ProductsAdapter;
+import com.rentezee.fragments.payment.PaymentActivity;
+import com.rentezee.fragments.payment.PaymentOptionActivity;
 import com.rentezee.helpers.BaseActivity;
 import com.rentezee.helpers.Constants;
 import com.rentezee.main.Detail;
@@ -40,6 +43,9 @@ public class MyCart extends BaseActivity {
     ArrayList<MyCartData> myCartDatas = new ArrayList<>();
     MyCartAdapter myCartAdapter;
     RelativeLayout relativeTotal;
+    LinearLayout layoutContinue;
+    String device_id;
+
 
 
     @Override
@@ -58,11 +64,14 @@ public class MyCart extends BaseActivity {
             actionBar.setTitle("My Cart");
         }
 
+        device_id = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
 
         //find views
         coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinatorLayout);
         layoutBottom = (LinearLayout) findViewById(R.id.layoutBottom);
         relativeTotal = (RelativeLayout) findViewById(R.id.relativeTotal);
+
+        layoutContinue = (LinearLayout)findViewById(R.id.layoutContinue);
 
         mycartProducts=(RecyclerView)findViewById(R.id.lvMyCart);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
@@ -81,6 +90,20 @@ public class MyCart extends BaseActivity {
             }
         });*/
 
+
+        layoutContinue.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+
+                Intent intent = new Intent(context, PaymentActivity.class);
+                gotoActivity(intent);
+            }
+        });
+
+
+
         fetchData(true);
 
     }
@@ -98,37 +121,39 @@ public class MyCart extends BaseActivity {
     private void reset()
     {
 
-
         myCartDatas.clear();
         layoutBottom.setVisibility(View.GONE);
         relativeTotal.setVisibility(View.GONE);
 
         showProgressBar(context);
 
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("name", "Hello Arvind");
+
         Ion.with(this)
-                .load("http://netforce.biz/renteeze/webservice/products/product_list?cat_id=1")
+                .load("http://netforce.biz/marzify/api/test.php")
+                .setJsonObjectBody(jsonObject)
                 .asJsonObject()
-                .setCallback(new FutureCallback<JsonObject>()
-                {
+                .setCallback(new FutureCallback<JsonObject>() {
                     @Override
                     public void onCompleted(Exception e, JsonObject result)
                     {
 
-                        if (result != null) {
+                       /* if (result != null)
+                        {
+                            System.out.println("data "+ result);
+                              JsonArray productListArray = result.getAsJsonArray("data");
 
-                            JsonArray productListArray = result.getAsJsonArray("data");
+                            System.out.println("data=====" + result.toString());
 
-                            System.out.println("data====="+ result.toString());
-
-                            for (int i = 0; i < productListArray.size(); i++)
-                            {
+                            for (int i = 0; i < productListArray.size(); i++) {
                                 JsonObject jsonObject = (JsonObject) productListArray.get(i);
-                                JsonObject product = jsonObject.getAsJsonObject("Product");
-                                String id = product.get("id").getAsString();
-                                String name = product.get("name").getAsString();
-                                String price = product.get("price").getAsString();
-                                String special_price = product.get("special_price").getAsString();
-                                String image = "http://netforce.biz/renteeze/webservice/files/products/" + product.get("images").getAsString();
+
+                                String id = jsonObject.get("product_id").getAsString();
+                                String name = jsonObject.get("name").getAsString();
+                                String price = jsonObject.get("price").getAsString();
+                                String special_price = jsonObject.get("categories_name").getAsString();
+                                String image = "http://netforce.biz/renteeze/webservice/files/products/" + jsonObject.get("image").getAsString();
                                 myCartDatas.add(new MyCartData(id, name, image, price, special_price));
 
                             }
@@ -144,7 +169,7 @@ public class MyCart extends BaseActivity {
 
                             dismissProgressBar();
                             Log.e("error", e.toString());
-                        }
+                        }*/
                     }
                 });
 

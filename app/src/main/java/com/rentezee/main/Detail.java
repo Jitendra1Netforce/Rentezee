@@ -73,7 +73,7 @@ public class Detail extends BaseActivity
     SharedPreferences settings;
     String id,user_id;
     long  userId;
-
+    User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -132,16 +132,14 @@ public class Detail extends BaseActivity
 
         String cat_id = getIntent().getStringExtra(Constants.PRODUCT_ID);
 
-         User user = (User) new AppPreferenceManager(context).getObject(PreferenceKeys.savedUser, User.class);
+          user = (User) new AppPreferenceManager(context).getObject(PreferenceKeys.savedUser, User.class);
 
         if(user != null){
 
             userId = user.getUserId();
-
         }
 
          user_id = Long.toString(userId);
-
 
 
         layoutAddToWishlist.setOnClickListener(new View.OnClickListener()
@@ -152,6 +150,7 @@ public class Detail extends BaseActivity
                 SharedPreferences.Editor editor = settings.edit();
 
                 System.out.println("material favorite status========"+ materialFavoriteButton.isFavorite());
+                add_wish_list(id, user_id);
 
                 if(materialFavoriteButton.isFavorite() )
                 {
@@ -169,7 +168,7 @@ public class Detail extends BaseActivity
                 else
                 {
                     System.out.println(" product_id============" +id);
-                    add_wish_list(id, user_id);
+
 
 
                     materialFavoriteButton.setAnimateUnfavorite(true);
@@ -197,7 +196,7 @@ public class Detail extends BaseActivity
             @Override
             public void onClick(View view)
             {
-
+                add_to_cart(device_id, id);
             }
         });
 
@@ -253,13 +252,15 @@ public class Detail extends BaseActivity
         }
     }
 
-    private void processProductDetailResponse(Response response){
+    private void processProductDetailResponse(Response response)
+    {
 
         ProductDetail productDetail=response.getData();
 
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         ArrayList<String> images=productDetail.getImages();
-        for (String imageUrl : images) {
+        for (String imageUrl : images)
+        {
             Fragment fragment = new DashboardSliderImage();
             Bundle bundle = new Bundle();
             bundle.putString(Constants.URL, imageUrl);
@@ -341,16 +342,96 @@ public class Detail extends BaseActivity
 
     }
 
+    private void add_to_cart(String device_id ,String product_id)
+    {
+
+        JSONObject jsonObject = new JSONObject();
+
+        try {
+            jsonObject.put("device_id",device_id);
+            jsonObject.put("product_id", product_id);
+            //registerViaId: 1 -> Normal, 2 -> Facebook, 3 -> Google
+
+            showProgressBar(context);
+
+            VolleyGsonRequest<GenericResponse> gsonRequest = new VolleyGsonRequest<>("http://netforce.biz/renteeze/webservice/Products/addtocart",
+                    jsonObject,
+                    new com.android.volley.Response.Listener<GenericResponse>() {
+                        @Override
+                        public void onResponse(GenericResponse response) {
+                            dismissProgressBar();
+                            Debugger.i(TAG, "Response " + response);
+                            if (response != null)
+                            {
+                                if (response.isSuccess())
+                                {
+
+                                    System.out.println("some data =========" + response.toString());
+                                }
+                                else
+                                {
+                                    showSnackBar(coordinatorLayout, response.getMessage());
+                                }
+                            } else {
+                                showSnackBar(coordinatorLayout, getString(R.string.generic_error));
+                            }
+                        }
+                    },
+
+                    new com.android.volley.Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            dismissProgressBar();
+                            error.printStackTrace();
+                            showSnackBar(coordinatorLayout, VolleyErrorHandler.getMessage(context, error));
+                        }
+                    },
+                    GenericResponse.class,
+                    null
+            );
+            AppController.getInstance().addToRequestQueue(gsonRequest);
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
+
 
 
 
     private void load_refresh(int productId)
     {
 
-        showProgressBar(context);
+          showProgressBar(context);
+
+        System.out.println("user_id"+user_id+"Prodcuct"+String.valueOf(productId));
+        JsonObject json = new JsonObject();
+
+        if(user != null){
+
+            json.addProperty("action", "details");
+            json.addProperty("id", String.valueOf(productId));
+            json.addProperty("device_id", device_id);
+            json.addProperty("user_id", user_id);
+
+        }
+        else
+        {
+
+            json.addProperty("action", "details");
+            json.addProperty("id", String.valueOf(productId));
+            json.addProperty("device_id", device_id);
+
+        }
+
 
         Ion.with(this)
-                .load("http://netforce.biz/renteeze/webservice/products/product_details?action=details&id="+productId)
+                .load("http://netforce.biz/renteeze/webservice/products/product_details")
+                .setJsonObjectBody(json)
                 .asJsonObject()
                 .setCallback(new FutureCallback<JsonObject>() {
                     @Override
@@ -359,13 +440,14 @@ public class Detail extends BaseActivity
 
                         if (result != null)
                         {
+                            System.out.println("result==============" + result);
+
                             JsonObject data = result.getAsJsonObject("data");
 
                             JsonArray productImage = data.getAsJsonArray("ProductImage");
 
                             ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-                            for (int i = 0; i < productImage.size(); i++)
-                            {
+                            for (int i = 0; i < productImage.size(); i++) {
                                 JsonObject jsonObject = (JsonObject) productImage.get(i);
 
                                 String id = jsonObject.get("product_id").getAsString();
@@ -374,7 +456,7 @@ public class Detail extends BaseActivity
 
                                 Fragment fragment = new DashboardSliderImage();
                                 Bundle bundle = new Bundle();
-                                bundle.putString(Constants.URL, "http://netforce.biz/renteeze/webservice/files/products/"+image);
+                                bundle.putString(Constants.URL, "http://netforce.biz/renteeze/webservice/files/products/" + image);
                                 fragment.setArguments(bundle);
                                 adapter.addFragment(fragment, "");
                             }
@@ -407,10 +489,9 @@ public class Detail extends BaseActivity
 
                             Boolean yourLocked = settings.getBoolean(id, false);
 
-                            System.out.println("yourloocked=============="+ yourLocked);
+                            System.out.println("yourloocked==============" + yourLocked);
 
-                            if(yourLocked)
-                            {
+                            if (yourLocked) {
 
                                 System.out.println("data============" + settings.getBoolean(id, true));
 
@@ -422,9 +503,7 @@ public class Detail extends BaseActivity
                                 materialFavoriteButton.setFavorite(true);
 
 
-                            }
-                            else
-                            {
+                            } else {
                                 System.out.println("not favo============" + settings.getBoolean(id, true));
                                 materialFavoriteButton.setAnimateUnfavorite(true);
                                 materialFavoriteButton.setBounceDuration(300);
