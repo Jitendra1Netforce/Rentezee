@@ -1,4 +1,4 @@
-package com.rentezee.fragments.myorder;
+package com.rentezee.fragments.myorder.activeorder;
 
 
 import android.content.Context;
@@ -17,13 +17,13 @@ import com.rentezee.main.R;
 import java.util.ArrayList;
 
 
-public class MyOrders extends BaseActivity {
+public class ActiveOrders extends BaseActivity {
 
-    private static final String TAG = MyOrders.class.getSimpleName();
+    private static final String TAG = ActiveOrders.class.getSimpleName();
     RecyclerView recycler_notification;
     Context context;
-    ArrayList<MyOrderdata> myOrderdatas = new ArrayList<>();
-    MyOrderAdapter myOrderAdapter;
+    ArrayList<ActiveOrderdata> myOrderdatas = new ArrayList<>();
+    ActiveOrderAdapter myOrderAdapter;
 
 
 
@@ -89,10 +89,10 @@ public class MyOrders extends BaseActivity {
                                 String price = product.get("price").getAsString();
                                 String special_price = product.get("special_price").getAsString();
                                 String image = "http://netforce.biz/renteeze/webservice/files/products/" + product.get("images").getAsString();
-                                myOrderdatas.add(new MyOrderdata(id, name, image, price, special_price));
+                                myOrderdatas.add(new ActiveOrderdata(id, name, image, price, special_price));
 
                             }
-                            myOrderAdapter = new MyOrderAdapter(context, myOrderdatas);
+                            myOrderAdapter = new ActiveOrderAdapter(context, myOrderdatas);
                             recycler_notification.setAdapter(myOrderAdapter);
                             myOrderAdapter.notifyDataSetChanged();
 

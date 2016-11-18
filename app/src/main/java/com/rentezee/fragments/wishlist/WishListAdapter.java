@@ -1,7 +1,8 @@
-package com.rentezee.fragments.my_cart;
+package com.rentezee.fragments.wishlist;
 
 import android.content.Context;
 import android.content.Intent;
+import android.provider.Settings;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import com.bumptech.glide.Glide;
 import com.google.gson.JsonObject;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
+import com.rentezee.fragments.my_cart.MyCart;
 import com.rentezee.helpers.Constants;
 import com.rentezee.helpers.Debugger;
 import com.rentezee.helpers.VolleyErrorHandler;
@@ -33,34 +35,32 @@ import java.util.List;
 /**
  * Created by John on 11/10/2016.
  */
-public class MyCartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
+public class WishListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 {
 
     private static final int SIMPLE_TYPE = 0;
     private static final int IMAGE_TYPE = 1;
     private final LayoutInflater inflater;
     ArrayList<Integer> values=new ArrayList<>();
-    private List<MyCartData> itemList;
+    private List<WishListData> itemList;
     private Context context;
-    MyCartHolder myCartHolder;
-    MyCart myCart;
+    WishListHolder myCartHolder;
+    WishList wishList;
 
-
-    public MyCartAdapter(Context context, List<MyCartData> itemList, MyCart myCart)
+    public WishListAdapter(Context context, List<WishListData> itemList, WishList wishList)
     {
-        this.myCart=myCart;
+        this.wishList = wishList;
         this.itemList = itemList;
         this.context = context;
         inflater = LayoutInflater.from(context);
     }
 
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
     {
-
-        View view = inflater.inflate(R.layout.row_my_cart, parent, false);
-        myCartHolder = new MyCartHolder(view);
-
+        View view = inflater.inflate(R.layout.row_wishlist, parent, false);
+        myCartHolder = new WishListHolder(view);
         return myCartHolder;
     }
 
@@ -68,33 +68,32 @@ public class MyCartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position)
     {
 
-        MyCartHolder homeHolder = (MyCartHolder) holder;
-
+        WishListHolder homeHolder = (WishListHolder) holder;
         homeHolder.tvProductName.setText(itemList.get(position).product_name);
-        homeHolder.tvRentPrice.setText(itemList.get(position).rental_price);
-        homeHolder.tvSecurytiFee.setText(itemList.get(position).security_price);
-        homeHolder.tvCategoriesName.setText(itemList.get(position).category_name);
+        homeHolder.tvRentPrice.setText("Rs"+itemList.get(position).price+" per day");
 
-         // homeHolder.tvTotal.setText(Integer.parseInt(homeHolder.tvRentPrice.getText().toString())+Integer.parseInt(homeHolder.tvSecurytiFee.getText().toString()));
+        homeHolder.tvCategoriesName.setText(itemList.get(position).category_name);
 
         Glide.with(context)
                 .load(itemList.get(position).image_url)
-                .centerCrop()
-                        //.placeholder(R.mipmap.ic_loading)
+                .centerCrop()//.placeholder(R.mipmap.ic_loading)
                 .crossFade()
                 .into(homeHolder.imProductImage);
+
+
 
         homeHolder.layoutRemove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view)
             {
+                delete_wihlist(itemList.get(position).wishlist_id.toString());
+            }
+        });
 
-                /* *//*  String cart_id = itemList.get(position).my_cart_id.toString();
-                add_to_cart(cart_id);*//*
-                itemList.remove(position);
-                notifyItemRemoved(position);*/
-                String cart_id = itemList.get(position).my_cart_id.toString();
-                delete_to_cart(cart_id);
+        homeHolder.layoutMoveToCart.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view) {
 
             }
         });
@@ -119,34 +118,30 @@ public class MyCartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     }
 
 
-    private void delete_to_cart(final String cart_id )
+    private void delete_wihlist(String wishlist_id)
     {
 
         JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("id", cart_id);
+        jsonObject.addProperty("id", wishlist_id);
 
         Ion.with(context)
-                .load("http://netforce.biz/renteeze/webservice/Products/delete_cart")
+                .load("http://netforce.biz/renteeze/webservice/Users/delete_wishlist")
                 .setJsonObjectBody(jsonObject)
                 .asJsonObject()
                 .setCallback(new FutureCallback<JsonObject>() {
                     @Override
                     public void onCompleted(Exception e, JsonObject result)
                     {
-
-                        if (result != null) {
-
-                            myCart.fetchData(true);
-
+                        if (result != null)
+                        {
+                            wishList.load_refresh();
                         }
 
                     }
+    });
 
-                });
+    }
 
     }
 
 
-
-
-}

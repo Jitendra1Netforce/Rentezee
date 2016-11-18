@@ -75,6 +75,8 @@ public class MyCart extends BaseActivity {
 
         mycartProducts=(RecyclerView)findViewById(R.id.lvMyCart);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+        myCartAdapter = new MyCartAdapter(context, myCartDatas,this);
+        mycartProducts.setAdapter(myCartAdapter);
         mycartProducts.setLayoutManager(mLayoutManager);
 
         mycartProducts.setNestedScrollingEnabled(false);
@@ -108,7 +110,7 @@ public class MyCart extends BaseActivity {
 
     }
 
-    private void fetchData(boolean reset)
+    public void fetchData(boolean reset)
     {
 
         if(reset)
@@ -128,10 +130,10 @@ public class MyCart extends BaseActivity {
         showProgressBar(context);
 
         JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("name", "Hello Arvind");
+        jsonObject.addProperty("device_id", device_id);
 
         Ion.with(this)
-                .load("http://netforce.biz/marzify/api/test.php")
+                .load("http://netforce.biz/renteeze/webservice/Products/listcart")
                 .setJsonObjectBody(jsonObject)
                 .asJsonObject()
                 .setCallback(new FutureCallback<JsonObject>() {
@@ -139,7 +141,7 @@ public class MyCart extends BaseActivity {
                     public void onCompleted(Exception e, JsonObject result)
                     {
 
-                       /* if (result != null)
+                        if (result != null)
                         {
                             System.out.println("data "+ result);
                               JsonArray productListArray = result.getAsJsonArray("data");
@@ -149,16 +151,16 @@ public class MyCart extends BaseActivity {
                             for (int i = 0; i < productListArray.size(); i++) {
                                 JsonObject jsonObject = (JsonObject) productListArray.get(i);
 
-                                String id = jsonObject.get("product_id").getAsString();
+                                String cart_id = jsonObject.get("id").getAsString();
+                                String product_id = jsonObject.get("product_id").getAsString();
                                 String name = jsonObject.get("name").getAsString();
                                 String price = jsonObject.get("price").getAsString();
-                                String special_price = jsonObject.get("categories_name").getAsString();
-                                String image = "http://netforce.biz/renteeze/webservice/files/products/" + jsonObject.get("image").getAsString();
-                                myCartDatas.add(new MyCartData(id, name, image, price, special_price));
+                                String category_name = jsonObject.get("categories_name").getAsString();
+                                String security_price = jsonObject.get("security_price").getAsString();
+                                String image = jsonObject.get("image").getAsString();
+                                myCartDatas.add(new MyCartData(cart_id,product_id, name, image, price, security_price,category_name));
 
                             }
-                            myCartAdapter = new MyCartAdapter(context, myCartDatas);
-                            mycartProducts.setAdapter(myCartAdapter);
                             myCartAdapter.notifyDataSetChanged();
 
                             dismissProgressBar();
@@ -169,7 +171,7 @@ public class MyCart extends BaseActivity {
 
                             dismissProgressBar();
                             Log.e("error", e.toString());
-                        }*/
+                        }
                     }
                 });
 

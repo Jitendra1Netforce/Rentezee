@@ -19,6 +19,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.github.ivbaranov.mfb.MaterialFavoriteButton;
@@ -142,6 +143,8 @@ public class Detail extends BaseActivity
          user_id = Long.toString(userId);
 
 
+        System.out.println("user_id---------------"+ user_id);
+
         layoutAddToWishlist.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -149,11 +152,12 @@ public class Detail extends BaseActivity
             {
                 SharedPreferences.Editor editor = settings.edit();
 
-                System.out.println("material favorite status========"+ materialFavoriteButton.isFavorite());
-                add_wish_list(id, user_id);
+                System.out.println("material favorite status========" + materialFavoriteButton.isFavorite());
+
 
                 if(materialFavoriteButton.isFavorite() )
                 {
+                    add_wish_list(id, user_id);
                     System.out.println("favorite============" + materialFavoriteButton.isFavorite());
                     materialFavoriteButton.setAnimateFavorite(true);
                     materialFavoriteButton.setBounceDuration(300);
@@ -161,30 +165,24 @@ public class Detail extends BaseActivity
                     materialFavoriteButton.setRotationDuration(100);
                     materialFavoriteButton.setNotFavoriteResource(R.mipmap.ic_add_to_wishlist);
                     materialFavoriteButton.setFavorite(false);
-                    editor.putBoolean(id, false);
-                    editor.commit();
+                  /*  editor.putBoolean(id, false);
+                    editor.commit();*/
 
                 }
                 else
                 {
-                    System.out.println(" product_id============" +id);
-
-
-
+                    add_wish_list(id, user_id);
+                    System.out.println(" product_id============" + id);
                     materialFavoriteButton.setAnimateUnfavorite(true);
                     materialFavoriteButton.setBounceDuration(300);
                     materialFavoriteButton.setRotationAngle(360);
                     materialFavoriteButton.setRotationDuration(100);
                     materialFavoriteButton.setFavoriteResource(R.mipmap.ic_favorite_hdpi);
                     materialFavoriteButton.setFavorite(true);
-                    editor.putBoolean(id, true);
-                    editor.commit();
+                  /*  editor.putBoolean(id, true);
+                    editor.commit();*/
 
                 }
-
-
-
-
 
             }
         });
@@ -196,10 +194,11 @@ public class Detail extends BaseActivity
             @Override
             public void onClick(View view)
             {
+
                 add_to_cart(device_id, id);
+
             }
         });
-
 
 
         // fetchDetail(Integer.parseInt(cat_id));
@@ -209,8 +208,6 @@ public class Detail extends BaseActivity
 
     private void fetchDetail(int productId)
     {
-
-
         try
         {
             String url = Constants.API + "product/"+String.valueOf(productId); //URL to hit
@@ -365,8 +362,10 @@ public class Detail extends BaseActivity
                             {
                                 if (response.isSuccess())
                                 {
-
                                     System.out.println("some data =========" + response.toString());
+
+                                    Toast.makeText(getApplicationContext(),response.getMessage().toString(),Toast.LENGTH_SHORT).show();
+
                                 }
                                 else
                                 {
@@ -411,7 +410,7 @@ public class Detail extends BaseActivity
         System.out.println("user_id"+user_id+"Prodcuct"+String.valueOf(productId));
         JsonObject json = new JsonObject();
 
-        if(user != null){
+       if(user != null){
 
             json.addProperty("action", "details");
             json.addProperty("id", String.valueOf(productId));
@@ -422,9 +421,11 @@ public class Detail extends BaseActivity
         else
         {
 
+            System.out.println("Not Login =================");
             json.addProperty("action", "details");
             json.addProperty("id", String.valueOf(productId));
             json.addProperty("device_id", device_id);
+            json.addProperty("user_id", "");
 
         }
 
@@ -435,14 +436,14 @@ public class Detail extends BaseActivity
                 .asJsonObject()
                 .setCallback(new FutureCallback<JsonObject>() {
                     @Override
-                    public void onCompleted(Exception e, JsonObject result)
-                    {
+                    public void onCompleted(Exception e, JsonObject result) {
 
-                        if (result != null)
-                        {
+                        if (result != null) {
                             System.out.println("result==============" + result);
 
                             JsonObject data = result.getAsJsonObject("data");
+
+                             String wishlist_status = result.get("wishlist").getAsString();
 
                             JsonArray productImage = data.getAsJsonArray("ProductImage");
 
@@ -487,11 +488,11 @@ public class Detail extends BaseActivity
 
                             layoutBottom.setVisibility(View.VISIBLE);
 
-                            Boolean yourLocked = settings.getBoolean(id, false);
+                          //  Boolean yourLocked = settings.getBoolean(id, false);
 
-                            System.out.println("yourloocked==============" + yourLocked);
+                            System.out.println("wishlist_status==============" + wishlist_status);
 
-                            if (yourLocked) {
+                            if (wishlist_status.equals("1")) {
 
                                 System.out.println("data============" + settings.getBoolean(id, true));
 
@@ -503,7 +504,8 @@ public class Detail extends BaseActivity
                                 materialFavoriteButton.setFavorite(true);
 
 
-                            } else {
+                            }
+                            else {
                                 System.out.println("not favo============" + settings.getBoolean(id, true));
                                 materialFavoriteButton.setAnimateUnfavorite(true);
                                 materialFavoriteButton.setBounceDuration(300);

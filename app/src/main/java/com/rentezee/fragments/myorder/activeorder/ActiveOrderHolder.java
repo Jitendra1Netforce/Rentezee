@@ -1,4 +1,4 @@
-package com.rentezee.fragments.myorder;
+package com.rentezee.fragments.myorder.activeorder;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -10,7 +10,7 @@ import com.rentezee.main.R;
 /**
  * Created by John on 11/11/2016.
  */
-public class MyOrderHolder extends RecyclerView.ViewHolder
+public class ActiveOrderHolder extends RecyclerView.ViewHolder
 {
 
     View view;
@@ -18,7 +18,7 @@ public class MyOrderHolder extends RecyclerView.ViewHolder
 
     RelativeLayout relativelayout;
 
-    public MyOrderHolder(View itemView)
+    public ActiveOrderHolder(View itemView)
     {
         super(itemView);
         relativelayout = (RelativeLayout) itemView.findViewById(R.id.relative_layout_container);

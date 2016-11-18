@@ -5,20 +5,13 @@
     android:id="@+id/content_category"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F1F5F7"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    android:background="@color/screenbackground"
     >
-
-
-
     <android.support.v7.widget.RecyclerView
         android:id="@+id/lvProducts"
         android:divider="@null"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/layoutBottom"
-        android:layout_below="@+id/tabLayout" />
-
-
-
+        android:background="@color/screenbackground"
+        />
 </RelativeLayout>

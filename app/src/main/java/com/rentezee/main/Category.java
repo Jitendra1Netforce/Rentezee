@@ -283,7 +283,7 @@ public class Category extends BaseActivity implements View.OnClickListener
 
                             JsonArray productListArray = result.getAsJsonArray("data");
 
-                            System.out.println("data=====");
+                            System.out.println("data====="+ result);
 
                             for (int i = 0; i < productListArray.size(); i++)
                             {
@@ -292,9 +292,9 @@ public class Category extends BaseActivity implements View.OnClickListener
                                 String id = product.get("id").getAsString();
                                 String name = product.get("name").getAsString();
                                 String price = product.get("price").getAsString();
-                                String special_price = product.get("special_price").getAsString();
+                               // String special_price = product.get("special_price").getAsString();
                                 String image = "http://netforce.biz/renteeze/webservice/files/products/"+product.get("images").getAsString();
-                                productListDatas.add(new ProductListData(id, name, image,price,special_price));
+                                productListDatas.add(new ProductListData(id, name, image,price,""));
 
                             }
                             productsAdapter=new ProductsAdapter(context, productListDatas);

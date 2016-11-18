@@ -12,6 +12,7 @@ import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.Settings;
 import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -59,14 +60,11 @@ import com.koushikdutta.ion.Ion;
 import com.rentezee.adapters.DashboardCategoriesAdapter;
 import com.rentezee.adapters.TrendingAdapter;
 import com.rentezee.adapters.ViewPagerAdapter;
-import com.rentezee.fragments.WishList;
 import com.rentezee.fragments.DashboardSliderImage;
-import com.rentezee.fragments.myorder.MyOrders;
+import com.rentezee.fragments.myorder.activeorder.ActiveOrders;
 import com.rentezee.fragments.my_cart.MyCart;
 import com.rentezee.fragments.notification.NotificationActivity;
-import com.rentezee.fragments.payment.PaymentActivity;
-import com.rentezee.fragments.payment.PaymentOptionActivity;
-import com.rentezee.fragments.profile.ProfileSetting;
+import com.rentezee.fragments.wishlist.WishList;
 import com.rentezee.helpers.AppPreferenceManager;
 import com.rentezee.helpers.BaseActivity;
 import com.rentezee.helpers.Constants;
@@ -80,6 +78,8 @@ import com.rentezee.pojos.mdashboard.Slider;
 import com.rentezee.pojos.mdashboard.Trending;
 import com.rentezee.services.GPSTracker;
 import com.rentezee.views.ExpandableHeightGridView;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -438,13 +438,13 @@ public class DashboardContainer extends BaseActivity implements NavigationView.O
         switch (item.getItemId())
         {
             case R.id.nav_orders:
-                Intent intent=new Intent(context, MyOrders.class);
+                Intent intent=new Intent(context, ActiveOrders.class);
                 gotoActivity(intent);
 
                 break;
 
             case R.id.nav_cart:
-                Intent cart=new Intent(context, ProfileSetting.class);
+                Intent cart=new Intent(context, MyCart.class);
 
                 gotoActivity(cart);
 
@@ -664,15 +664,18 @@ public class DashboardContainer extends BaseActivity implements NavigationView.O
 
     private void load_refresh()
     {
-       // recyclerView.setVisibility(View.GONE);
 
-       // homeDatas.clear();
+        String  device_id = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
+        // recyclerView.setVisibility(View.GONE);
+        // homeDatas.clear();
+
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("device_id", device_id);
 
         showProgressBar(context);
-
         Ion.with(this)
                 .load("http://netforce.biz/renteeze/webservice/Pages/dashboard.json")
-
+                .setJsonObjectBody(jsonObject)
                 .asJsonObject()
                 .setCallback(new FutureCallback<JsonObject>() {
                     @Override

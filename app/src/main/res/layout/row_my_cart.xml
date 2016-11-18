@@ -5,7 +5,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#FFFFFF"
+    android:background="@color/screenbackground"
     >
 
     <android.support.v7.widget.CardView
@@ -21,265 +21,351 @@
         android:id="@+id/relativeCantainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp"
+
         >
 
 
-        <LinearLayout
-            android:id="@+id/linearlayout"
-            android:layout_width="130dp"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            >
-
-            <ImageView
-                android:id="@+id/product_image"
-                android:layout_width="130dp"
-                android:layout_height="110dp"
-                android:src="@mipmap/intro1"
-                android:scaleType="fitXY"
-                android:padding="3dp"
-                />
-
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="ITEM TOTAL"
-                android:textColor="@color/black"
-                android:layout_marginTop="10dp"
-                android:layout_gravity="center_horizontal"
-                android:textSize="12sp"
-                android:textStyle="bold"
-                />
-
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="(RENTAL + SECURITY)"
-                android:textColor="@color/black"
-                android:layout_marginTop="5dp"
-                android:textSize="12sp"
-                android:layout_gravity="center_horizontal"
-                android:textStyle="bold"
-                />
-
-        </LinearLayout>
-
         <RelativeLayout
-            android:id="@+id/relativeData"
-            android:layout_toRightOf="@+id/linearlayout"
+            android:id="@+id/relative_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+            android:padding="10dp"
             >
 
+
+            <LinearLayout
+                android:id="@+id/linearlayout"
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
+
+                <ImageView
+                    android:id="@+id/product_image"
+                    android:layout_width="130dp"
+                    android:layout_height="110dp"
+                    android:src="@mipmap/intro1"
+                    android:scaleType="fitXY"
+                    android:padding="3dp"
+                    />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="ITEM TOTAL"
+                    android:textColor="@color/black"
+                    android:layout_marginTop="10dp"
+                    android:layout_gravity="center_horizontal"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="(RENTAL + SECURITY)"
+                    android:textColor="@color/black"
+                    android:layout_marginTop="5dp"
+                    android:textSize="12sp"
+                    android:layout_gravity="center_horizontal"
+                    android:textStyle="bold"
+                    />
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/relativeData"
+                android:layout_toRightOf="@+id/linearlayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                >
+
+                <TextView
+                    android:id="@+id/tv_product_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="SONY E 50"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_categories_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Electronics and Appliances"
+                    android:layout_below="@+id/tv_product_name"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_rental_heading"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Rental:"
+                    android:layout_below="@+id/tv_categories_name"
+                    android:layout_alignParentLeft="true"
+                    android:textColor="@color/black"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_rental"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="500:00"
+                    android:layout_below="@+id/tv_categories_name"
+
+                    android:layout_alignParentRight="true"
+                    android:textColor="@color/black"
+                    />
+
+
+                <TextView
+                    android:id="@+id/tv_security_fee_heading"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Security Fee:"
+                    android:layout_below="@+id/tv_rental_heading"
+
+                    android:layout_alignParentLeft="true"
+                    android:textColor="@color/black"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_security_fee"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="28000"
+                    android:layout_below="@+id/tv_rental_heading"
+                    android:textColor="@color/black"
+                    android:layout_alignParentRight="true"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_rent_duration_heading"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Rent Duration:"
+                    android:layout_below="@+id/tv_security_fee_heading"
+                    android:layout_alignParentLeft="true"
+                    android:textColor="@color/black"
+                    />
+
+
+                <TextView
+                    android:id="@+id/tv_rent_duration"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="4 Days"
+                    android:layout_below="@+id/tv_security_fee_heading"
+                    android:layout_alignParentRight="true"
+                    android:textColor="@color/black"
+                    />
+
+
+                <TextView
+                    android:id="@+id/textview_from_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="12"
+                    android:layout_below="@+id/tv_rent_duration_heading"
+                    android:layout_marginTop="5dp"
+                    android:layout_alignParentLeft="true"
+                    android:textColor="@color/black"
+                    android:background="@drawable/black_border"
+                    android:padding="3dp"
+                    android:textSize="12sp"
+                    />
+
+
+                <TextView
+                    android:id="@+id/tv_from_month"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="mm"
+                    android:layout_below="@+id/tv_rent_duration_heading"
+                    android:layout_marginTop="5dp"
+                    android:layout_toRightOf="@+id/textview_from_date"
+                    android:textColor="@color/black"
+                    android:background="@drawable/black_border"
+                    android:padding="3dp"
+                    android:layout_marginLeft="5dp"
+                    android:textSize="12sp"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_from_year"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="yy"
+                    android:layout_below="@+id/tv_rent_duration_heading"
+                    android:layout_marginTop="5dp"
+                    android:layout_toRightOf="@+id/tv_from_month"
+                    android:textColor="@color/black"
+                    android:background="@drawable/black_border"
+                    android:padding="3dp"
+                    android:layout_marginLeft="5dp"
+                    android:textSize="12sp"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_to"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="t0"
+                    android:layout_below="@+id/tv_rent_duration_heading"
+                    android:layout_marginTop="5dp"
+                    android:layout_toRightOf="@+id/tv_from_year"
+                    android:textColor="@color/black"
+                    android:textSize="12sp"
+                    android:padding="3dp"
+                    android:layout_marginLeft="3dp"
+                    />
+
+                <TextView
+                    android:id="@+id/textview_to_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="22"
+                    android:layout_below="@+id/tv_rent_duration_heading"
+                    android:layout_marginTop="5dp"
+                    android:layout_toRightOf="@+id/tv_to"
+                    android:textColor="@color/black"
+                    android:background="@drawable/black_border"
+                    android:padding="3dp"
+                    android:layout_marginLeft="3dp"
+                    android:textSize="12sp"
+                    />
+
+
+                <TextView
+                    android:id="@+id/tv_to_month"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="mm"
+                    android:layout_below="@+id/tv_rent_duration_heading"
+                    android:layout_marginTop="5dp"
+                    android:layout_toRightOf="@+id/textview_to_date"
+                    android:textColor="@color/black"
+                    android:background="@drawable/black_border"
+                    android:padding="3dp"
+                    android:layout_marginLeft="5dp"
+                    android:textSize="12sp"
+                    />
+
+
+                <TextView
+                    android:id="@+id/tv_to_year"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="yy"
+                    android:layout_below="@+id/tv_rent_duration_heading"
+                    android:layout_marginTop="5dp"
+                    android:layout_toRightOf="@+id/tv_to_month"
+                    android:textColor="@color/black"
+                    android:background="@drawable/black_border"
+                    android:padding="3dp"
+                    android:layout_marginLeft="3dp"
+                    android:textSize="12sp"
+                    />
+
+
+
+
+            </RelativeLayout>
+
+
             <TextView
-                android:id="@+id/tv_product_name"
+                android:id="@+id/tvTotal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="SONY E 50"
+                android:layout_below="@+id/relativeData"
+                android:layout_marginLeft="10dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="10dp"
+                android:text="\u20B9 28,500"
                 android:textColor="@color/black"
                 android:textStyle="bold"
                 />
-
-            <TextView
-                android:id="@+id/tv_categories_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Electronics and Appliances"
-                android:layout_below="@+id/tv_product_name"
-                />
-
-            <TextView
-                android:id="@+id/tv_rental_heading"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Rental:"
-                android:layout_below="@+id/tv_categories_name"
-                android:layout_alignParentLeft="true"
-                android:textColor="@color/black"
-                />
-
-            <TextView
-                android:id="@+id/tv_rental"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="500:00"
-                android:layout_below="@+id/tv_categories_name"
-
-                android:layout_alignParentRight="true"
-                android:textColor="@color/black"
-                />
-
-
-            <TextView
-                android:id="@+id/tv_security_fee_heading"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Security Fee:"
-                android:layout_below="@+id/tv_rental_heading"
-
-                android:layout_alignParentLeft="true"
-                android:textColor="@color/black"
-                />
-
-            <TextView
-                android:id="@+id/tv_security_fee"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="28000"
-                android:layout_below="@+id/tv_rental_heading"
-                android:textColor="@color/black"
-                android:layout_alignParentRight="true"
-                />
-
-            <TextView
-                android:id="@+id/tv_rent_duration_heading"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Rent Duration:"
-                android:layout_below="@+id/tv_security_fee_heading"
-                android:layout_alignParentLeft="true"
-                android:textColor="@color/black"
-                />
-
-
-            <TextView
-                android:id="@+id/tv_rent_duration"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="4 Days"
-                android:layout_below="@+id/tv_security_fee_heading"
-                android:layout_alignParentRight="true"
-                android:textColor="@color/black"
-                />
-
-
-            <TextView
-                android:id="@+id/textview_from_date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="12"
-                android:layout_below="@+id/tv_rent_duration_heading"
-                android:layout_marginTop="5dp"
-                android:layout_alignParentLeft="true"
-                android:textColor="@color/black"
-                android:background="@drawable/black_border"
-                android:padding="3dp"
-                android:textSize="12sp"
-                />
-
-
-            <TextView
-                android:id="@+id/tv_from_month"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="mm"
-                android:layout_below="@+id/tv_rent_duration_heading"
-                android:layout_marginTop="5dp"
-                android:layout_toRightOf="@+id/textview_from_date"
-                android:textColor="@color/black"
-                android:background="@drawable/black_border"
-                android:padding="3dp"
-                android:layout_marginLeft="5dp"
-                android:textSize="12sp"
-                />
-
-            <TextView
-                android:id="@+id/tv_from_year"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="yy"
-                android:layout_below="@+id/tv_rent_duration_heading"
-                android:layout_marginTop="5dp"
-                android:layout_toRightOf="@+id/tv_from_month"
-                android:textColor="@color/black"
-                android:background="@drawable/black_border"
-                android:padding="3dp"
-                android:layout_marginLeft="5dp"
-                android:textSize="12sp"
-                />
-
-            <TextView
-                android:id="@+id/tv_to"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="t0"
-                android:layout_below="@+id/tv_rent_duration_heading"
-                android:layout_marginTop="5dp"
-                android:layout_toRightOf="@+id/tv_from_year"
-                android:textColor="@color/black"
-                android:textSize="12sp"
-                android:padding="3dp"
-                android:layout_marginLeft="3dp"
-                />
-
-            <TextView
-                android:id="@+id/textview_to_date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="22"
-                android:layout_below="@+id/tv_rent_duration_heading"
-                android:layout_marginTop="5dp"
-                android:layout_toRightOf="@+id/tv_to"
-                android:textColor="@color/black"
-                android:background="@drawable/black_border"
-                android:padding="3dp"
-                android:layout_marginLeft="3dp"
-                android:textSize="12sp"
-                />
-
-
-            <TextView
-                android:id="@+id/tv_to_month"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="mm"
-                android:layout_below="@+id/tv_rent_duration_heading"
-                android:layout_marginTop="5dp"
-                android:layout_toRightOf="@+id/textview_to_date"
-                android:textColor="@color/black"
-                android:background="@drawable/black_border"
-                android:padding="3dp"
-                android:layout_marginLeft="5dp"
-                android:textSize="12sp"
-                />
-
-
-            <TextView
-                android:id="@+id/tv_to_year"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="yy"
-                android:layout_below="@+id/tv_rent_duration_heading"
-                android:layout_marginTop="5dp"
-                android:layout_toRightOf="@+id/tv_to_month"
-                android:textColor="@color/black"
-                android:background="@drawable/black_border"
-                android:padding="3dp"
-                android:layout_marginLeft="3dp"
-                android:textSize="12sp"
-                />
-
-
-
 
         </RelativeLayout>
 
 
-        <TextView
-            android:layout_width="wrap_content"
+
+        <View
+            android:id="@+id/view"
+            android:layout_below="@+id/relative_layout"
+            android:layout_width="match_parent"
+            android:layout_height="1.5dp"
+            android:background="#F1F5F7"
+            android:layout_marginTop="0dp"
+            ></View>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/relativeData"
-            android:layout_marginLeft="10dp"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="10dp"
-            android:text="\u20B9 28,500"
-            android:textColor="@color/black"
-            android:textStyle="bold"
-            />
+            android:weightSum="2"
+            android:orientation="horizontal"
+             android:layout_below="@+id/view"
+            >
+
+            <LinearLayout
+                android:id="@+id/layoutRemove"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.99"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:background="@drawable/address_button_back"
+                >
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_gravity="center_vertical"
+                    android:src="@mipmap/de_xhdpi" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:padding="10dp"
+                    android:text="@string/remove"
+                    android:textStyle="bold"
+                    android:theme="@style/MyTextViewNormal" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/layoutMoveToCart"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.99"
+                android:gravity="center"
+                android:orientation="horizontal"
+
+                >
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_gravity="center_vertical"
+                    android:src="@mipmap/ic_move_to_cart" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:padding="10dp"
+                    android:text="@string/movetocart"
+                    android:textStyle="bold"
+                    android:theme="@style/MyTextViewNormal" />
+            </LinearLayout>
+
+
+        </LinearLayout>
 
 
     </RelativeLayout>
