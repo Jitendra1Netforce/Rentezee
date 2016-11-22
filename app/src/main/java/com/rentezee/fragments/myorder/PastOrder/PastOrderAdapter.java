@@ -50,6 +50,14 @@ public class PastOrderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position)
     {
         PastOrderHolder homeHolder = (PastOrderHolder) holder;
+
+        homeHolder.buttonPrice.setText(itemList.get(position).image_url);
+
+        homeHolder.tv_f_date.setText(itemList.get(position).product_name);
+
+        homeHolder.tv_l_date.setText(itemList.get(position).product_name);
+
+
     }
 
     private void showMessage(String s)

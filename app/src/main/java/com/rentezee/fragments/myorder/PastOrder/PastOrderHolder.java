@@ -2,6 +2,7 @@ package com.rentezee.fragments.myorder.PastOrder;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -16,27 +17,20 @@ public class PastOrderHolder extends RecyclerView.ViewHolder
 {
 
     View view;
-    TextView tvProductName,tvCategoriesName,tvRentPrice;
-    ImageView imProductImage;
-    LinearLayout linearLayout,layoutRemove,layoutMoveToCart;
+    TextView tv_f_date,tv_l_date;
+    Button buttonPrice;
+
 
     public PastOrderHolder(View itemView)
     {
         super(itemView);
 
-        linearLayout = (LinearLayout) itemView.findViewById(R.id.linearlayout_wishlist);
+        buttonPrice = (Button) itemView.findViewById(R.id.buttonPrice);
 
-        layoutRemove = (LinearLayout) itemView.findViewById(R.id.layoutRemove);
+        tv_f_date = (TextView) itemView.findViewById(R.id.tv_f_date);
 
-        layoutMoveToCart = (LinearLayout) itemView.findViewById(R.id.layoutMoveToCart);
+        tv_l_date = (TextView) itemView.findViewById(R.id.tv_l_date);
 
-        tvProductName = (TextView) itemView.findViewById(R.id.tvProductName);
-
-        imProductImage = (ImageView) itemView.findViewById(R.id.ivProductImage);
-
-        tvCategoriesName = (TextView) itemView.findViewById(R.id.tvProductCategoryName);
-
-        tvRentPrice = (TextView) itemView.findViewById(R.id.tvPrice);
 
         view = itemView;
     }

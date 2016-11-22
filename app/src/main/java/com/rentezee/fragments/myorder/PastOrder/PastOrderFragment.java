@@ -17,8 +17,12 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
+import com.rentezee.helpers.AppPreferenceManager;
 import com.rentezee.helpers.BaseActivity;
+import com.rentezee.helpers.PreferenceKeys;
 import com.rentezee.main.R;
+import com.rentezee.pojos.User;
+
 import java.util.ArrayList;
 
 
@@ -30,7 +34,9 @@ public class PastOrderFragment extends Fragment implements  View.OnClickListener
     ArrayList<PastOrderData> pastOrderDatas = new ArrayList<>();
     PastOrderAdapter pastOrderAdapter;
     BaseActivity baseActivity;
-
+    String id,user_id;
+    long  userId;
+    User user;
 
 
     @Override
@@ -49,6 +55,16 @@ public class PastOrderFragment extends Fragment implements  View.OnClickListener
               super.showProgressBar(context);
           }
          };
+
+
+        user = (User) new AppPreferenceManager(getActivity()).getObject(PreferenceKeys.savedUser, User.class);
+
+        if(user != null){
+
+            userId = user.getUserId();
+        }
+
+        user_id = Long.toString(userId);
 
 
 
@@ -79,13 +95,21 @@ public class PastOrderFragment extends Fragment implements  View.OnClickListener
         pastOrderDatas.clear();
 
         baseActivity.showProgressBar(context);
+
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("user_id","2");
+
         Ion.with(this)
-                .load("http://netforce.biz/renteeze/webservice/products/product_list?cat_id=1")
+                .load("http://netforce.biz/renteeze/webservice/Orders/orderlist")
+                .setJsonObjectBody(jsonObject)
                 .asJsonObject()
                 .setCallback(new FutureCallback<JsonObject>() {
                     @Override
                     public void onCompleted(Exception e, JsonObject result) {
-                        if (result != null) {
+                        if (result != null)
+                        {
+
+                            System.out.println("data=====" + result.toString());
 
                             JsonArray productListArray = result.getAsJsonArray("data");
 
@@ -93,20 +117,20 @@ public class PastOrderFragment extends Fragment implements  View.OnClickListener
 
                             for (int i = 0; i < productListArray.size(); i++) {
                                 JsonObject jsonObject = (JsonObject) productListArray.get(i);
-                                JsonObject product = jsonObject.getAsJsonObject("Product");
-                                String id = product.get("id").getAsString();
-                                String name = product.get("name").getAsString();
-                                String price = product.get("price").getAsString();
+
+                                String id = jsonObject.get("product_id").getAsString();
+                                String name = jsonObject.get("order_date").getAsString();
+                                String price = jsonObject.get("total_amount").getAsString();
                                 //String special_price = product.get("special_price").getAsString();
-                                String image = "http://netforce.biz/renteeze/webservice/files/products/" + product.get("images").getAsString();
-                                pastOrderDatas.add(new PastOrderData(id, name, image, price, price));
+
+                                pastOrderDatas.add(new PastOrderData(id, name, price, price, price));
 
                             }
                             pastOrderAdapter = new PastOrderAdapter(context, pastOrderDatas);
                             recyclerviewPastOrder.setAdapter(pastOrderAdapter);
                             pastOrderAdapter.notifyDataSetChanged();
                             recyclerviewPastOrder.setVisibility(View.VISIBLE);
-                           baseActivity.dismissProgressBar();
+                            baseActivity.dismissProgressBar();
 
 
                         } else
@@ -126,9 +150,7 @@ public class PastOrderFragment extends Fragment implements  View.OnClickListener
         if (visible) {
             //Do your stuff here
             context = getActivity();
-
         }
-
         super.setMenuVisibility(visible);
     }
 

@@ -74,5 +74,6 @@ dependencies {
     compile 'com.github.ivbaranov:materialfavoritebutton:0.1.2'
     compile 'com.minimize.library:seekbar-compat:0.2.5'
     compile 'com.stepstone.stepper:material-stepper:1.1.1'
+    compile 'com.balysv:material-ripple:1.0.2'
 }
 apply plugin: 'com.google.gms.google-services'

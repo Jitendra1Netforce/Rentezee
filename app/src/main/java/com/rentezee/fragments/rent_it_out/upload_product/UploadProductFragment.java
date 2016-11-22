@@ -41,7 +41,6 @@ import com.rentezee.helpers.AppPreferenceManager;
 import com.rentezee.helpers.PreferenceKeys;
 import com.rentezee.main.R;
 import com.rentezee.pojos.User;
-
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -116,29 +115,31 @@ public class UploadProductFragment extends Fragment
 
         circleImageView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View view)
+            {
 
-                Toast.makeText(getActivity(), "Hi", Toast.LENGTH_SHORT).show();
-
-                if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)
+                {
                     // Request permission to save videos in external storage
-                    ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSION_RQ);
-                } else {
-                    try {
-
-                        pickPictureIntent();
-
-                    } catch (Exception ex) {
-                        // showMessage("Grant permission first");
-                    }
-
+                    ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CAMERA}, PERMISSION_RQ);
                 }
+                else
+                {
+                    try
+                    {
+                        showEditPicPopup();
+                    }
+                    catch (Exception ex)
+                    {
+                        //showMessage("Grant permission first");
+                    }
+                }
+
+
 
 
             }
         });
-
-
 
         return view;
     }
@@ -280,7 +281,7 @@ public class UploadProductFragment extends Fragment
     private void upload_image()
     {
 
-        System.out.println("iage array size =====" + rentItDatas.size());
+        System.out.println("image array size =====" + rentItDatas.size());
 
         for (int i = 0; i <rentItDatas.size(); i++)
         {
@@ -365,8 +366,6 @@ public class UploadProductFragment extends Fragment
         }
          */
 
-
-
     }
 
 
@@ -393,15 +392,17 @@ public class UploadProductFragment extends Fragment
         }
 
         return file;
-
-
     }
 
 
-    private void showEditPicPopup() {
+    private void showEditPicPopup()
+    {
         boolean wrapInScrollView = true;
+
+       // Toast.makeText(getActivity(),"This is pic intent",Toast.LENGTH_SHORT).show();
+
         dialog = new MaterialDialog.Builder(getActivity())
-                .title("Hi")
+                .title("Choose Picture")
                 .customView(R.layout.dailog_editpic, wrapInScrollView)
                 .negativeText("Cancel")
                 .onNegative(new MaterialDialog.SingleButtonCallback() {
@@ -416,6 +417,7 @@ public class UploadProductFragment extends Fragment
             @Override
             public void onClick(View v)
             {
+
                 if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                     // Request permission to save videos in external storage
                     ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSION_RQ);
