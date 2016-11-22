@@ -2,18 +2,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.rentezee.fragments.upload_product.UploadProductFragment">
+    tools:context="com.rentezee.fragments.rent_it_out.upload_product.UploadProductFragment">
 
-    <RelativeLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:padding="15dp"
-        >
+        android:layout_height="wrap_content">
 
-        <ScrollView
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:padding="15dp"
+            >
+
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -23,21 +28,30 @@
                 <de.hdodenhof.circleimageview.CircleImageView
                     xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:id="@+id/profile_image"
-                    android:layout_width="86dp"
-                    android:layout_height="86dp"
-                    android:src="@drawable/ic_menu_camera"
-                    app:civ_border_width="2dp"
+                    android:layout_width="76dp"
+                    android:layout_height="76dp"
+                    android:src="@drawable/ic_product_pick"
+                    app:civ_border_width="0dp"
                     android:layout_marginTop="20dp"
                     android:layout_marginBottom="20dp"
                     android:layout_centerHorizontal="true"
                     app:civ_border_color="#FF000000"/>
 
 
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recycler"
+                    android:layout_width="wrap_content"
+                    android:layout_height="70dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_below="@+id/profile_image"
+                    />
+
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:layout_below="@+id/profile_image"
+                    android:layout_below="@+id/recycler"
                     android:padding="10dp"
                     >
 
@@ -46,12 +60,16 @@
                         android:layout_height="wrap_content">
 
                         <EditText
-                            android:id="@+id/input_password"
+                            android:id="@+id/edtProductName"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textColor="@color/black"
                             android:textColorHint="@color/black"
-                            android:hint="Product Name" />
+                            android:hint="Product Name"
+                            android:imeOptions="actionNext"
+                            android:singleLine="true"
+                            android:inputType="text"
+                            />
 
                     </android.support.design.widget.TextInputLayout>
 
@@ -78,12 +96,16 @@
                         android:layout_height="wrap_content">
 
                         <EditText
-                            android:id="@+id/edtAddress2"
+                            android:id="@+id/edtDiscription"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textColor="@color/black"
                             android:textColorHint="@color/black"
-                            android:hint="Discription" />
+                            android:hint="Discription"
+                            android:imeOptions="actionNext"
+                            android:singleLine="true"
+                            android:inputType="text"
+                            />
 
                     </android.support.design.widget.TextInputLayout>
 
@@ -92,12 +114,16 @@
                         android:layout_height="wrap_content">
 
                         <EditText
-                            android:id="@+id/edtLocality"
+                            android:id="@+id/edtSecurityAmount"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textColor="@color/black"
                             android:textColorHint="@color/black"
-                            android:hint="Security Amount" />
+                            android:hint="Security Amount"
+                            android:imeOptions="actionNext"
+                            android:singleLine="true"
+                            android:inputType="number"
+                            />
 
                     </android.support.design.widget.TextInputLayout>
 
@@ -107,12 +133,16 @@
                         android:layout_height="wrap_content">
 
                         <EditText
-                            android:id="@+id/edtCity"
+                            android:id="@+id/edtRentPerDay"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textColor="@color/black"
                             android:textColorHint="@color/black"
-                            android:hint="Rent Per Day" />
+                            android:hint="Rent Per Day"
+                            android:imeOptions="actionDone"
+                            android:singleLine="true"
+                            android:inputType="number"
+                            />
 
                     </android.support.design.widget.TextInputLayout>
 
@@ -139,37 +169,39 @@
 
 
 
-        </ScrollView>
+
+        </RelativeLayout>
 
 
-
-
-
-    </RelativeLayout>
-
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="5dp"
-        android:background="@color/colorPrimary"
-        android:layout_alignParentBottom="true"
-        >
-
-
-        <Button
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:id="@+id/relativeUpload"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:drawableLeft="@mipmap/ic_profile_edit"
-            android:text="Save"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            android:layout_centerHorizontal="true"
-            android:background="?android:attr/selectableItemBackground"
-            />
+            android:padding="5dp"
+            android:background="@color/colorPrimary"
+            android:layout_alignParentBottom="true"
+            >
 
 
-    </RelativeLayout>
+            <Button
+                android:id="@+id/buttonSave"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@mipmap/ic_profile_edit"
+                android:text="Save"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:layout_centerHorizontal="true"
+                android:background="?android:attr/selectableItemBackground"
+                />
+
+
+        </RelativeLayout>
+
+
+        </RelativeLayout>
+    </ScrollView>
+
 
 
 </RelativeLayout>

@@ -1,6 +1,7 @@
 package com.rentezee.main;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -62,7 +63,7 @@ public class Detail extends BaseActivity
     private CoordinatorLayout coordinatorLayout;
     private ViewPager viewPager;
     private CircleIndicator indicator;
-    private TextView tvProductName, tvProductCategoryName, tvDescription,tvProductID;
+    private TextView tvProductName,tvProductCategoryName,tvDescription,tvProductID;
     private TextView tvSecurityMoney, tvPerDayRent;
     private CardView cardViewDescription;
     private LinearLayout layoutPrice, layoutBottom;
@@ -75,6 +76,8 @@ public class Detail extends BaseActivity
     String id,user_id;
     long  userId;
     User user;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -154,35 +157,46 @@ public class Detail extends BaseActivity
 
                 System.out.println("material favorite status========" + materialFavoriteButton.isFavorite());
 
+                if(user != null){
 
-                if(materialFavoriteButton.isFavorite() )
-                {
-                    add_wish_list(id, user_id);
-                    System.out.println("favorite============" + materialFavoriteButton.isFavorite());
-                    materialFavoriteButton.setAnimateFavorite(true);
-                    materialFavoriteButton.setBounceDuration(300);
-                    materialFavoriteButton.setRotationAngle(360);
-                    materialFavoriteButton.setRotationDuration(100);
-                    materialFavoriteButton.setNotFavoriteResource(R.mipmap.ic_add_to_wishlist);
-                    materialFavoriteButton.setFavorite(false);
+                    if(materialFavoriteButton.isFavorite() )
+                    {
+                        add_wish_list(id, user_id);
+                        System.out.println("favorite============" + materialFavoriteButton.isFavorite());
+                        materialFavoriteButton.setAnimateFavorite(true);
+                        materialFavoriteButton.setBounceDuration(300);
+                        materialFavoriteButton.setRotationAngle(360);
+                        materialFavoriteButton.setRotationDuration(100);
+                        materialFavoriteButton.setNotFavoriteResource(R.mipmap.ic_add_to_wishlist);
+                        materialFavoriteButton.setFavorite(false);
                   /*  editor.putBoolean(id, false);
                     editor.commit();*/
 
-                }
-                else
-                {
-                    add_wish_list(id, user_id);
-                    System.out.println(" product_id============" + id);
-                    materialFavoriteButton.setAnimateUnfavorite(true);
-                    materialFavoriteButton.setBounceDuration(300);
-                    materialFavoriteButton.setRotationAngle(360);
-                    materialFavoriteButton.setRotationDuration(100);
-                    materialFavoriteButton.setFavoriteResource(R.mipmap.ic_favorite_hdpi);
-                    materialFavoriteButton.setFavorite(true);
+                    }
+                    else
+                    {
+                        add_wish_list(id, user_id);
+                        System.out.println(" product_id============" + id);
+                        materialFavoriteButton.setAnimateUnfavorite(true);
+                        materialFavoriteButton.setBounceDuration(300);
+                        materialFavoriteButton.setRotationAngle(360);
+                        materialFavoriteButton.setRotationDuration(100);
+                        materialFavoriteButton.setFavoriteResource(R.mipmap.ic_favorite_hdpi);
+                        materialFavoriteButton.setFavorite(true);
                   /*  editor.putBoolean(id, true);
                     editor.commit();*/
 
+                    }
                 }
+                else
+                {
+
+                    Intent intent = new Intent(Detail.this,Login.class);
+                    startActivity(intent);
+
+                }
+
+
 
             }
         });

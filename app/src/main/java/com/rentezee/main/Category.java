@@ -54,6 +54,8 @@ public class Category extends BaseActivity implements View.OnClickListener
      private ProductsAdapter productsAdapter;
      private int categoryId, page, sortBy;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -69,11 +71,11 @@ public class Category extends BaseActivity implements View.OnClickListener
         if(actionBar!=null){
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
-
         //find views
         coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinatorLayout);
         layoutBottom=(LinearLayout)findViewById(R.id.layoutBottom);
-         lvProducts=(ListView)findViewById(R.id.lvProducts);
+
+        lvProducts=(ListView)findViewById(R.id.lvProducts);
 
 
         lvProducts.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -85,7 +87,6 @@ public class Category extends BaseActivity implements View.OnClickListener
             }
         });
 
-
         TabLayout tabLayout = (TabLayout)findViewById(R.id.tabLayout);
 
         findViewById(R.id.layoutSort).setOnClickListener(this);
@@ -95,7 +96,6 @@ public class Category extends BaseActivity implements View.OnClickListener
         String cat_id = intent.getStringExtra(Constants.CATEGORY_ID);
 
         categoryId = Integer.parseInt(cat_id);
-
 
         fetchedCategoryDataList = (ArrayList<CategoriesData>) intent.getSerializableExtra(Constants.CATEGORIES);
         int selectedTabPosition=intent.getIntExtra(Constants.SELECTED_TAB_POSITION, 0);
@@ -185,7 +185,8 @@ public class Category extends BaseActivity implements View.OnClickListener
         }
     }
 
-    private void reset(){
+    private void reset()
+    {
         layoutBottom.setVisibility(View.GONE);
         page=1;
         sortBy=0;
@@ -257,6 +258,8 @@ public class Category extends BaseActivity implements View.OnClickListener
             productList.addAll(list);
             productsAdapter.notifyDataSetChanged();
         }
+
+
     }
 
 

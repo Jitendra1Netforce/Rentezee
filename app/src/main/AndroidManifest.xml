@@ -7,6 +7,21 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <!-- To auto-complete the email text field in the login form with the user's emails -->
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.READ_PROFILE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+
     <application
         android:name=".AppController"
         android:allowBackup="true"
@@ -125,12 +140,10 @@
             android:name="com.rentezee.fragments.my_cart.MyCart"
             android:label="@string/title_activity_my_cart"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name="com.rentezee.fragments.wishlist.WishList"
             android:label="@string/title_activity_my_cart"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name="com.rentezee.fragments.notification.NotificationActivity"
             android:label="@string/title_activity_my_cart"
@@ -145,7 +158,14 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name="com.rentezee.fragments.payment.PaymentOptionActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="com.rentezee.fragments.myorder.MyOrder"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="com.rentezee.fragments.rent_it_out.RentitOutActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            ></activity>
     </application>
 
 </manifest>

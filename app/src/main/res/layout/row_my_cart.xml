@@ -359,7 +359,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:padding="10dp"
-                    android:text="@string/movetocart"
+                    android:text="Add To Wishlist"
                     android:textStyle="bold"
                     android:theme="@style/MyTextViewNormal" />
             </LinearLayout>

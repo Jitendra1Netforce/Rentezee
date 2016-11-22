@@ -1,14 +1,11 @@
 package com.rentezee.fragments.profile.general;
-import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.util.AttributeSet;
-import android.view.MotionEvent;
 
 import com.rentezee.fragments.profile.ProfileFragment;
 import com.rentezee.fragments.profile.general.address.AddressFragment;
-import com.rentezee.fragments.upload_product.UploadProductFragment;
+import com.rentezee.fragments.rent_it_out.upload_product.UploadProductFragment;
 
 /**
  * Created by hegazy on 2/13/15.
@@ -20,6 +17,7 @@ public class CustomViewPager extends FragmentStatePagerAdapter
     ProfileFragment profileFragment;
     AddressFragment addressFragment;
     UploadProductFragment uploadProductFragment;
+
 
     public CustomViewPager(FragmentManager fm, int NumOfTabs)
     {
@@ -41,8 +39,8 @@ public class CustomViewPager extends FragmentStatePagerAdapter
                 addressFragment = new AddressFragment();
                 return addressFragment;
             default:
-                uploadProductFragment = new UploadProductFragment();
-                return uploadProductFragment;
+                addressFragment = new AddressFragment();
+                return addressFragment;
 
 
         }

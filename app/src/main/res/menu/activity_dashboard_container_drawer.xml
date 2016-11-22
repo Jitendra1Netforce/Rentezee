@@ -24,6 +24,14 @@
                 android:icon="@mipmap/nav_notifications"
                 android:title="My Notifications"
                 app:actionLayout="@layout/menu_counter" />
+
+            <item
+                android:id="@+id/nav_profile"
+                android:icon="@drawable/ic_profile"
+                android:title="My Profile"
+               />
+
+
             <item
                 android:id="@+id/nav_rentezee_credits"
                 android:icon="@mipmap/nav_rentezee_credits"

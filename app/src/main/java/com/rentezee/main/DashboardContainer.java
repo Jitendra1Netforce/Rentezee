@@ -61,9 +61,12 @@ import com.rentezee.adapters.DashboardCategoriesAdapter;
 import com.rentezee.adapters.TrendingAdapter;
 import com.rentezee.adapters.ViewPagerAdapter;
 import com.rentezee.fragments.DashboardSliderImage;
+import com.rentezee.fragments.myorder.MyOrder;
 import com.rentezee.fragments.myorder.activeorder.ActiveOrders;
 import com.rentezee.fragments.my_cart.MyCart;
 import com.rentezee.fragments.notification.NotificationActivity;
+import com.rentezee.fragments.profile.ProfileSetting;
+import com.rentezee.fragments.rent_it_out.RentitOutActivity;
 import com.rentezee.fragments.wishlist.WishList;
 import com.rentezee.helpers.AppPreferenceManager;
 import com.rentezee.helpers.BaseActivity;
@@ -153,8 +156,7 @@ public class DashboardContainer extends BaseActivity implements NavigationView.O
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
@@ -228,7 +230,6 @@ public class DashboardContainer extends BaseActivity implements NavigationView.O
         setMenuCounter(R.id.nav_cart, 1);
         setMenuCounter(R.id.nav_notifications, 0);
         setMenuCredits(R.id.nav_rentezee_credits, 100);
-
 
         //check permissions
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -438,32 +439,28 @@ public class DashboardContainer extends BaseActivity implements NavigationView.O
         switch (item.getItemId())
         {
             case R.id.nav_orders:
-                Intent intent=new Intent(context, ActiveOrders.class);
+                Intent intent=new Intent(context, MyOrder.class);
                 gotoActivity(intent);
-
                 break;
-
             case R.id.nav_cart:
                 Intent cart=new Intent(context, MyCart.class);
-
                 gotoActivity(cart);
-
                 break;
-
+            case R.id.nav_profile:
+                Intent profile=new Intent(context, ProfileSetting.class);
+                gotoActivity(profile);
+                break;
             case R.id.nav_wishlist:
-
                 Intent intent2=new Intent(context, WishList.class);
-
                 gotoActivity(intent2);
-
                 break;
-
             case R.id.nav_notifications:
-
                 Intent notification=new Intent(context, NotificationActivity.class);
-
                 gotoActivity(notification);
-
+                break;
+            case R.id.nav_ret_it_out:
+                Intent rent_it_out=new Intent(context, RentitOutActivity.class);
+                gotoActivity(rent_it_out);
                 break;
 
         }
@@ -668,7 +665,6 @@ public class DashboardContainer extends BaseActivity implements NavigationView.O
         String  device_id = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
         // recyclerView.setVisibility(View.GONE);
         // homeDatas.clear();
-
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("device_id", device_id);
 

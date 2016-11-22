@@ -24,7 +24,7 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_my_orders" />
+    <include layout="@layout/content_rentit" />
 
 
 </android.support.design.widget.CoordinatorLayout>

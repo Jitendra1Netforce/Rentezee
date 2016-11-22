@@ -1,34 +1,35 @@
-package com.rentezee.fragments.myorder.PastOrder;
+package com.rentezee.fragments.rent_it_out.productview;
 
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.ActionBar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
+import com.rentezee.fragments.myorder.PastOrder.PastOrderAdapter;
+import com.rentezee.fragments.myorder.PastOrder.PastOrderData;
 import com.rentezee.helpers.BaseActivity;
 import com.rentezee.main.R;
+
 import java.util.ArrayList;
 
 
-public class PastOrderFragment extends Fragment implements  View.OnClickListener
+public class ProductViewFragment extends Fragment implements  View.OnClickListener
 {
 
     RecyclerView recyclerviewPastOrder;
     Context context;
-    ArrayList<PastOrderData> pastOrderDatas = new ArrayList<>();
-    PastOrderAdapter pastOrderAdapter;
+    ArrayList<ProductViewData> productViewDatas = new ArrayList<>();
+    ProductViewAdatpter productViewAdatpter;
     BaseActivity baseActivity;
 
 
@@ -43,12 +44,12 @@ public class PastOrderFragment extends Fragment implements  View.OnClickListener
 
         baseActivity = new BaseActivity()
         {
-          @Override
-          public void showProgressBar(Context context)
-          {
-              super.showProgressBar(context);
-          }
-         };
+            @Override
+            public void showProgressBar(Context context)
+            {
+                super.showProgressBar(context);
+            }
+        };
 
 
 
@@ -76,7 +77,7 @@ public class PastOrderFragment extends Fragment implements  View.OnClickListener
     private void reset()
     {
         recyclerviewPastOrder.setVisibility(View.INVISIBLE);
-        pastOrderDatas.clear();
+        productViewDatas.clear();
 
         baseActivity.showProgressBar(context);
         Ion.with(this)
@@ -99,14 +100,14 @@ public class PastOrderFragment extends Fragment implements  View.OnClickListener
                                 String price = product.get("price").getAsString();
                                 //String special_price = product.get("special_price").getAsString();
                                 String image = "http://netforce.biz/renteeze/webservice/files/products/" + product.get("images").getAsString();
-                                pastOrderDatas.add(new PastOrderData(id, name, image, price, price));
+                                productViewDatas.add(new ProductViewData(id, name, image, price, price));
 
                             }
-                            pastOrderAdapter = new PastOrderAdapter(context, pastOrderDatas);
-                            recyclerviewPastOrder.setAdapter(pastOrderAdapter);
-                            pastOrderAdapter.notifyDataSetChanged();
+                            productViewAdatpter = new ProductViewAdatpter(context, productViewDatas);
+                            recyclerviewPastOrder.setAdapter(productViewAdatpter);
+                            productViewAdatpter.notifyDataSetChanged();
                             recyclerviewPastOrder.setVisibility(View.VISIBLE);
-                           baseActivity.dismissProgressBar();
+                            baseActivity.dismissProgressBar();
 
 
                         } else

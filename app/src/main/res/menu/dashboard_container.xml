@@ -13,5 +13,7 @@
         android:orderInCategory="100"
         android:title="@string/action_cart"
         app:actionLayout="@layout/menu_cart_icon"
-        app:showAsAction="always" />
+        app:showAsAction="always"
+
+        />
 </menu>

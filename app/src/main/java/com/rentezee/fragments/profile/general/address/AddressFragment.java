@@ -14,12 +14,16 @@ import com.rentezee.main.R;
 public class AddressFragment extends Fragment
 {
 
+    Context address_context;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_address, container, false);
+
+        address_context = getActivity();
+
 
         return view;
     }

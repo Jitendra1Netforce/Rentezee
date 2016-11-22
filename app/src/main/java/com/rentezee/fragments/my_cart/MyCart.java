@@ -45,7 +45,7 @@ public class MyCart extends BaseActivity {
     RelativeLayout relativeTotal;
     LinearLayout layoutContinue;
     String device_id;
-
+    RelativeLayout relativeLayoutDetails;
 
 
     @Override
@@ -73,6 +73,8 @@ public class MyCart extends BaseActivity {
 
         layoutContinue = (LinearLayout)findViewById(R.id.layoutContinue);
 
+        relativeLayoutDetails = (RelativeLayout) findViewById(R.id.relativeLayoutDetails);
+
         mycartProducts=(RecyclerView)findViewById(R.id.lvMyCart);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         myCartAdapter = new MyCartAdapter(context, myCartDatas,this);
@@ -91,7 +93,6 @@ public class MyCart extends BaseActivity {
                 gotoActivity(intent);
             }
         });*/
-
 
         layoutContinue.setOnClickListener(new View.OnClickListener()
         {
@@ -143,12 +144,19 @@ public class MyCart extends BaseActivity {
 
                         if (result != null)
                         {
+
                             System.out.println("data "+ result);
-                              JsonArray productListArray = result.getAsJsonArray("data");
+                            JsonArray productListArray = result.getAsJsonArray("data");
 
-                            System.out.println("data=====" + result.toString());
+                            System.out.println("data=====" + productListArray.size());
 
-                            for (int i = 0; i < productListArray.size(); i++) {
+                            if(productListArray.size()== 0){
+
+                                relativeLayoutDetails.setVisibility(View.GONE);
+                            }
+
+                            for (int i = 0; i < productListArray.size(); i++)
+                            {
                                 JsonObject jsonObject = (JsonObject) productListArray.get(i);
 
                                 String cart_id = jsonObject.get("id").getAsString();
@@ -159,6 +167,7 @@ public class MyCart extends BaseActivity {
                                 String security_price = jsonObject.get("security_price").getAsString();
                                 String image = jsonObject.get("image").getAsString();
                                 myCartDatas.add(new MyCartData(cart_id,product_id, name, image, price, security_price,category_name));
+                                relativeLayoutDetails.setVisibility(View.VISIBLE);
 
                             }
                             myCartAdapter.notifyDataSetChanged();
