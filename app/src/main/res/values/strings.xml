@@ -75,4 +75,12 @@
     <string name="title_activity_search">Search</string>
     <string name="add_to_cart">Add to Cart</string>
     <string name="add_to_wishlist">Add to Wishlist</string>
+    <string name="remove">Remove</string>
+    <string name="movetocart">Move To Cart</string>
+    <string name="title_activity_my_cart">MyCart</string>
+    <string name="Checkout">Checkout</string>
+    <string name="notification_description">Lorem Ipsum is simply dummy text of the  printing and type setting industry. Lorem Ipsum has been the indus standard dummy</string>
+    <string name="title_activity_profile_setting">ProfileSetting</string>
+    <string name="mobile">Mobile Number</string>
+    <string name="delete">Delete</string>
 </resources>

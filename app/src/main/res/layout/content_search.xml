@@ -9,4 +9,14 @@
     tools:context="com.rentezee.main.Search"
     tools:showIn="@layout/activity_search">
 
+    <ListView
+        android:id="@+id/lvProducts"
+        android:divider="@null"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/layoutBottom"
+        android:layout_below="@+id/tabLayout" />
+
+
+
 </RelativeLayout>

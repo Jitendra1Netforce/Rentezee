@@ -15,6 +15,7 @@ import com.google.gson.JsonSyntaxException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -26,6 +27,8 @@ public class VolleyGsonRequest<T> extends JsonRequest<T> {
     private Class<T> clazz;
     private Map<String, String> headers;
     private Response.Listener<T> listener;
+    HashMap<String, String> headers_post = new HashMap<String, String>();
+
 
     public VolleyGsonRequest(String url,
                              JSONObject jsonObject,
@@ -33,8 +36,8 @@ public class VolleyGsonRequest<T> extends JsonRequest<T> {
                              Response.ErrorListener errorListener,
                              Class<T> clazz,
                              Map<String, String> headers) {
-        super(Method.POST, url, jsonObject!=null?jsonObject.toString():"", listener, errorListener);
-        Debugger.d("Url", url);
+
+        super(Method.POST, url, (jsonObject == null) ? null : jsonObject.toString(), listener, errorListener);
         this.clazz = clazz;
         this.headers = headers;
         this.listener = listener;
@@ -79,6 +82,7 @@ public class VolleyGsonRequest<T> extends JsonRequest<T> {
             return Response.error(new ParseError(e));
         }
     }
+
 
 
 }

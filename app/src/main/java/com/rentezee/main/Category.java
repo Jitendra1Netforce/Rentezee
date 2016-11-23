@@ -17,10 +17,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.Toast;
-
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.koushikdutta.async.future.FutureCallback;
@@ -47,7 +43,6 @@ import java.util.ArrayList;
 public class Category extends BaseActivity implements View.OnClickListener
 {
 
-
      private static  final String TAG=Category.class.getSimpleName();
      private Context context;
      private CoordinatorLayout coordinatorLayout;
@@ -55,14 +50,17 @@ public class Category extends BaseActivity implements View.OnClickListener
      ListView lvProducts;
      ArrayList<ProductListData> productListDatas = new ArrayList<>();
      ArrayList<CategoriesData> fetchedCategoryDataList;
-
      private ArrayList<Product> productList=new ArrayList<>();
      private ProductsAdapter productsAdapter;
      private int categoryId, page, sortBy;
 
+
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_category);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -73,37 +71,50 @@ public class Category extends BaseActivity implements View.OnClickListener
         if(actionBar!=null){
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
-
         //find views
         coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinatorLayout);
         layoutBottom=(LinearLayout)findViewById(R.id.layoutBottom);
-         lvProducts=(ListView)findViewById(R.id.lvProducts);
+
+        lvProducts=(ListView)findViewById(R.id.lvProducts);
 
 
         lvProducts.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent=new Intent(context, Detail.class);
-                intent.putExtra(Constants.PRODUCT_ID, productList.get(position).getProductId());
+                Intent intent = new Intent(context, Detail.class);
+                intent.putExtra(Constants.PRODUCT_ID, productListDatas.get(position).product_id);
                 gotoActivity(intent);
             }
         });
 
-
         TabLayout tabLayout = (TabLayout)findViewById(R.id.tabLayout);
+
         findViewById(R.id.layoutSort).setOnClickListener(this);
 
         Intent intent=getIntent();
-        categoryId=intent.getIntExtra(Constants.CATEGORY_ID, 0);
+
+        String cat_id = intent.getStringExtra(Constants.CATEGORY_ID);
+
+        categoryId = Integer.parseInt(cat_id);
+
         fetchedCategoryDataList = (ArrayList<CategoriesData>) intent.getSerializableExtra(Constants.CATEGORIES);
         int selectedTabPosition=intent.getIntExtra(Constants.SELECTED_TAB_POSITION, 0);
+
+        System.out.println("selectedTabPosition============"+ selectedTabPosition);
+
         setUpTabs(tabLayout, selectedTabPosition);
 
        /* if(categoryId==0){
             showSnackBar(coordinatorLayout, "Not able to find the category");
             return;
         }*/
-        fetchData(true);
+
+        if(selectedTabPosition == 0){
+            fetchData(true);
+        }
+
+
+
     }
 
     private void setUpTabs(final TabLayout tabLayout, final int selectedTabPosition){
@@ -174,20 +185,22 @@ public class Category extends BaseActivity implements View.OnClickListener
         }
     }
 
-    private void reset(){
+    private void reset()
+    {
         layoutBottom.setVisibility(View.GONE);
         page=1;
         sortBy=0;
-        productList.clear();
+        productListDatas.clear();
         // productsAdapter.notifyDataSetChanged();
     }
 
     private void fetchData(final boolean reset)
     {
+        System.out.println("fetch data=====");
         if(reset){
             reset();
         }
-        load_refresh();
+       load_refresh();
        /* //Post data to sever
         JSONObject jsonObject = new JSONObject();
         try {
@@ -245,6 +258,8 @@ public class Category extends BaseActivity implements View.OnClickListener
             productList.addAll(list);
             productsAdapter.notifyDataSetChanged();
         }
+
+
     }
 
 
@@ -271,6 +286,7 @@ public class Category extends BaseActivity implements View.OnClickListener
 
                             JsonArray productListArray = result.getAsJsonArray("data");
 
+                            System.out.println("data====="+ result);
 
                             for (int i = 0; i < productListArray.size(); i++)
                             {
@@ -279,19 +295,19 @@ public class Category extends BaseActivity implements View.OnClickListener
                                 String id = product.get("id").getAsString();
                                 String name = product.get("name").getAsString();
                                 String price = product.get("price").getAsString();
-                                String special_price = product.get("special_price").getAsString();
+                               // String special_price = product.get("special_price").getAsString();
                                 String image = "http://netforce.biz/renteeze/webservice/files/products/"+product.get("images").getAsString();
-                                productListDatas.add(new ProductListData(id, name, image,price,special_price));
+                                productListDatas.add(new ProductListData(id, name, image,price,""));
 
                             }
-
                             productsAdapter=new ProductsAdapter(context, productListDatas);
                             lvProducts.setAdapter(productsAdapter);
-
-
+                            productsAdapter.notifyDataSetChanged();
 
                             dismissProgressBar();
-                        } else
+                            layoutBottom.setVisibility(View.VISIBLE);
+                        }
+                        else
                         {
 
                             dismissProgressBar();

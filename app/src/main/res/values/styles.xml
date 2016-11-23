@@ -13,7 +13,8 @@
         <item name="android:textColorSecondary">@android:color/black</item>
         <item name="android:fontFamily">sans-serif</item>
         <!-- <item name="android:textSize">12sp</item>--><!-- text size in menu-->
-        <item name="android:listPreferredItemHeightSmall">32dp</item><!-- item size in menu-->
+        <item name="android:listPreferredItemHeightSmall">32dp</item>
+        <!-- item size in menu-->
     </style>
 
     <style name="NavigationText" parent="Theme.AppCompat.Light">

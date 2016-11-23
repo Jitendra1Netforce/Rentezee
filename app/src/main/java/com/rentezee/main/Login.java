@@ -2,7 +2,9 @@ package com.rentezee.main;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -65,7 +67,8 @@ import java.util.HashMap;
 
 import static com.rentezee.main.R.id.coordinatorLayout;
 
-public class Login extends BaseActivity implements View.OnClickListener {
+public class Login extends BaseActivity implements View.OnClickListener
+{
 
     private static final String TAG = Login.class.getSimpleName();
     private static final int RC_SIGN_IN = 1091;
@@ -75,8 +78,10 @@ public class Login extends BaseActivity implements View.OnClickListener {
     private CallbackManager callbackManager;
     private GoogleApiClient googleApiClient;
 
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         FacebookSdk.sdkInitialize(getApplicationContext());
@@ -108,6 +113,9 @@ public class Login extends BaseActivity implements View.OnClickListener {
         googleApiClient = new GoogleApiClient.Builder(context)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
+
+
+
     }
 
 
@@ -211,20 +219,24 @@ public class Login extends BaseActivity implements View.OnClickListener {
      *
      * @param result GoogleSignInResult
      */
-    private void handleSignInResult(GoogleSignInResult result) {
+    private void handleSignInResult(GoogleSignInResult result)
+    {
         Debugger.i(TAG, "handleSignInResult:" + result.isSuccess());
-        if (result.isSuccess()) {
+        if (result.isSuccess())
+        {
             // Signed in successfully, show authenticated UI.
             GoogleSignInAccount acct = result.getSignInAccount();
             assert acct != null;
             String name = acct.getDisplayName();
             String email = acct.getEmail();
-
+            Uri image = acct.getPhotoUrl();
             Debugger.i(TAG, "Name " + name + ", Email " + email);
             socialLogin(name, email, RegisterVia.google);
 
             Debugger.i(TAG, "Name " + acct.getDisplayName() + ", Email " + acct.getEmail());
-        } else {
+        }
+        else
+        {
             // Signed out, show unauthenticated UI.
             Debugger.i(TAG, "Google Sign in not authenticated");
             showSnackBar(coordinatorLayout, "Google Sign in not authenticated");
@@ -271,20 +283,26 @@ public class Login extends BaseActivity implements View.OnClickListener {
         try {
             jsonObject.put("name", name);
             jsonObject.put("email", email);
+            jsonObject.put("mobile", "");
             //registerViaId: 1 -> Normal, 2 -> Facebook, 3 -> Google
-            if (registerVia == RegisterVia.facebook) {
+            if (registerVia == RegisterVia.facebook)
+            {
                 jsonObject.put("registeredVia", 2);
-            } else {
+            }
+            else
+            {
                 jsonObject.put("registeredVia", 3);
             }
 
             jsonObject.put("appTypeId", Constants.APP_TYPE_ID);
             jsonObject.put("versionName", Util.getVersionName(context));
+             String android_id = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
+            jsonObject.put("app_id", android_id);
 
             Debugger.i(TAG, "post data " + jsonObject.toString());
             String url = Constants.API + "socialLogin"; //URL to hit
             showProgressBar(context);
-            VolleyGsonRequest<LoginResponse> gsonRequest = new VolleyGsonRequest<>(url,
+            VolleyGsonRequest<LoginResponse> gsonRequest = new VolleyGsonRequest<>("http://netforce.biz/renteeze/webservice/Users/fb_login",
                     jsonObject,
                     new Response.Listener<LoginResponse>() {
                         @Override
@@ -292,10 +310,15 @@ public class Login extends BaseActivity implements View.OnClickListener {
                             dismissProgressBar();
                             Debugger.i(TAG, "Response " + response);
                             if (response != null) {
-                                if (response.isSuccess()) {
+                                if (response.isSuccess())
+                                {
+
+                                    System.out.println("some data ========="+  response.getData().toString());
                                     new AppPreferenceManager(context).putObject(PreferenceKeys.savedUser, response.getData());
                                     gotoActivityByClearingBackStack(DashboardContainer.class);
-                                } else {
+                                }
+                                else
+                                {
                                     showSnackBar(coordinatorLayout, response.getMessage());
                                 }
                             } else {
@@ -348,13 +371,70 @@ public class Login extends BaseActivity implements View.OnClickListener {
             return;
         }
 
-        //URL to hit
+        /*//URL to hit
         StringBuilder stringBuilder = new StringBuilder(Constants.API + "login/1/" + Util.getVersionName(context));
         stringBuilder.append("/").append(email);
         stringBuilder.append("/").append(password);
         String url = stringBuilder.toString();
-        showProgressBar(context);
-        VolleyGsonRequest<LoginResponse> gsonRequest = new VolleyGsonRequest<>(url,
+
+        System.out.println("url==========="+url);*/
+
+
+        JSONObject jsonObject = new JSONObject();
+
+        try {
+            jsonObject.put("email", email);
+            jsonObject.put("password", password);
+            //registerViaId: 1 -> Normal, 2 -> Facebook, 3 -> Google
+
+            showProgressBar(context);
+
+             VolleyGsonRequest<LoginResponse> gsonRequest = new VolleyGsonRequest<>("http://netforce.biz/renteeze/webservice/Users/authenticate",
+                jsonObject,
+                new Response.Listener<LoginResponse>() {
+                    @Override
+                    public void onResponse(LoginResponse response) {
+                        dismissProgressBar();
+                        Debugger.i(TAG, "Response " + response);
+                        if (response != null) {
+                            if (response.isSuccess())
+                            {
+
+                                System.out.println("some data ========="+  response.getData().toString());
+                                new AppPreferenceManager(context).putObject(PreferenceKeys.savedUser, response.getData());
+                                gotoActivityByClearingBackStack(DashboardContainer.class);
+
+                            }
+                            else
+                            {
+                                showSnackBar(coordinatorLayout, response.getMessage());
+                            }
+                        } else {
+                            showSnackBar(coordinatorLayout, getString(R.string.generic_error));
+                        }
+                    }
+                },
+
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        dismissProgressBar();
+                        error.printStackTrace();
+                        showSnackBar(coordinatorLayout, VolleyErrorHandler.getMessage(context, error));
+                    }
+                },
+                LoginResponse.class,
+                null
+        );
+        AppController.getInstance().addToRequestQueue(gsonRequest);
+
+
+    } catch (JSONException e) {
+        e.printStackTrace();
+    }
+
+
+     /*   VolleyGsonRequest<LoginResponse> gsonRequest = new VolleyGsonRequest<>(url,
                 null,
                 new Response.Listener<LoginResponse>() {
                     @Override
@@ -385,7 +465,7 @@ public class Login extends BaseActivity implements View.OnClickListener {
                 LoginResponse.class,
                 null
         );
-        AppController.getInstance().addToRequestQueue(gsonRequest);
+        AppController.getInstance().addToRequestQueue(gsonRequest);*/
     }
 
 }

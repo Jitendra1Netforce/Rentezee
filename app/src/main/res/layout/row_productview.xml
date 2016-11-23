@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="#F1F5F7"
+    android:id="@+id/linearlayout_productView"
+    >
+    <android.support.v7.widget.CardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:elevation="8dp"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="60dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:src="@mipmap/intro1"
+                    android:layout_margin="10dp"
+                    android:id="@+id/ivProductImage"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp">
+
+                    <TextView
+                        android:id="@+id/tvProductName"
+                        style="@style/MyTextViewSmall"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:maxLines="1"
+                        android:text="MAC BOOK"
+                        android:textStyle="bold"
+                        android:textAllCaps="true" />
+
+                    <TextView
+                        android:id="@+id/tvProductCategoryName"
+                        style="@style/MyTextViewSmall"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tvProductName"
+                        android:maxLines="1"
+                        android:text="Electronics Appliances"
+                        android:textColor="@color/hintColor"
+                        android:layout_marginTop="5dp"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:id="@+id/tvDescriptionheading"
+                        style="@style/MyTextViewSmall"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tvProductCategoryName"
+                        android:maxLines="1"
+                        android:textStyle="bold"
+                        android:text="Discription"
+                        android:layout_marginTop="5dp"
+                        />
+
+
+                    <TextView
+                        android:id="@+id/tvDescription"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tvDescriptionheading"
+                        android:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry"
+                        android:layout_marginTop="5dp"
+                        />
+
+
+                    <LinearLayout
+                        android:id="@+id/linear_container"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:weightSum="2"
+                        android:orientation="horizontal"
+                        android:layout_below="@+id/tvDescription"
+                        android:layout_marginTop="5dp"
+                        >
+
+                        <LinearLayout
+                            android:id="@+id/layoutRemove"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.99"
+                            android:orientation="horizontal"
+                            >
+
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Security Money Rent"
+                                android:textStyle="bold"
+                                android:textColor="@color/black"
+                                android:textSize="12sp"
+                                 />
+                        </LinearLayout>
+
+
+                        <LinearLayout
+                            android:id="@+id/layoutMoveToCart"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.99"
+                            android:gravity="center_horizontal"
+                            android:orientation="horizontal"
+
+                            >
+
+
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:text="Per Day Rent"
+                                android:textStyle="bold"
+                                android:textSize="12sp"
+                                android:textColor="@color/black" />
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:weightSum="2"
+                        android:orientation="horizontal"
+                        android:layout_below="@+id/linear_container"
+                        android:layout_marginTop="5dp"
+                        >
+
+                        <LinearLayout
+                            android:gravity="center_horizontal"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.99"
+                            android:orientation="horizontal"
+
+                            >
+
+
+                            <TextView
+                                android:id="@+id/tvSecurityMoney"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="\u20B9 50,000"
+                                android:textStyle="bold"
+                                android:textSize="12sp"
+                                android:theme="@style/MyTextViewNormal" />
+                        </LinearLayout>
+
+
+                        <LinearLayout
+
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.99"
+                            android:gravity="center_horizontal"
+                            android:orientation="horizontal"
+
+                            >
+
+
+                            <TextView
+                                android:id="@+id/tvPerdayRent"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:text="\u20B9 500 per day"
+                                android:textStyle="bold"
+                                android:textSize="12sp"
+                                android:theme="@style/MyTextViewNormal" />
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+
+                </RelativeLayout>
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+
+
+    </android.support.v7.widget.CardView>
+
+
+</LinearLayout>

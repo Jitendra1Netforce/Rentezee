@@ -2,6 +2,7 @@ package com.rentezee.main;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
@@ -15,6 +16,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.facebook.AccessToken;
@@ -36,6 +38,9 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.gson.JsonObject;
+import com.koushikdutta.async.future.FutureCallback;
+import com.koushikdutta.ion.Ion;
 import com.rentezee.helpers.AppPreferenceManager;
 import com.rentezee.helpers.BaseActivity;
 import com.rentezee.helpers.Constants;
@@ -55,15 +60,22 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ExecutionException;
 
-public class SignUp extends BaseActivity implements View.OnClickListener{
+public class SignUp extends BaseActivity implements View.OnClickListener
+{
 
     private static final String TAG = SignUp.class.getSimpleName();
     private Context context;
     private CoordinatorLayout coordinatorLayout;
     private EditText etName, etEmail, etPhone, etPassword;
+    public static final String PREFERENCES = "WishListPrefs";
+    SharedPreferences settings;
+    SharedPreferences.Editor prefEditor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -164,8 +176,145 @@ public class SignUp extends BaseActivity implements View.OnClickListener{
         }
 
 
-        //Post data to sever
-        JSONObject jsonObject = new JSONObject();
+     /*   JsonObject json = new JsonObject();
+        json.addProperty("name", name);
+        json.addProperty("email", email);
+        json.addProperty("mobile", mobile);
+        json.addProperty("password", password);
+        json.addProperty("registeredVia", "1");
+        json.addProperty("appTypeId", "2");
+        json.addProperty("versionName", "1.0");
+
+        Ion.with(context)
+                .load("http://netforce.biz/renteeze/webservice/users/signup")
+                .setJsonObjectBody(json)
+                .asJsonObject()
+                .setCallback(new FutureCallback<JsonObject>() {
+                    @Override
+                    public void onCompleted(Exception e, JsonObject result) {
+                        System.out.println("ar=============" + result);
+                        // do stuff with the result or error
+                    }
+                });*/
+
+
+     /* Ion.with(context)
+                .load("POST","http://netforce.biz/renteeze/webservice/users/signup")
+                .setBodyParameter("name", name)
+                .setBodyParameter("email", email)
+                .setBodyParameter("mobile", mobile)
+                .setBodyParameter("password", password)
+                .setBodyParameter("registeredVia", "1")
+                .setBodyParameter("appTypeId", "2")
+                .setBodyParameter("versionName", "1.0")
+                .asJsonObject()
+                .setCallback(new FutureCallback<JsonObject>() {
+                    @Override
+                    public void onCompleted(Exception e, JsonObject result) {
+                        // do stuff with the result or error
+                        System.out.println("ar=============" + result.toString());
+                    }
+                });
+
+*/
+
+       /*Ion.with(SignUp.this)
+                .load("http://netforce.biz/renteeze/webservice/users/signup")
+
+
+                .setMultipartParameter("name", name)
+                .setMultipartParameter("email", email)
+                .setMultipartParameter("mobile", mobile)
+                .setMultipartParameter("password", password)
+                .setMultipartParameter("registeredVia","1")
+                .setMultipartParameter("appTypeId", "2")
+                .setMultipartParameter("versionName", "1.0")
+
+                .asJsonObject()
+                .setCallback(new FutureCallback<JsonObject>() {
+                    @Override
+                    public void onCompleted(Exception e, JsonObject result) {
+
+
+                        System.out.println("ar=============" + result.toString());
+                    }
+                }) ;
+*/
+
+       //Post data to sever
+       JSONObject jsonObject = new JSONObject();
+        try {
+
+            jsonObject.put("name", name);
+            jsonObject.put("email", email);
+            jsonObject.put("mobile", mobile);
+            jsonObject.put("password", password);
+            //registerViaId: 1 -> Normal, 2 -> Facebook, 3 -> Google
+            jsonObject.put("registeredVia", 1);
+            jsonObject.put("appTypeId", Constants.APP_TYPE_ID);
+            jsonObject.put("versionName", Util.getVersionName(context));
+
+            Debugger.i(TAG, "post data " + jsonObject.toString());
+            String url = "http://netforce.biz/renteeze/webservice/users/signup"; //URL to hit
+            showProgressBar(context);
+            VolleyGsonRequest<SignUpResponse> gsonRequest = new VolleyGsonRequest<>(url, jsonObject,
+                    new Response.Listener<SignUpResponse>()
+                    {
+
+
+
+                        @Override
+                        public void onResponse(SignUpResponse response) {
+
+                            System.out.println("arvind=============" + response);
+                            dismissProgressBar();
+                            Debugger.i(TAG, "Response " + response);
+                            if (response != null) {
+                                if (response.isSuccess())
+                                {
+
+                                    User user = new User(name, email, mobile);
+                                    user.setUserId(response.getUserId());
+
+                                    System.out.println("response=============" + response.toString());
+
+                                    new AppPreferenceManager(context).putObject(PreferenceKeys.savedUser, user);
+                                    gotoActivityByClearingBackStack(DashboardContainer.class);
+
+
+
+                                } else {
+                                    showSnackBar(coordinatorLayout, response.getMessage());
+                                }
+                            } else {
+                                showSnackBar(coordinatorLayout, getString(R.string.generic_error));
+                            }
+                        }
+                    },
+
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            dismissProgressBar();
+                            error.printStackTrace();
+                            showSnackBar(coordinatorLayout, VolleyErrorHandler.getMessage(context, error));
+                        }
+                    },
+                    SignUpResponse.class,
+
+              null
+
+            );
+            AppController.getInstance().addToRequestQueue(gsonRequest);
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+
+       /* JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("name", name);
             jsonObject.put("email", email);
@@ -219,6 +368,11 @@ public class SignUp extends BaseActivity implements View.OnClickListener{
         } catch (JSONException e) {
             e.printStackTrace();
         }
+*/
+
+
+
+
     }
 
 

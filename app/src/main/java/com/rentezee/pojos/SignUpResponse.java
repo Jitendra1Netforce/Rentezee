@@ -11,10 +11,10 @@ public class SignUpResponse {
 
     @Override
     public String toString() {
-        return "SignUpResponse{" +
-                "userId=" + userId +
-                ", success=" + success +
-                ", message='" + message + '\'' +
+        return "{" +
+                "success=" + success +
+                ", message=" + message +
+                ", userId='" + userId +
                 '}';
     }
 

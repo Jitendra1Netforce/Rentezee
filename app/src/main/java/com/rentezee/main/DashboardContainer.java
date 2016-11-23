@@ -12,6 +12,7 @@ import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.Settings;
 import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -59,9 +60,14 @@ import com.koushikdutta.ion.Ion;
 import com.rentezee.adapters.DashboardCategoriesAdapter;
 import com.rentezee.adapters.TrendingAdapter;
 import com.rentezee.adapters.ViewPagerAdapter;
-import com.rentezee.fragments.Cart;
 import com.rentezee.fragments.DashboardSliderImage;
-import com.rentezee.fragments.MyOrders;
+import com.rentezee.fragments.myorder.MyOrder;
+import com.rentezee.fragments.myorder.activeorder.ActiveOrders;
+import com.rentezee.fragments.my_cart.MyCart;
+import com.rentezee.fragments.notification.NotificationActivity;
+import com.rentezee.fragments.profile.ProfileSetting;
+import com.rentezee.fragments.rent_it_out.RentitOutActivity;
+import com.rentezee.fragments.wishlist.WishList;
 import com.rentezee.helpers.AppPreferenceManager;
 import com.rentezee.helpers.BaseActivity;
 import com.rentezee.helpers.Constants;
@@ -75,6 +81,8 @@ import com.rentezee.pojos.mdashboard.Slider;
 import com.rentezee.pojos.mdashboard.Trending;
 import com.rentezee.services.GPSTracker;
 import com.rentezee.views.ExpandableHeightGridView;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -148,8 +156,7 @@ public class DashboardContainer extends BaseActivity implements NavigationView.O
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
@@ -210,6 +217,7 @@ public class DashboardContainer extends BaseActivity implements NavigationView.O
             tvNavName.setText("Welcome " + user.getName());
             tvNavEmail.setText(user.getEmail());
             tvNavMobile.setText(user.getMobile());
+
             headerLayout.findViewById(R.id.ivArrow).setOnClickListener(this);
         } else {
             layoutLogout.setVisibility(View.GONE);
@@ -222,7 +230,6 @@ public class DashboardContainer extends BaseActivity implements NavigationView.O
         setMenuCounter(R.id.nav_cart, 1);
         setMenuCounter(R.id.nav_notifications, 0);
         setMenuCredits(R.id.nav_rentezee_credits, 100);
-
 
         //check permissions
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -432,20 +439,30 @@ public class DashboardContainer extends BaseActivity implements NavigationView.O
         switch (item.getItemId())
         {
             case R.id.nav_orders:
-
-                Intent intent=new Intent(context, MyOrders.class);
-
+                Intent intent=new Intent(context, MyOrder.class);
                 gotoActivity(intent);
-
                 break;
-
             case R.id.nav_cart:
-
-                Intent intent2=new Intent(context, Cart.class);
-
-                gotoActivity(intent2);
-
+                Intent cart=new Intent(context, MyCart.class);
+                gotoActivity(cart);
                 break;
+            case R.id.nav_profile:
+                Intent profile=new Intent(context, ProfileSetting.class);
+                gotoActivity(profile);
+                break;
+            case R.id.nav_wishlist:
+                Intent intent2=new Intent(context, WishList.class);
+                gotoActivity(intent2);
+                break;
+            case R.id.nav_notifications:
+                Intent notification=new Intent(context, NotificationActivity.class);
+                gotoActivity(notification);
+                break;
+            case R.id.nav_ret_it_out:
+                Intent rent_it_out=new Intent(context, RentitOutActivity.class);
+                gotoActivity(rent_it_out);
+                break;
+
         }
 
         /*if (id == R.id.nav_cart) {
@@ -644,15 +661,17 @@ public class DashboardContainer extends BaseActivity implements NavigationView.O
 
     private void load_refresh()
     {
-       // recyclerView.setVisibility(View.GONE);
 
-       // homeDatas.clear();
+        String  device_id = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
+        // recyclerView.setVisibility(View.GONE);
+        // homeDatas.clear();
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("device_id", device_id);
 
         showProgressBar(context);
-
         Ion.with(this)
                 .load("http://netforce.biz/renteeze/webservice/Pages/dashboard.json")
-
+                .setJsonObjectBody(jsonObject)
                 .asJsonObject()
                 .setCallback(new FutureCallback<JsonObject>() {
                     @Override
@@ -880,13 +899,16 @@ public class DashboardContainer extends BaseActivity implements NavigationView.O
 
         //trending data
         fetchedTrendingList = response.getData().getTrendings();
-        if (fetchedTrendingList != null) {
+        if (fetchedTrendingList != null)
+        {
             tvTrending.setVisibility(View.VISIBLE);
             int width=displayMetrics.widthPixels-(int)getResources().getDimension(R.dimen.ten);
            // TrendingAdapter trendingAdapter = new TrendingAdapter(context, fetchedTrendingList, width);
           //  gvTrending.setFocusable(false);
           //  gvTrending.setAdapter(trendingAdapter);
-        }else{
+        }
+        else
+        {
             tvTrending.setVisibility(View.GONE);
         }
     }
