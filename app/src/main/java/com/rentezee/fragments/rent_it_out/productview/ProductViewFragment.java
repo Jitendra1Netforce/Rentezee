@@ -17,8 +17,11 @@ import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 import com.rentezee.fragments.myorder.PastOrder.PastOrderAdapter;
 import com.rentezee.fragments.myorder.PastOrder.PastOrderData;
+import com.rentezee.helpers.AppPreferenceManager;
 import com.rentezee.helpers.BaseActivity;
+import com.rentezee.helpers.PreferenceKeys;
 import com.rentezee.main.R;
+import com.rentezee.pojos.User;
 
 import java.util.ArrayList;
 
@@ -31,8 +34,9 @@ public class ProductViewFragment extends Fragment implements  View.OnClickListen
     ArrayList<ProductViewData> productViewDatas = new ArrayList<>();
     ProductViewAdatpter productViewAdatpter;
     BaseActivity baseActivity;
-
-
+    String user_id;
+    long  userId;
+    User user;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -51,14 +55,24 @@ public class ProductViewFragment extends Fragment implements  View.OnClickListen
             }
         };
 
-
-
         recyclerviewPastOrder=(RecyclerView) view.findViewById(R.id.lvProducts);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         recyclerviewPastOrder.setLayoutManager(mLayoutManager);
 
         recyclerviewPastOrder.setNestedScrollingEnabled(false);
-        fetchData(true);
+
+        user = (User) new AppPreferenceManager(getActivity()).getObject(PreferenceKeys.savedUser, User.class);
+
+        if(user != null){
+
+            userId = user.getUserId();
+
+            user_id = Long.toString(userId);
+
+            fetchData(true);
+
+        }
+
 
         return view;
     }
@@ -81,36 +95,50 @@ public class ProductViewFragment extends Fragment implements  View.OnClickListen
 
         baseActivity.showProgressBar(context);
         Ion.with(this)
-                .load("http://netforce.biz/renteeze/webservice/products/product_list?cat_id=1")
+                .load("http://netforce.biz/renteeze/webservice/products/product_list?user_id="+user_id)
                 .asJsonObject()
                 .setCallback(new FutureCallback<JsonObject>() {
                     @Override
                     public void onCompleted(Exception e, JsonObject result) {
-                        if (result != null) {
+                        if (result != null)
+                        {
+
+                            System.out.println("data=====" + result.toString());
 
                             JsonArray productListArray = result.getAsJsonArray("data");
 
                             System.out.println("data=====" + result.toString());
 
-                            for (int i = 0; i < productListArray.size(); i++) {
-                                JsonObject jsonObject = (JsonObject) productListArray.get(i);
-                                JsonObject product = jsonObject.getAsJsonObject("Product");
-                                String id = product.get("id").getAsString();
-                                String name = product.get("name").getAsString();
-                                String price = product.get("price").getAsString();
-                                //String special_price = product.get("special_price").getAsString();
-                                String image = "http://netforce.biz/renteeze/webservice/files/products/" + product.get("images").getAsString();
-                                productViewDatas.add(new ProductViewData(id, name, image, price, price));
+                            if(productListArray.size() == 0)
+                            {
+
+                                baseActivity.dismissProgressBar();
 
                             }
-                            productViewAdatpter = new ProductViewAdatpter(context, productViewDatas);
-                            recyclerviewPastOrder.setAdapter(productViewAdatpter);
-                            productViewAdatpter.notifyDataSetChanged();
-                            recyclerviewPastOrder.setVisibility(View.VISIBLE);
-                            baseActivity.dismissProgressBar();
+                            else
+                            {
+                                for (int i = 0; i < productListArray.size(); i++) {
+                                    JsonObject jsonObject = (JsonObject) productListArray.get(i);
+                                    JsonObject product = jsonObject.getAsJsonObject("Product");
+                                    String id = product.get("id").getAsString();
+                                    String name = product.get("name").getAsString();
+                                    String price = product.get("price").getAsString();
+                                    String security_price = product.get("security_price").getAsString();
+                                    String description = product.get("description").getAsString();
+                                    String image = "http://netforce.biz/renteeze/webservice/files/products/" + product.get("images").getAsString();
+                                    productViewDatas.add(new ProductViewData(id, name, image, description, security_price, price));
+
+                                }
+                                productViewAdatpter = new ProductViewAdatpter(context, productViewDatas);
+                                recyclerviewPastOrder.setAdapter(productViewAdatpter);
+                                productViewAdatpter.notifyDataSetChanged();
+                                recyclerviewPastOrder.setVisibility(View.VISIBLE);
+                                baseActivity.dismissProgressBar();
+                            }
 
 
-                        } else
+                        }
+                        else
                         {
 
                             baseActivity.dismissProgressBar();
@@ -123,11 +151,11 @@ public class ProductViewFragment extends Fragment implements  View.OnClickListen
 
 
     @Override
-    public void setMenuVisibility(final boolean visible) {
+    public void setMenuVisibility(final boolean visible)
+    {
         if (visible) {
             //Do your stuff here
             context = getActivity();
-
         }
 
         super.setMenuVisibility(visible);
@@ -135,7 +163,8 @@ public class ProductViewFragment extends Fragment implements  View.OnClickListen
 
 
     @Override
-    public void onClick(View view) {
+    public void onClick(View view)
+    {
 
     }
 

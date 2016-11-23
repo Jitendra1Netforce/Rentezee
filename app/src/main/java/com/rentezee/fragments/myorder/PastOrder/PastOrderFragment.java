@@ -115,15 +115,16 @@ public class PastOrderFragment extends Fragment implements  View.OnClickListener
 
                             System.out.println("data=====" + result.toString());
 
-                            for (int i = 0; i < productListArray.size(); i++) {
+                            for (int i = 0; i < productListArray.size(); i++)
+                            {
                                 JsonObject jsonObject = (JsonObject) productListArray.get(i);
 
-                                String id = jsonObject.get("product_id").getAsString();
-                                String name = jsonObject.get("order_date").getAsString();
+                                String product_id = jsonObject.get("product_id").getAsString();
+                                String order_date = jsonObject.get("order_date").getAsString();
                                 String price = jsonObject.get("total_amount").getAsString();
-                                //String special_price = product.get("special_price").getAsString();
+                                String product_status = jsonObject.get("order_status").getAsString();
 
-                                pastOrderDatas.add(new PastOrderData(id, name, price, price, price));
+                                pastOrderDatas.add(new PastOrderData(product_id, order_date, price, product_status));
 
                             }
                             pastOrderAdapter = new PastOrderAdapter(context, pastOrderDatas);

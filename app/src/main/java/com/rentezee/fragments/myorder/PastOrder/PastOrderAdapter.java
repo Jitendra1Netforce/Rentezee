@@ -6,13 +6,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
-import com.rentezee.fragments.myorder.activeorder.ActiveOrderHolder;
-import com.rentezee.fragments.myorder.activeorder.ActiveOrderdata;
 import com.rentezee.main.R;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 
 /**
  * Created by John on 11/21/2016.
@@ -49,13 +48,18 @@ public class PastOrderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position)
     {
+
         PastOrderHolder homeHolder = (PastOrderHolder) holder;
 
-        homeHolder.buttonPrice.setText(itemList.get(position).image_url);
+        homeHolder.buttonPrice.setText(itemList.get(position).price);
 
-        homeHolder.tv_f_date.setText(itemList.get(position).product_name);
+        homeHolder.tv_f_date.setText(itemList.get(position).order_date);
 
-        homeHolder.tv_l_date.setText(itemList.get(position).product_name);
+        homeHolder.tv_l_date.setText(itemList.get(position).order_date);
+
+        String order_time = itemList.get(position).order_date.toString();
+
+       // homeHolder.tv_time.setText(itemList.get(position).order_date);
 
 
     }

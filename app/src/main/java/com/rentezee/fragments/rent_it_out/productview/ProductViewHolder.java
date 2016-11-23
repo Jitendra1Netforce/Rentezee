@@ -2,6 +2,8 @@ package com.rentezee.fragments.rent_it_out.productview;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -14,21 +16,27 @@ public class ProductViewHolder extends RecyclerView.ViewHolder
 {
 
     View view;
-    TextView tv_first_date,second_date,tv_product_condition;
+    TextView tvProductName,tvProductCategoryName,tvDescription,tvSecurityMoney,tvPerdayRent;
+    LinearLayout linearLayout;
+    ImageView ivProductImage;
 
-    RelativeLayout relativelayout;
 
     public ProductViewHolder(View itemView)
     {
         super(itemView);
-        relativelayout = (RelativeLayout) itemView.findViewById(R.id.relative_layout_container);
+        linearLayout = (LinearLayout) itemView.findViewById(R.id.linearlayout_productView);
 
-        tv_first_date = (TextView) itemView.findViewById(R.id.tv_first_date);
+        ivProductImage = (ImageView) itemView.findViewById(R.id.ivProductImage);
 
-        second_date = (TextView) itemView.findViewById(R.id.second_date);
+        tvProductName = (TextView) itemView.findViewById(R.id.tvProductName);
 
-        tv_product_condition = (TextView) itemView.findViewById(R.id.tv_product_condition);
+        tvProductCategoryName = (TextView) itemView.findViewById(R.id.tvProductCategoryName);
 
+        tvDescription = (TextView) itemView.findViewById(R.id.tvDescription);
+
+        tvSecurityMoney = (TextView) itemView.findViewById(R.id.tvSecurityMoney);
+
+        tvPerdayRent = (TextView) itemView.findViewById(R.id.tvPerdayRent);
 
         view = itemView;
     }

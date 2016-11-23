@@ -42,8 +42,10 @@ public class RentItAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     private final LayoutInflater inflater;
     private List<RentItData> itemList;
     private Context context;
-
     private MaterialDialog dialog;
+
+
+
 
     public RentItAdapter(Context context, List<RentItData> itemList) {
         this.itemList = itemList;

@@ -33,8 +33,8 @@ public class RentAdapter extends FragmentStatePagerAdapter
         {
 
             case 0:
-               // productViewFragment = new ProductViewFragment();
-               // return productViewFragment;
+                productViewFragment = new ProductViewFragment();
+                return productViewFragment;
 
             default:
                 uploadProductFragment = new UploadProductFragment();

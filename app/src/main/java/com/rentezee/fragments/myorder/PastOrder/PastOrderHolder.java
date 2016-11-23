@@ -17,7 +17,7 @@ public class PastOrderHolder extends RecyclerView.ViewHolder
 {
 
     View view;
-    TextView tv_f_date,tv_l_date;
+    TextView tv_f_date,tv_l_date,tv_time;
     Button buttonPrice;
 
 
@@ -31,6 +31,7 @@ public class PastOrderHolder extends RecyclerView.ViewHolder
 
         tv_l_date = (TextView) itemView.findViewById(R.id.tv_l_date);
 
+        tv_time= (TextView) itemView.findViewById(R.id.tv_time);
 
         view = itemView;
     }

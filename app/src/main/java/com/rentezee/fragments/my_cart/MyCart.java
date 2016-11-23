@@ -48,6 +48,7 @@ public class MyCart extends BaseActivity {
     RelativeLayout relativeLayoutDetails;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {

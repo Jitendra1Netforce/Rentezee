@@ -5,14 +5,16 @@ package com.rentezee.fragments.myorder.PastOrder;
  */
 public class PastOrderData {
 
-    public String product_id,product_name,image_url,date,time;
-    PastOrderData(String product_id, String product_name, String image_url, String date, String time)
+    public String product_id,order_date,price,product_status;
+    PastOrderData(String product_id, String order_date, String price, String product_status)
     {
+
         this.product_id = product_id;
-        this.product_name = product_name;
-        this.image_url = image_url;
-        this.date = date;
-        this.time = time;
+        this.order_date = order_date;
+        this.price = price;
+        this.product_status = product_status;
+
+
     }
 
 }

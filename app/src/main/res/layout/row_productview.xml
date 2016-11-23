@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:background="#F1F5F7"
-    android:id="@+id/linearlayout_wishlist"
+    android:id="@+id/linearlayout_productView"
     >
     <android.support.v7.widget.CardView
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -162,6 +162,7 @@
 
 
                             <TextView
+                                android:id="@+id/tvSecurityMoney"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="\u20B9 50,000"
@@ -183,6 +184,7 @@
 
 
                             <TextView
+                                android:id="@+id/tvPerdayRent"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"

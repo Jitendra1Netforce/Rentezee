@@ -67,11 +67,14 @@ public class UploadProductFragment extends Fragment
     RentItAdapter adapter;
     LinearLayoutManager layoutManager;
     RelativeLayout relativeUpload;
-    String id,user_id;
+    String user_id;
     long  userId;
     User user;
     EditText product_name, discription,security_amount,rent_per_day;
     MaterialDialog dialog;
+
+
+
 
 
     @Override
@@ -295,7 +298,7 @@ public class UploadProductFragment extends Fragment
                         //.setHeader("ENCTYPE", "multipart/form-data")
                         .addMultipartParts(files)
                 .setMultipartParameter("action", "add_item")
-               // .setMultipartFile("image", "image/*", new File(rentItDatas.get(0).path))
+                .setMultipartFile("image", "image/*", new File(rentItDatas.get(0).path))
                 .setMultipartParameter("user_id", user_id)
                 .setMultipartParameter("product_name", product_name.getText().toString())
                 .setMultipartParameter("description", discription.getText().toString())
@@ -369,7 +372,8 @@ public class UploadProductFragment extends Fragment
     }
 
 
-    private File savebitmap(String filePath) {
+    private File savebitmap(String filePath)
+    {
         File file = new File(filePath);
         String extension = filePath.substring(filePath.lastIndexOf(".") + 1, filePath.length());
         BitmapFactory.Options bmOptions = new BitmapFactory.Options();

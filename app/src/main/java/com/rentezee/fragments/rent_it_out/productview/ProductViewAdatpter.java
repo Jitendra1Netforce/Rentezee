@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.rentezee.fragments.myorder.PastOrder.PastOrderData;
 import com.rentezee.fragments.myorder.PastOrder.PastOrderHolder;
 import com.rentezee.main.R;
@@ -52,6 +53,24 @@ public class ProductViewAdatpter extends RecyclerView.Adapter<RecyclerView.ViewH
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position)
     {
         ProductViewHolder homeHolder = (ProductViewHolder) holder;
+
+        Glide.with(context)
+                .load(itemList.get(position).image_url)
+                .centerCrop()
+                        //.placeholder(R.mipmap.ic_loading)
+                .crossFade()
+                .into(homeHolder.ivProductImage);
+
+        homeHolder.tvProductName.setText(itemList.get(position).product_name);
+
+        homeHolder.tvDescription.setText(itemList.get(position).description);
+
+        homeHolder.tvProductCategoryName.setText(itemList.get(position).product_name);
+
+        homeHolder.tvSecurityMoney.setText("\u20B9"+itemList.get(position).security_price);
+
+        homeHolder.tvPerdayRent.setText("\u20B9" + itemList.get(position).price +" Per day");
+
     }
 
     private void showMessage(String s)
