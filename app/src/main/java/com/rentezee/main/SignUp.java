@@ -272,16 +272,13 @@ public class SignUp extends BaseActivity implements View.OnClickListener
                             if (response != null) {
                                 if (response.isSuccess())
                                 {
-
-                                    User user = new User(name, email, mobile);
-                                    user.setUserId(response.getUserId());
+                                    User user = new User(response.getUserId(),name, email, mobile,"");
+                                   // user.setUserId(response.getUserId());
 
                                     System.out.println("response=============" + response.toString());
 
                                     new AppPreferenceManager(context).putObject(PreferenceKeys.savedUser, user);
                                     gotoActivityByClearingBackStack(DashboardContainer.class);
-
-
 
                                 } else {
                                     showSnackBar(coordinatorLayout, response.getMessage());

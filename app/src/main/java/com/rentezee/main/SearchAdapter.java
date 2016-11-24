@@ -46,7 +46,7 @@ public class SearchAdapter  extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder viewHolder = null;
         if (convertView == null) {
-            convertView = LayoutInflater.from(context).inflate(R.layout.row_wishlist, parent, false);
+            convertView = LayoutInflater.from(context).inflate(R.layout.row_search, parent, false);
             viewHolder = new ViewHolder();
             viewHolder.ivProductImage = (ImageView) convertView.findViewById(R.id.ivProductImage);
             viewHolder.tvProductName = (TextView) convertView.findViewById(R.id.tvProductName);
@@ -66,7 +66,7 @@ public class SearchAdapter  extends BaseAdapter {
                 .into(viewHolder.ivProductImage);
 
         viewHolder.tvProductName.setText(list.get(position).product_name);
-        viewHolder.tvProductCategoryName.setText(list.get(position).product_name);
+        viewHolder.tvProductCategoryName.setText(list.get(position).category_name);
         viewHolder.tvPrice.setText(rs + list.get(position).price + " per day");
         return convertView;
     }

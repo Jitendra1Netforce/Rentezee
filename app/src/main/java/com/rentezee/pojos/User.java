@@ -15,10 +15,12 @@ public class User implements Parcelable{
     private String imageUrl;
     private int status;
 
-    public User(String name, String email, String mobile) {
+    public User(long userId,String name, String email, String mobile,String imageUrl) {
+        this.userId = userId;
         this.name = name;
         this.email = email;
         this.mobile = mobile;
+        this.imageUrl = imageUrl;
     }
 
     protected User(Parcel in) {

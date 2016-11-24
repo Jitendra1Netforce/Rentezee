@@ -51,15 +51,16 @@ public class PastOrderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
         PastOrderHolder homeHolder = (PastOrderHolder) holder;
 
-        homeHolder.buttonPrice.setText(itemList.get(position).price);
+        homeHolder.buttonPrice.setText("\u20B9"+itemList.get(position).price);
 
-        homeHolder.tv_f_date.setText(itemList.get(position).order_date);
+        homeHolder.tv_f_date.setText(itemList.get(position).order_date.toString().substring(0,10));
 
-        homeHolder.tv_l_date.setText(itemList.get(position).order_date);
+        homeHolder.tv_l_date.setText(itemList.get(position).order_date.toString().substring(0,10));
 
-        String order_time = itemList.get(position).order_date.toString();
+        String order_time = itemList.get(position).order_date.toString().substring(11,itemList.get(position).order_date.toString().length());
+        System.out.println("order_time======"+ order_time);
 
-       // homeHolder.tv_time.setText(itemList.get(position).order_date);
+        homeHolder.tv_time.setText(order_time);
 
 
     }

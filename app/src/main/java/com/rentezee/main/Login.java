@@ -347,7 +347,8 @@ public class Login extends BaseActivity implements View.OnClickListener
 
     }
 
-    private void normalLogin() {
+    private void normalLogin()
+    {
         String email = etEmail.getText().toString();
         if (email.isEmpty()) {
             showSnackBar(coordinatorLayout, getString(R.string.error_email_empty));
@@ -358,7 +359,6 @@ public class Login extends BaseActivity implements View.OnClickListener
             showSnackBar(coordinatorLayout, getString(R.string.error_email_not_valid));
             return;
         }
-
 
         String password = etPassword.getText().toString();
         if (password.isEmpty()) {
@@ -376,9 +376,7 @@ public class Login extends BaseActivity implements View.OnClickListener
         stringBuilder.append("/").append(email);
         stringBuilder.append("/").append(password);
         String url = stringBuilder.toString();
-
         System.out.println("url==========="+url);*/
-
 
         JSONObject jsonObject = new JSONObject();
 
@@ -399,11 +397,9 @@ public class Login extends BaseActivity implements View.OnClickListener
                         if (response != null) {
                             if (response.isSuccess())
                             {
-
                                 System.out.println("some data ========="+  response.getData().toString());
                                 new AppPreferenceManager(context).putObject(PreferenceKeys.savedUser, response.getData());
                                 gotoActivityByClearingBackStack(DashboardContainer.class);
-
                             }
                             else
                             {

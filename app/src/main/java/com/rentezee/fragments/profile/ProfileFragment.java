@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -21,18 +22,26 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.bumptech.glide.Glide;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.async.http.body.FilePart;
 import com.koushikdutta.async.http.body.Part;
 import com.koushikdutta.ion.Ion;
+import com.rentezee.fragments.myorder.PastOrder.PastOrderData;
 import com.rentezee.fragments.profile.general.UserSessionManager;
 import com.rentezee.helpers.AppPreferenceManager;
+import com.rentezee.helpers.BaseActivity;
 import com.rentezee.helpers.PreferenceKeys;
+import com.rentezee.helpers.Validator;
+import com.rentezee.main.Login;
 import com.rentezee.main.R;
 import com.rentezee.pojos.User;
 import java.io.ByteArrayOutputStream;
@@ -47,6 +56,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ProfileFragment extends Fragment
 {
+
+
     List<Part> files = new ArrayList();
     Context profile_comtext;
     private final static int PERMISSION_RQ = 84;
@@ -56,10 +67,12 @@ public class ProfileFragment extends Fragment
     String user_id;
     long  userId;
     User user;
-    EditText product_name, discription,security_amount,rent_per_day;
+    EditText etName,etMobile;
     MaterialDialog dialog;
     private static final int PICK_IMAGE = 109;
     String filePath;
+    BaseActivity baseActivity;
+    Button buttonEditEnable;
 
 
     @Override
@@ -72,24 +85,75 @@ public class ProfileFragment extends Fragment
 
         circleImageView = (CircleImageView) view.findViewById(R.id.profile_image);
 
+        circleImageView.setEnabled(false);
+
         relativeUpload = (RelativeLayout) view.findViewById(R.id.relativeUpload);
+
+        etName = (EditText) view.findViewById(R.id.etName);
+
+        etName.setEnabled(false);
+
+        buttonEditEnable = (Button) view.findViewById(R.id.buttonEditEnable);
+
+        etMobile = (EditText) view.findViewById(R.id.etMobile);
+
+        etMobile.setEnabled(false);
 
         user = (User) new AppPreferenceManager(getActivity()).getObject(PreferenceKeys.savedUser, User.class);
 
-        if(user != null){
+        baseActivity = new BaseActivity()
+        {
+            @Override
+            public void showProgressBar(Context context)
+            {
+                super.showProgressBar(context);
+            }
+        };
+
+        if(user != null)
+        {
 
             userId = user.getUserId();
-        }
+            etMobile.setText(user.getMobile());
+            etName.setText(user.getName());
 
+            Glide.with(getActivity())
+                    .load(user.getImageUrl())
+                    .centerCrop()
+                            //.placeholder(R.mipmap.ic_loading)
+                    .crossFade()
+                    .into(circleImageView);
+
+
+        }
+        else
+        {
+
+            Intent  login = new Intent(getActivity(), Login.class);
+            startActivity(login);
+            getActivity().finish();
+
+
+        }
         user_id = Long.toString(userId);
 
 
-        relativeUpload.setOnClickListener(new View.OnClickListener() {
+        relativeUpload.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view) {
+                upload_image();
+            }
+        });
+
+        buttonEditEnable.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                Toast.makeText(getActivity(), "Hi", Toast.LENGTH_SHORT).show();
-                upload_image();
+                etName.setEnabled(true);
+                etMobile.setEnabled(true);
+                circleImageView.setEnabled(true);
+
             }
         });
 
@@ -117,8 +181,6 @@ public class ProfileFragment extends Fragment
                 }
 
 
-
-
             }
         });
 
@@ -126,6 +188,15 @@ public class ProfileFragment extends Fragment
         return view;
     }
 
+
+    public  void showError(String content){
+
+        new MaterialDialog.Builder(getActivity())
+                .title("Rentenzee")
+                .content(content)
+                .positiveText("Ok")
+                .show();
+    }
 
 
     private void showEditPicPopup()
@@ -194,28 +265,74 @@ public class ProfileFragment extends Fragment
     private void upload_image()
     {
 
+        System.out.println("filePath=============="+ filePath);
+
+
+        final String name = etName.getText().toString();
+        if (!Validator.isValidName(name)) {
+
+            showError(getString(R.string.error_name));
+            return;
+        }
+
+
+        final String mobile = etMobile.getText().toString();
+        if (mobile.isEmpty()) {
+
+
+            showError(getString(R.string.error_mobile_empty));
+            return;
+        }
+
+        if (!Validator.isValidMobile(mobile)) {
+
+            showError(getString(R.string.error_mobile_not_valid));
+
+            return;
+        }
+
        // files.add(new FilePart("image[]", savebitmap(filePath)));
+        baseActivity.showProgressBar(getActivity());
 
         Ion.with(getActivity())
                 .load("http://netforce.biz/renteeze/webservice/Users/edit_profile")
                 .setMultipartFile("image", "image/*", new File(filePath))
                 .setMultipartParameter("user_id", user_id)
-                .setMultipartParameter("name", "Mulayam")
-                .setMultipartParameter("email", "mulayam@gmail.com")
-                .setMultipartParameter("mobile", "9811501065")
-                .asString()
-                .setCallback(new FutureCallback<String>() {
+                .setMultipartParameter("name", etName.getText().toString())
+                //.setMultipartParameter("email", etEmail.getText().toString())
+                .setMultipartParameter("mobile", etMobile.getText().toString())
+                .asJsonObject()
+                .setCallback(new FutureCallback<JsonObject>() {
                     @Override
-                    public void onCompleted(Exception e, String result) {
-                        Toast.makeText(getActivity(), result, Toast.LENGTH_SHORT).show();
+                    public void onCompleted(Exception e, JsonObject result)
+                    {
+
                         if (result == null) {
-                            Toast.makeText(getActivity(), "error called", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), "Profile Not Update Successfully", Toast.LENGTH_SHORT).show();
                             e.printStackTrace();
-                        } else {
-                            Toast.makeText(getActivity(), "success called", Toast.LENGTH_SHORT).show();
+                            baseActivity.dismissProgressBar();
+                        }
+                        else
+                        {
+                            // Toast.makeText(getActivity(), "success called", Toast.LENGTH_SHORT).show();
+                             System.out.println("data=====" + result.toString());
+
+                               JsonObject jsonObject = (JsonObject) result.getAsJsonObject("data");
+
+                                String name = jsonObject.get("name").getAsString();
+                                String email = jsonObject.get("email").getAsString();
+                                String mobile = jsonObject.get("mobile").getAsString();
+                                String image_url = jsonObject.get("imageUrl").getAsString();
+
+                                long userId = Long.parseLong(user_id);
+                                User user = new User(userId, name, email, mobile, image_url);
+                                new AppPreferenceManager(getActivity()).putObject(PreferenceKeys.savedUser, user);
+
                             Log.e("result", result.toString());
-
-
+                            baseActivity.dismissProgressBar();
+                            showError("Profile Has Been Successfully Updated");
+                            etName.setText("");
+                            etMobile.setText("");
                         }
 
                     }
@@ -230,9 +347,8 @@ public class ProfileFragment extends Fragment
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE);
+
     }
-
-
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data)
