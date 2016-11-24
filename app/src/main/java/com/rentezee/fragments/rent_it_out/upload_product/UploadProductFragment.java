@@ -38,6 +38,7 @@ import com.rentezee.fragments.profile.general.UserSessionManager;
 import com.rentezee.fragments.rent_it_out.upload_product.rentitData.RentItAdapter;
 import com.rentezee.fragments.rent_it_out.upload_product.rentitData.RentItData;
 import com.rentezee.helpers.AppPreferenceManager;
+import com.rentezee.helpers.BaseActivity;
 import com.rentezee.helpers.PreferenceKeys;
 import com.rentezee.main.R;
 import com.rentezee.pojos.User;
@@ -72,8 +73,7 @@ public class UploadProductFragment extends Fragment
     User user;
     EditText product_name, discription,security_amount,rent_per_day;
     MaterialDialog dialog;
-
-
+    BaseActivity baseActivity;
 
 
 
@@ -95,9 +95,19 @@ public class UploadProductFragment extends Fragment
 
         relativeUpload = (RelativeLayout) view.findViewById(R.id.relativeUpload);
 
+        baseActivity = new BaseActivity()
+        {
+            @Override
+            public void showProgressBar(Context context)
+            {
+                super.showProgressBar(context);
+            }
+        };
+
         user = (User) new AppPreferenceManager(getActivity()).getObject(PreferenceKeys.savedUser, User.class);
 
-        if(user != null){
+        if(user != null)
+        {
 
             userId = user.getUserId();
         }
@@ -284,6 +294,7 @@ public class UploadProductFragment extends Fragment
     private void upload_image()
     {
 
+        baseActivity.showProgressBar(getActivity());
         System.out.println("image array size =====" + rentItDatas.size());
 
         for (int i = 0; i <rentItDatas.size(); i++)
@@ -310,10 +321,13 @@ public class UploadProductFragment extends Fragment
                     @Override
                     public void onCompleted(Exception e, String result) {
                         Toast.makeText(getActivity(), result, Toast.LENGTH_SHORT).show();
-                        if (result == null) {
+                        if (result == null)
+                        {
                             Toast.makeText(getActivity(), "error called", Toast.LENGTH_SHORT).show();
                             e.printStackTrace();
-                        } else {
+                            baseActivity.dismissProgressBar();
+                        }
+                        else {
                             Toast.makeText(getActivity(), "success called", Toast.LENGTH_SHORT).show();
                             Log.e("result", result.toString());
 
@@ -323,7 +337,7 @@ public class UploadProductFragment extends Fragment
                             rent_per_day.setText("");
                             rentItDatas.clear();
                             adapter.notifyDataSetChanged();
-
+                            baseActivity.dismissProgressBar();
                         }
 
                     }

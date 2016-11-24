@@ -24,6 +24,18 @@
                 android:layout_centerHorizontal="true"
                 app:civ_border_color="#FF000000"/>
 
+
+            <Button
+                android:id="@+id/buttonEditEnable"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Edit"
+                android:textAllCaps="false"
+                android:layout_alignParentRight="true"
+                android:textStyle="bold"
+                android:background="?android:attr/selectableItemBackground"
+                />
+
             <LinearLayout
                 android:id="@+id/layoutUserName"
                 android:layout_width="match_parent"
@@ -50,12 +62,13 @@
                     android:layout_gravity="center_vertical"
                     android:background="@null"
                     android:hint="@string/name"
+                    android:editable="false"
                     android:inputType="textCapWords|textNoSuggestions"
                     android:padding="10dp" />
             </LinearLayout>
 
 
-            <LinearLayout
+           <!-- <LinearLayout
                 android:id="@+id/layoutUserEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -84,6 +97,8 @@
                     android:inputType="textCapWords|textNoSuggestions"
                     android:padding="10dp" />
             </LinearLayout>
+-->
+
 
 
             <LinearLayout
@@ -92,7 +107,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:padding="5dp"
-                android:layout_below="@+id/layoutUserEmail"
+                android:layout_below="@+id/layoutUserName"
                 android:background="@drawable/edittext_dark_orange_back"
                 android:orientation="horizontal">
 
@@ -112,43 +127,15 @@
                     android:layout_gravity="center_vertical"
                     android:background="@null"
                     android:hint="@string/mobile"
-                    android:inputType="textCapWords|textNoSuggestions"
+                    android:editable="false"
+                    android:inputType="number"
+                    android:maxLength="10"
                     android:padding="10dp" />
 
 
 
             </LinearLayout>
 
-
-            <LinearLayout
-                android:id="@+id/layoutUserPassword"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:padding="5dp"
-                android:layout_below="@+id/layoutUserMobile"
-                android:background="@drawable/edittext_dark_orange_back"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginStart="10dp"
-                    android:src="@mipmap/ic_password" />
-
-                <EditText
-                    android:id="@+id/etPassword"
-                    style="@style/MyEditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:background="@null"
-                    android:hint="@string/password"
-                    android:inputType="textCapWords|textNoSuggestions"
-                    android:padding="10dp" />
-            </LinearLayout>
 
 
 

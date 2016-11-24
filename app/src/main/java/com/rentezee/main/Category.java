@@ -292,12 +292,15 @@ public class Category extends BaseActivity implements View.OnClickListener
                             {
                                 JsonObject jsonObject = (JsonObject) productListArray.get(i);
                                 JsonObject product = jsonObject.getAsJsonObject("Product");
+                                JsonObject category = jsonObject.getAsJsonObject("Category");
+
+                                String categories_name =  category.get("name").getAsString();
                                 String id = product.get("id").getAsString();
                                 String name = product.get("name").getAsString();
                                 String price = product.get("price").getAsString();
                                // String special_price = product.get("special_price").getAsString();
                                 String image = "http://netforce.biz/renteeze/webservice/files/products/"+product.get("images").getAsString();
-                                productListDatas.add(new ProductListData(id, name, image,price,""));
+                                productListDatas.add(new ProductListData(id, name, image,price,categories_name));
 
                             }
                             productsAdapter=new ProductsAdapter(context, productListDatas);

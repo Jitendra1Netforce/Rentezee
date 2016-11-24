@@ -70,7 +70,7 @@ public class ProductsAdapter extends BaseAdapter {
                 .into(viewHolder.ivProductImage);
 
         viewHolder.tvProductName.setText(list.get(position).product_name);
-        viewHolder.tvProductCategoryName.setText(list.get(position).product_name);
+        viewHolder.tvProductCategoryName.setText(list.get(position).category_name);
         viewHolder.tvPrice.setText(rs + list.get(position).price + " per day");
         return convertView;
     }

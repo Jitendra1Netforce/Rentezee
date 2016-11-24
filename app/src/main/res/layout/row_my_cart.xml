@@ -169,58 +169,28 @@
                     android:id="@+id/textview_from_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="12"
+                    android:text="16/09/2016"
                     android:layout_below="@+id/tv_rent_duration_heading"
                     android:layout_marginTop="5dp"
                     android:layout_alignParentLeft="true"
                     android:textColor="@color/black"
-                    android:background="@drawable/black_border"
+                    android:background="@drawable/date_border"
                     android:padding="3dp"
                     android:textSize="12sp"
                     />
 
-
-                <TextView
-                    android:id="@+id/tv_from_month"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="mm"
-                    android:layout_below="@+id/tv_rent_duration_heading"
-                    android:layout_marginTop="5dp"
-                    android:layout_toRightOf="@+id/textview_from_date"
-                    android:textColor="@color/black"
-                    android:background="@drawable/black_border"
-                    android:padding="3dp"
-                    android:layout_marginLeft="5dp"
-                    android:textSize="12sp"
-                    />
-
-                <TextView
-                    android:id="@+id/tv_from_year"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="yy"
-                    android:layout_below="@+id/tv_rent_duration_heading"
-                    android:layout_marginTop="5dp"
-                    android:layout_toRightOf="@+id/tv_from_month"
-                    android:textColor="@color/black"
-                    android:background="@drawable/black_border"
-                    android:padding="3dp"
-                    android:layout_marginLeft="5dp"
-                    android:textSize="12sp"
-                    />
 
                 <TextView
                     android:id="@+id/tv_to"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="t0"
+                    android:text="to"
                     android:layout_below="@+id/tv_rent_duration_heading"
                     android:layout_marginTop="5dp"
-                    android:layout_toRightOf="@+id/tv_from_year"
+                    android:layout_toRightOf="@+id/textview_from_date"
                     android:textColor="@color/black"
                     android:textSize="12sp"
-                    android:padding="3dp"
+                    android:padding="5dp"
                     android:layout_marginLeft="3dp"
                     />
 
@@ -228,48 +198,18 @@
                     android:id="@+id/textview_to_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="22"
+                    android:text="22/09/2016"
                     android:layout_below="@+id/tv_rent_duration_heading"
                     android:layout_marginTop="5dp"
                     android:layout_toRightOf="@+id/tv_to"
                     android:textColor="@color/black"
-                    android:background="@drawable/black_border"
+                    android:background="@drawable/date_border"
                     android:padding="3dp"
                     android:layout_marginLeft="3dp"
                     android:textSize="12sp"
                     />
 
 
-                <TextView
-                    android:id="@+id/tv_to_month"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="mm"
-                    android:layout_below="@+id/tv_rent_duration_heading"
-                    android:layout_marginTop="5dp"
-                    android:layout_toRightOf="@+id/textview_to_date"
-                    android:textColor="@color/black"
-                    android:background="@drawable/black_border"
-                    android:padding="3dp"
-                    android:layout_marginLeft="5dp"
-                    android:textSize="12sp"
-                    />
-
-
-                <TextView
-                    android:id="@+id/tv_to_year"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="yy"
-                    android:layout_below="@+id/tv_rent_duration_heading"
-                    android:layout_marginTop="5dp"
-                    android:layout_toRightOf="@+id/tv_to_month"
-                    android:textColor="@color/black"
-                    android:background="@drawable/black_border"
-                    android:padding="3dp"
-                    android:layout_marginLeft="3dp"
-                    android:textSize="12sp"
-                    />
 
 
 
@@ -303,22 +243,18 @@
             android:layout_marginTop="0dp"
             ></View>
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:weightSum="2"
-            android:orientation="horizontal"
              android:layout_below="@+id/view"
             >
 
             <LinearLayout
                 android:id="@+id/layoutRemove"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.99"
-                android:gravity="center"
+                android:layout_centerHorizontal="true"
                 android:orientation="horizontal"
-                android:background="@drawable/address_button_back"
                 >
 
                 <ImageView
@@ -338,34 +274,9 @@
             </LinearLayout>
 
 
-            <LinearLayout
-                android:id="@+id/layoutMoveToCart"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.99"
-                android:gravity="center"
-                android:orientation="horizontal"
-
-                >
-
-                <ImageView
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:layout_gravity="center_vertical"
-                    android:src="@mipmap/ic_move_to_cart" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:padding="10dp"
-                    android:text="Add To Wishlist"
-                    android:textStyle="bold"
-                    android:theme="@style/MyTextViewNormal" />
-            </LinearLayout>
 
 
-        </LinearLayout>
+        </RelativeLayout>
 
 
     </RelativeLayout>

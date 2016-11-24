@@ -39,6 +39,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.facebook.FacebookSdk;
 import com.facebook.login.LoginManager;
 import com.google.android.gms.auth.api.Auth;
@@ -86,6 +87,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import me.relex.circleindicator.CircleIndicator;
 
 public class DashboardContainer extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener,
@@ -122,7 +124,10 @@ public class DashboardContainer extends BaseActivity implements NavigationView.O
     private ArrayList<Slider> fetchedSliderDataList;
     private ArrayList<Trending> fetchedTrendingList;
     private DisplayMetrics displayMetrics;
-
+    User user;
+    TextView tvNavName,tvNavEmail,tvNavMobile;
+    LinearLayout layoutNavLogin,layoutNavEmailMobile,layoutLogout;
+    CircleImageView circleImageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -189,7 +194,7 @@ public class DashboardContainer extends BaseActivity implements NavigationView.O
         coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinatorLayout);
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        LinearLayout layoutLogout = (LinearLayout) navigationView.findViewById(R.id.layout_logout);
+         layoutLogout = (LinearLayout) navigationView.findViewById(R.id.layout_logout);
 
         viewPager = (ViewPager) findViewById(R.id.viewPager);
         viewPager.getLayoutParams().height = (int) (displayMetrics.widthPixels * .5834);
@@ -202,21 +207,30 @@ public class DashboardContainer extends BaseActivity implements NavigationView.O
 
         //Navigation header
         View headerLayout = navigationView.getHeaderView(0);
-        TextView tvNavName = (TextView) headerLayout.findViewById(R.id.tvNavName);
-        TextView tvNavEmail = (TextView) headerLayout.findViewById(R.id.tvNavEmail);
-        TextView tvNavMobile = (TextView) headerLayout.findViewById(R.id.tvNavMobile);
-        LinearLayout layoutNavLogin = (LinearLayout) headerLayout.findViewById(R.id.layoutNavLogin);
-        LinearLayout layoutNavEmailMobile = (LinearLayout) headerLayout.findViewById(R.id.layoutNavEmailMobile);
+         circleImageView = (CircleImageView) headerLayout.findViewById(R.id.imageView);
+         tvNavName = (TextView) headerLayout.findViewById(R.id.tvNavName);
+         tvNavEmail = (TextView) headerLayout.findViewById(R.id.tvNavEmail);
+         tvNavMobile = (TextView) headerLayout.findViewById(R.id.tvNavMobile);
+         layoutNavLogin = (LinearLayout) headerLayout.findViewById(R.id.layoutNavLogin);
+         layoutNavEmailMobile = (LinearLayout) headerLayout.findViewById(R.id.layoutNavEmailMobile);
 
         User user = (User) new AppPreferenceManager(context).getObject(PreferenceKeys.savedUser, User.class);
 
-        if (user != null) {
+        if (user != null)
+        {
             layoutNavEmailMobile.setVisibility(View.VISIBLE);
             layoutNavLogin.setVisibility(View.GONE);
             layoutLogout.setOnClickListener(this);
             tvNavName.setText("Welcome " + user.getName());
             tvNavEmail.setText(user.getEmail());
             tvNavMobile.setText(user.getMobile());
+
+                    Glide.with(context)
+                    .load(user.getImageUrl())
+                    .centerCrop()
+                            //.placeholder(R.mipmap.ic_loading)
+                    .crossFade()
+                    .into(circleImageView);
 
             headerLayout.findViewById(R.id.ivArrow).setOnClickListener(this);
         } else {
@@ -438,6 +452,13 @@ public class DashboardContainer extends BaseActivity implements NavigationView.O
     {
         switch (item.getItemId())
         {
+
+            case R.id.nav_home:
+                Intent dashboard=new Intent(context, DashboardContainer.class);
+                gotoActivity(dashboard);
+                finish();
+
+                break;
             case R.id.nav_orders:
                 Intent intent=new Intent(context, MyOrder.class);
                 gotoActivity(intent);
@@ -661,7 +682,6 @@ public class DashboardContainer extends BaseActivity implements NavigationView.O
 
     private void load_refresh()
     {
-
         String  device_id = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
         // recyclerView.setVisibility(View.GONE);
         // homeDatas.clear();
@@ -914,4 +934,35 @@ public class DashboardContainer extends BaseActivity implements NavigationView.O
     }
 
 
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+
+        User user = (User) new AppPreferenceManager(context).getObject(PreferenceKeys.savedUser, User.class);
+
+        if (user != null)
+        {
+            layoutNavEmailMobile.setVisibility(View.VISIBLE);
+            layoutNavLogin.setVisibility(View.GONE);
+            layoutLogout.setOnClickListener(this);
+            tvNavName.setText("Welcome " + user.getName());
+            tvNavEmail.setText(user.getEmail());
+            tvNavMobile.setText(user.getMobile());
+
+            Glide.with(context)
+                    .load(user.getImageUrl())
+                    .centerCrop()
+                            //.placeholder(R.mipmap.ic_loading)
+                    .crossFade()
+                    .into(circleImageView);
+
+        } else {
+            layoutLogout.setVisibility(View.GONE);
+            layoutNavEmailMobile.setVisibility(View.GONE);
+            layoutNavLogin.setVisibility(View.VISIBLE);
+            layoutNavLogin.setOnClickListener(this);
+            tvNavName.setText("Welcome Guest!");
+        }
+
+    }
 }

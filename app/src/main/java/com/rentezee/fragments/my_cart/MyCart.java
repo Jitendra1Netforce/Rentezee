@@ -48,7 +48,6 @@ public class MyCart extends BaseActivity {
     RelativeLayout relativeLayoutDetails;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -128,8 +127,9 @@ public class MyCart extends BaseActivity {
         myCartDatas.clear();
         layoutBottom.setVisibility(View.GONE);
         relativeTotal.setVisibility(View.GONE);
-
         showProgressBar(context);
+
+        System.out.println("device_id======"+device_id);
 
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("device_id", device_id);
