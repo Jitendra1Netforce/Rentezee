@@ -57,7 +57,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class ProfileFragment extends Fragment
 {
 
-
     List<Part> files = new ArrayList();
     Context profile_comtext;
     private final static int PERMISSION_RQ = 84;
@@ -72,7 +71,7 @@ public class ProfileFragment extends Fragment
     private static final int PICK_IMAGE = 109;
     String filePath;
     BaseActivity baseActivity;
-    Button buttonEditEnable;
+    Button buttonEditEnable,buttonUpload;
 
 
     @Override
@@ -96,6 +95,8 @@ public class ProfileFragment extends Fragment
         buttonEditEnable = (Button) view.findViewById(R.id.buttonEditEnable);
 
         etMobile = (EditText) view.findViewById(R.id.etMobile);
+
+        buttonUpload = (Button) view.findViewById(R.id.buttonUpload);
 
         etMobile.setEnabled(false);
 
@@ -123,8 +124,6 @@ public class ProfileFragment extends Fragment
                             //.placeholder(R.mipmap.ic_loading)
                     .crossFade()
                     .into(circleImageView);
-
-
         }
         else
         {
@@ -132,13 +131,11 @@ public class ProfileFragment extends Fragment
             Intent  login = new Intent(getActivity(), Login.class);
             startActivity(login);
             getActivity().finish();
-
-
         }
         user_id = Long.toString(userId);
 
 
-        relativeUpload.setOnClickListener(new View.OnClickListener()
+        buttonUpload.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View view) {
@@ -153,6 +150,7 @@ public class ProfileFragment extends Fragment
                 etName.setEnabled(true);
                 etMobile.setEnabled(true);
                 circleImageView.setEnabled(true);
+
 
             }
         });
@@ -201,8 +199,8 @@ public class ProfileFragment extends Fragment
 
     private void showEditPicPopup()
     {
-        boolean wrapInScrollView = true;
 
+        boolean wrapInScrollView = true;
         // Toast.makeText(getActivity(),"This is pic intent",Toast.LENGTH_SHORT).show();
 
         dialog = new MaterialDialog.Builder(getActivity())
@@ -267,14 +265,12 @@ public class ProfileFragment extends Fragment
 
         System.out.println("filePath=============="+ filePath);
 
-
         final String name = etName.getText().toString();
         if (!Validator.isValidName(name)) {
 
             showError(getString(R.string.error_name));
             return;
         }
-
 
         final String mobile = etMobile.getText().toString();
         if (mobile.isEmpty()) {
@@ -291,33 +287,37 @@ public class ProfileFragment extends Fragment
             return;
         }
 
-       // files.add(new FilePart("image[]", savebitmap(filePath)));
-        baseActivity.showProgressBar(getActivity());
 
-        Ion.with(getActivity())
-                .load("http://netforce.biz/renteeze/webservice/Users/edit_profile")
-                .setMultipartFile("image", "image/*", new File(filePath))
-                .setMultipartParameter("user_id", user_id)
-                .setMultipartParameter("name", etName.getText().toString())
-                //.setMultipartParameter("email", etEmail.getText().toString())
-                .setMultipartParameter("mobile", etMobile.getText().toString())
-                .asJsonObject()
-                .setCallback(new FutureCallback<JsonObject>() {
-                    @Override
-                    public void onCompleted(Exception e, JsonObject result)
-                    {
+        if(filePath == null) {
 
-                        if (result == null) {
-                            Toast.makeText(getActivity(), "Profile Not Update Successfully", Toast.LENGTH_SHORT).show();
-                            e.printStackTrace();
-                            baseActivity.dismissProgressBar();
-                        }
-                        else
-                        {
-                            // Toast.makeText(getActivity(), "success called", Toast.LENGTH_SHORT).show();
-                             System.out.println("data=====" + result.toString());
+            showError("Please Choose Picture From Gallery or Camera");
+        }
+        else
+        {
+            // files.add(new FilePart("image[]", savebitmap(filePath)));
+            baseActivity.showProgressBar(getActivity());
 
-                               JsonObject jsonObject = (JsonObject) result.getAsJsonObject("data");
+            Ion.with(getActivity())
+                    .load("http://netforce.biz/renteeze/webservice/Users/edit_profile")
+                    .setMultipartFile("image", "image/*", new File(filePath))
+                    .setMultipartParameter("user_id", user_id)
+                    .setMultipartParameter("name", etName.getText().toString())
+                    .setMultipartParameter("mobile", etMobile.getText().toString())
+                            //.setMultipartParameter("email", etEmail.getText().toString())
+                    .asJsonObject()
+                    .setCallback(new FutureCallback<JsonObject>() {
+                        @Override
+                        public void onCompleted(Exception e, JsonObject result) {
+
+                            if (result == null) {
+                                Toast.makeText(getActivity(), "Profile Not Update Successfully", Toast.LENGTH_SHORT).show();
+                                e.printStackTrace();
+                                baseActivity.dismissProgressBar();
+                            } else {
+                                // Toast.makeText(getActivity(), "success called", Toast.LENGTH_SHORT).show();
+                                System.out.println("data=====" + result.toString());
+
+                                JsonObject jsonObject = (JsonObject) result.getAsJsonObject("data");
 
                                 String name = jsonObject.get("name").getAsString();
                                 String email = jsonObject.get("email").getAsString();
@@ -328,15 +328,19 @@ public class ProfileFragment extends Fragment
                                 User user = new User(userId, name, email, mobile, image_url);
                                 new AppPreferenceManager(getActivity()).putObject(PreferenceKeys.savedUser, user);
 
-                            Log.e("result", result.toString());
-                            baseActivity.dismissProgressBar();
-                            showError("Profile Has Been Successfully Updated");
-                            etName.setText("");
-                            etMobile.setText("");
-                        }
+                                Log.e("result", result.toString());
+                                baseActivity.dismissProgressBar();
+                                showError("Profile Has Been Successfully Updated");
+                                etName.setText("");
+                                etMobile.setText("");
+                            }
 
-                    }
-                });
+                        }
+                    });
+
+        }
+
+
 
     }
 

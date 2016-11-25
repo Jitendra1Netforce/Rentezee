@@ -8,10 +8,10 @@
    >
 
 <RelativeLayout
+    android:id="@+id/relativelayout"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="5dp"
     android:layout_marginTop="5dp"
     >
 
@@ -23,6 +23,7 @@
         android:text="Address 1"
         android:textColor="@color/black"
         android:textStyle="bold"
+        android:layout_marginLeft="7dp"
         />
 
 
@@ -31,9 +32,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Home"
+        android:layout_marginLeft="7dp"
         android:textColor="@color/black"
+        android:textStyle="bold"
         android:layout_below="@+id/txtAddressheading"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         />
 
     <TextView
@@ -42,7 +45,9 @@
         android:layout_height="wrap_content"
         android:text="4b/402 Kamal Nagar"
         android:layout_below="@+id/txtAddress"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
+        android:textColor="@color/black"
+        android:layout_marginLeft="7dp"
         />
 
     <TextView
@@ -51,23 +56,25 @@
         android:layout_height="wrap_content"
         android:text="New Delhi, Delhi-110055"
         android:layout_below="@+id/txtAddressDetails"
+        android:textColor="@color/black"
+        android:layout_marginLeft="7dp"
         />
 
     <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#000000"
+        android:id="@+id/view"
         android:layout_below="@+id/txtAddressCity"
+        android:layout_width="match_parent"
+        android:layout_height="1.5dp"
+        android:background="#F1F5F7"
+        android:layout_marginTop="10dp"
         ></View>
-
-
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:weightSum="2"
         android:orientation="horizontal"
-        android:layout_below="@+id/txtAddressCity"
+        android:layout_below="@+id/view"
         android:layout_marginTop="2dp"
         >
 
@@ -78,14 +85,14 @@
             android:layout_weight="0.99"
             android:gravity="center"
             android:orientation="horizontal"
-            android:background="@drawable/remove_button_back"
+            android:background="@drawable/address_button_back"
             >
 
             <ImageView
-                android:layout_width="16dp"
-                android:layout_height="16dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:layout_gravity="center_vertical"
-                android:src="@mipmap/de_xhdpi" />
+                android:src="@drawable/ic_edit_orange" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -109,10 +116,10 @@
             >
 
             <ImageView
-                android:layout_width="16dp"
-                android:layout_height="16dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:layout_gravity="center_vertical"
-                android:src="@mipmap/de_xhdpi" />
+                android:src="@drawable/ic_delete_orange" />
 
             <TextView
                 android:layout_width="wrap_content"

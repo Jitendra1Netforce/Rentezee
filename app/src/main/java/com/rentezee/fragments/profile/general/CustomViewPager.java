@@ -31,7 +31,6 @@ public class CustomViewPager extends FragmentStatePagerAdapter
     {
         switch (position)
         {
-
             case 0:
                 profileFragment = new ProfileFragment();
                 return profileFragment;
@@ -39,10 +38,8 @@ public class CustomViewPager extends FragmentStatePagerAdapter
                 addressFragment = new AddressFragment();
                 return addressFragment;
             default:
-                addressFragment = new AddressFragment();
-                return addressFragment;
-
-
+                profileFragment = new ProfileFragment();
+                return profileFragment;
         }
 
     }

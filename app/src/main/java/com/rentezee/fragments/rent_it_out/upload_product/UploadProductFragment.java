@@ -25,6 +25,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
@@ -40,6 +41,7 @@ import com.rentezee.fragments.rent_it_out.upload_product.rentitData.RentItData;
 import com.rentezee.helpers.AppPreferenceManager;
 import com.rentezee.helpers.BaseActivity;
 import com.rentezee.helpers.PreferenceKeys;
+import com.rentezee.helpers.Validator;
 import com.rentezee.main.R;
 import com.rentezee.pojos.User;
 import java.io.ByteArrayOutputStream;
@@ -74,8 +76,8 @@ public class UploadProductFragment extends Fragment
     EditText product_name, discription,security_amount,rent_per_day;
     MaterialDialog dialog;
     BaseActivity baseActivity;
-
-
+    int image_size = 2;
+Button buttonSave;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -94,6 +96,8 @@ public class UploadProductFragment extends Fragment
         rent_per_day = (EditText) view.findViewById(R.id.edtRentPerDay);
 
         relativeUpload = (RelativeLayout) view.findViewById(R.id.relativeUpload);
+
+        buttonSave = (Button) view.findViewById(R.id.buttonSave);
 
         baseActivity = new BaseActivity()
         {
@@ -114,41 +118,35 @@ public class UploadProductFragment extends Fragment
 
         user_id = Long.toString(userId);
 
+        rentItDatas.clear();
+
         setupRecyclerView(view);
 
-        relativeUpload.setOnClickListener(new View.OnClickListener() {
+        buttonSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                Toast.makeText(getActivity(), "Hi", Toast.LENGTH_SHORT).show();
+
                 upload_image();
             }
         });
 
 
+
         circleImageView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view)
-            {
+            public void onClick(View view) {
 
-                if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)
-                {
+                if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
                     // Request permission to save videos in external storage
                     ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CAMERA}, PERMISSION_RQ);
-                }
-                else
-                {
-                    try
-                    {
+                } else {
+                    try {
                         showEditPicPopup();
-                    }
-                    catch (Exception ex)
-                    {
+                    } catch (Exception ex) {
                         //showMessage("Grant permission first");
                     }
                 }
-
-
 
 
             }
@@ -294,54 +292,97 @@ public class UploadProductFragment extends Fragment
     private void upload_image()
     {
 
-        baseActivity.showProgressBar(getActivity());
-        System.out.println("image array size =====" + rentItDatas.size());
+         System.out.println("size=========="+rentItDatas.size());
 
-        for (int i = 0; i <rentItDatas.size(); i++)
+        int size = rentItDatas.size();
+
+        if(size >= image_size)
         {
-            files.add(new FilePart("image[]", savebitmap(rentItDatas.get(i).path)));
-            Log.e("sellDatas",files.toArray().toString());
+
+        if (product_name.getText().toString().equals(""))
+        {
+            showError("Please Enter Product Name");
+            return;
         }
 
-        Log.e("sellDatas", files.toString());
-        Ion.with(getActivity())
-                .load("http://netforce.biz/renteeze/webservice/products/add_item")
-                        //.setHeader("ENCTYPE", "multipart/form-data")
-                        .addMultipartParts(files)
-                .setMultipartParameter("action", "add_item")
-                .setMultipartFile("image", "image/*", new File(rentItDatas.get(0).path))
-                .setMultipartParameter("user_id", user_id)
-                .setMultipartParameter("product_name", product_name.getText().toString())
-                .setMultipartParameter("description", discription.getText().toString())
-                .setMultipartParameter("category_id", "1")
-                .setMultipartParameter("security_price", security_amount.getText().toString())
-                .setMultipartParameter("price", rent_per_day.getText().toString())
-                .asString()
-                .setCallback(new FutureCallback<String>() {
-                    @Override
-                    public void onCompleted(Exception e, String result) {
-                        Toast.makeText(getActivity(), result, Toast.LENGTH_SHORT).show();
-                        if (result == null)
-                        {
-                            Toast.makeText(getActivity(), "error called", Toast.LENGTH_SHORT).show();
-                            e.printStackTrace();
-                            baseActivity.dismissProgressBar();
-                        }
-                        else {
-                            Toast.makeText(getActivity(), "success called", Toast.LENGTH_SHORT).show();
-                            Log.e("result", result.toString());
+        if (discription.getText().toString().equals("")) {
 
-                            product_name.setText("");
-                            discription.setText("");
-                            security_amount.setText("");
-                            rent_per_day.setText("");
-                            rentItDatas.clear();
-                            adapter.notifyDataSetChanged();
-                            baseActivity.dismissProgressBar();
-                        }
+            showError("Please Enter Discription");
+            return;
+        }
 
-                    }
-                });
+
+        if (security_amount.getText().toString().equals(""))
+        {
+            showError("Plase Enter Security Amount");
+            return;
+        }
+
+        if (rent_per_day.getText().toString().equals("")) {
+
+            showError("Plase Enter Per Day Rent Amount");
+            return;
+        }
+
+
+
+            baseActivity.showProgressBar(getActivity());
+            System.out.println("image array size =====" + rentItDatas.size());
+
+            for (int i = 0; i <rentItDatas.size(); i++)
+            {
+                files.add(new FilePart("image[]", savebitmap(rentItDatas.get(i).path)));
+                Log.e("sellDatas",files.toArray().toString());
+            }
+
+            Log.e("sellDatas", files.toString());
+            Ion.with(getActivity())
+                    .load("http://netforce.biz/renteeze/webservice/products/add_item")
+                            //.setHeader("ENCTYPE", "multipart/form-data")
+                    .addMultipartParts(files)
+                    .setMultipartParameter("action", "add_item")
+                            //.setMultipartFile("image", "image*//*", new File(rentItDatas.get(0).path))
+                    .setMultipartParameter("user_id", user_id)
+                    .setMultipartParameter("product_name", product_name.getText().toString())
+                    .setMultipartParameter("description", discription.getText().toString())
+                    .setMultipartParameter("category_id", "1")
+                    .setMultipartParameter("security_price", security_amount.getText().toString())
+                    .setMultipartParameter("price", rent_per_day.getText().toString())
+                    .asString()
+                    .setCallback(new FutureCallback<String>() {
+                        @Override
+                        public void onCompleted(Exception e, String result) {
+                            Toast.makeText(getActivity(), result, Toast.LENGTH_SHORT).show();
+                            if (result == null) {
+
+                                Toast.makeText(getActivity(), "error called", Toast.LENGTH_SHORT).show();
+                                e.printStackTrace();
+                                baseActivity.dismissProgressBar();
+
+                            } else {
+                                Toast.makeText(getActivity(), "success called", Toast.LENGTH_SHORT).show();
+                                Log.e("result", result.toString());
+
+                                product_name.setText("");
+                                discription.setText("");
+                                security_amount.setText("");
+                                rent_per_day.setText("");
+                                rentItDatas.clear();
+                                adapter.notifyDataSetChanged();
+                                baseActivity.dismissProgressBar();
+
+
+                            }
+
+                        }
+                    });
+
+
+        }
+        else
+        {
+            showError("Please Choose 2  Images");
+        }
 
 
       /*  if(!product_name.getText().toString().equals(""))
@@ -477,6 +518,15 @@ public class UploadProductFragment extends Fragment
             e.printStackTrace();
         }
 
+    }
+
+    public  void showError(String content){
+
+        new MaterialDialog.Builder(getActivity())
+                .title("Rentenzee")
+                .content(content)
+                .positiveText("Ok")
+                .show();
     }
 
 
