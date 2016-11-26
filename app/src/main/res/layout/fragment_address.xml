@@ -1,128 +1,190 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.rentezee.fragments.profile.general.address.AddressFragment">
 
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:layout_alignParentTop="true"
-        android:padding="10dp"
         >
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Add New Address"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
-            android:textColor="@color/orange"
-            android:textStyle="bold"
-            />
-
-
-        <android.support.design.widget.TextInputLayout
+        <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent"
+            >
 
-            <EditText
-                android:id="@+id/input_password"
+
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:textColorHint="@color/black"
-                android:hint="Address Label" />
+                android:layout_height="wrap_content">
 
-        </android.support.design.widget.TextInputLayout>
+                <TextView
+                    android:id="@+id/txtAddAddressHeading"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="+ Add Address"
+                    android:textStyle="bold"
+                    android:textColor="@color/orange"
+                    android:layout_alignParentRight="true"
+                    android:padding="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    />
 
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/lvProducts"
+                    android:divider="@null"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/screenbackground"
+                    android:visibility="gone"
+                    android:layout_below="@+id/txtAddAddressHeading"
+                    />
 
-
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <EditText
-                android:id="@+id/edtAddress1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Address Line 1"
-                android:textColor="@color/black"
-                android:textColorHint="@color/black"
-
-                />
-
-        </android.support.design.widget.TextInputLayout>
-
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <EditText
-                android:id="@+id/edtAddress2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:textColorHint="@color/black"
-                android:hint="Address Line 2" />
-
-        </android.support.design.widget.TextInputLayout>
-
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <EditText
-                android:id="@+id/edtLocality"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:textColorHint="@color/black"
-                android:hint="Locality" />
-
-        </android.support.design.widget.TextInputLayout>
+                <LinearLayout
+                    android:id="@+id/linearlayout"
+                    android:layout_below="@+id/lvProducts"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="10dp"
+                    android:visibility="gone"
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Add New Address"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginBottom="20dp"
+                        android:textColor="@color/orange"
+                        android:textStyle="bold"
+                        />
 
 
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
 
-            <EditText
-                android:id="@+id/edtCity"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:textColorHint="@color/black"
-                android:hint="City" />
+                        <EditText
+                            android:id="@+id/edtAddresslabel"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/black"
+                            android:singleLine="true"
+                            android:imeOptions="actionNext"
+                            android:hint="Address Label" />
 
-        </android.support.design.widget.TextInputLayout>
+                    </android.support.design.widget.TextInputLayout>
 
 
 
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
 
-            <EditText
-                android:id="@+id/edtPincode"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:textColorHint="@color/black"
-                android:hint="Pincode" />
+                        <EditText
+                            android:id="@+id/edtAddress1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Address Line 1"
+                            android:singleLine="true"
+                            android:imeOptions="actionNext"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/black"
 
-        </android.support.design.widget.TextInputLayout>
+                            />
 
-    </LinearLayout>
+                    </android.support.design.widget.TextInputLayout>
 
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <EditText
+                            android:id="@+id/edtAddress2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/black"
+                            android:hint="Address Line 2" />
+
+                    </android.support.design.widget.TextInputLayout>
+
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <EditText
+                            android:id="@+id/edtLocality"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/black"
+                            android:singleLine="true"
+                            android:imeOptions="actionNext"
+                            android:hint="Locality" />
+
+                    </android.support.design.widget.TextInputLayout>
+
+
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <EditText
+                            android:id="@+id/edtCity"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/black"
+                            android:singleLine="true"
+                            android:imeOptions="actionNext"
+                            android:hint="City" />
+
+                    </android.support.design.widget.TextInputLayout>
+
+
+
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <EditText
+                            android:id="@+id/edtPincode"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/black"
+                            android:inputType="number"
+                            android:maxLength="6"
+                            android:singleLine="true"
+                            android:imeOptions="actionDone"
+                            android:hint="Pincode" />
+
+                    </android.support.design.widget.TextInputLayout>
+
+                </LinearLayout>
+
+
+            </RelativeLayout>
+
+
+
+        </android.support.v4.widget.NestedScrollView>
+    </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/relativeBottomLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="5dp"
         android:background="@color/colorPrimary"
         android:layout_alignParentBottom="true"
+        android:visibility="gone"
         >
 
 
@@ -141,3 +203,4 @@
     </RelativeLayout>
 
 </RelativeLayout>
+

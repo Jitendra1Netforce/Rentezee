@@ -55,7 +55,6 @@ public class ProfileSetting extends BaseActivity {
 
         tabLayout.addTab(tabLayout.newTab().setIcon(ContextCompat.getDrawable(getApplicationContext(), R.drawable.profile_inactive)));
         tabLayout.addTab(tabLayout.newTab().setIcon(ContextCompat.getDrawable(getApplicationContext(), R.drawable.home_inactive)));
-        tabLayout.addTab(tabLayout.newTab().setIcon(ContextCompat.getDrawable(getApplicationContext(), R.drawable.card_inactive)));
 
         final int tabIconColor = ContextCompat.getColor(getApplicationContext(), R.color.black);
         final int tabIconSelectedColor = ContextCompat.getColor(getApplicationContext(), R.color.orange);
@@ -63,8 +62,7 @@ public class ProfileSetting extends BaseActivity {
 
         tabLayout.getTabAt(0).getIcon().setColorFilter(tabIconSelectedColor, PorterDuff.Mode.SRC_IN);
         tabLayout.getTabAt(1).getIcon().setColorFilter(tabIconColor, PorterDuff.Mode.SRC_IN);
-        tabLayout.getTabAt(2).getIcon().setColorFilter(tabIconColor, PorterDuff.Mode.SRC_IN);
-
+      
 
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
