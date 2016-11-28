@@ -6,16 +6,19 @@ import android.widget.ImageView;
 
 import com.rentezee.main.R;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 /**
  * Created by John on 11/22/2016.
  */
 public class RentItHolder extends RecyclerView.ViewHolder {
-    ImageView imageView, imageViewClose;
+    ImageView imageView;
+    CircleImageView imageViewClose;
 
     public RentItHolder(View itemView) {
         super(itemView);
         //implementing onClickListener
         imageView= (ImageView) itemView.findViewById(R.id.imageView);
-        imageViewClose = (ImageView) itemView.findViewById(R.id.imageViewClose);
+        imageViewClose = (CircleImageView) itemView.findViewById(R.id.imageViewClose);
     }
 }

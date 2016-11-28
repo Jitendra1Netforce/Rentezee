@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -31,6 +32,7 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.jaredrummler.materialspinner.MaterialSpinner;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.async.http.body.FilePart;
 import com.koushikdutta.async.http.body.Part;
@@ -42,14 +44,19 @@ import com.rentezee.helpers.AppPreferenceManager;
 import com.rentezee.helpers.BaseActivity;
 import com.rentezee.helpers.PreferenceKeys;
 import com.rentezee.helpers.Validator;
+import com.rentezee.main.CategoriesData;
+import com.rentezee.main.DashboardContainer;
 import com.rentezee.main.R;
 import com.rentezee.pojos.User;
+import com.rentezee.pojos.mdashboard.CategoryData;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -65,7 +72,7 @@ public class UploadProductFragment extends Fragment
     private static final String IMAGE_DIRECTORY_NAME = "ray";
     private static final int MEDIA_TYPE_IMAGE = 1;
     private static final int PICK_IMAGE = 109;
-    protected static ArrayList<RentItData> rentItDatas = new ArrayList<>();
+    public static ArrayList<RentItData> rentItDatas = new ArrayList<>();
     RecyclerView recyclerView;
     RentItAdapter adapter;
     LinearLayoutManager layoutManager;
@@ -77,7 +84,10 @@ public class UploadProductFragment extends Fragment
     MaterialDialog dialog;
     BaseActivity baseActivity;
     int image_size = 2;
-Button buttonSave;
+    Button buttonSave;
+    DashboardContainer dashboardContainer;
+    ArrayList<String> arrayList;
+    public  int cate_id =0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -98,6 +108,35 @@ Button buttonSave;
         relativeUpload = (RelativeLayout) view.findViewById(R.id.relativeUpload);
 
         buttonSave = (Button) view.findViewById(R.id.buttonSave);
+
+        dashboardContainer = new DashboardContainer();
+
+        MaterialSpinner spinner = (MaterialSpinner) view.findViewById(R.id.spinner);
+
+       arrayList = new ArrayList<>();
+
+        ArrayList<String>  category_data = new ArrayList<>();
+
+        arrayList = dashboardContainer.category_id;
+
+        category_data= dashboardContainer.category_data;
+
+        spinner.setItems(category_data);
+
+        spinner.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
+
+            @Override public void onItemSelected(MaterialSpinner view, int position, long id, String item)
+            {
+                if (position==0){
+                  cate_id= 0;
+                }
+                else {
+                    Snackbar.make(view, "Clicked " + arrayList.get(position-1).toString(), Snackbar.LENGTH_LONG).show();
+                    cate_id = Integer.parseInt(arrayList.get(position-1).toString());
+                }
+
+            }
+        });
 
         baseActivity = new BaseActivity()
         {
@@ -292,7 +331,7 @@ Button buttonSave;
     private void upload_image()
     {
 
-         System.out.println("size=========="+rentItDatas.size());
+         System.out.println("cate_id=========="+cate_id);
 
         int size = rentItDatas.size();
 
@@ -345,7 +384,7 @@ Button buttonSave;
                     .setMultipartParameter("user_id", user_id)
                     .setMultipartParameter("product_name", product_name.getText().toString())
                     .setMultipartParameter("description", discription.getText().toString())
-                    .setMultipartParameter("category_id", "1")
+                    .setMultipartParameter("category_id", String.valueOf(cate_id))
                     .setMultipartParameter("security_price", security_amount.getText().toString())
                     .setMultipartParameter("price", rent_per_day.getText().toString())
                     .asString()

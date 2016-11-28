@@ -28,6 +28,7 @@ public class AddressAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private List<AddressData> itemList;
     private Context context;
     AddressHolder addressHolder;
+    public  static  String product_id;
 
 
     public AddressAdapter(Context context, List<AddressData> itemList)
@@ -59,6 +60,41 @@ public class AddressAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         homeHolder.txtAddressDetails.setText(itemList.get(position).address_1);
         homeHolder.txtAddressCity.setText(itemList.get(position).city+","+itemList.get(position).zip_code);
 
+        homeHolder.layoutRemove.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                delete_to_cart(itemList.get(position).product_id);
+                AddressFragment.addressdata.remove(position);
+                notifyDataSetChanged();
+
+            }
+        });
+
+        homeHolder.layoutAddressEdit.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+
+                AddressFragment.Address_label.setText(itemList.get(position).address_label);
+                AddressFragment.Address_line1.setText(itemList.get(position).address_1);
+                AddressFragment.Address_line2.setText(itemList.get(position).address_2);
+                AddressFragment.Locality.setText(itemList.get(position).country);
+                AddressFragment.city.setText(itemList.get(position).city);
+                AddressFragment.pincode.setText(itemList.get(position).zip_code);
+
+                AddressFragment.recyclerviewPastOrder.setVisibility(View.GONE);
+                AddressFragment.txtAddAddressHeading.setVisibility(View.GONE);
+                AddressFragment.relativeBottomLayout.setVisibility(View.VISIBLE);
+                AddressFragment.saveButton.setText("Update");
+                AddressFragment.linearlayout.setVisibility(View.VISIBLE);
+                product_id =itemList.get(position).product_id;
+
+
+            }
+        });
+
+
     }
 
     private void showMessage(String s)
@@ -82,12 +118,9 @@ public class AddressAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private void delete_to_cart(final String cart_id )
     {
 
-        JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("id", cart_id);
 
         Ion.with(context)
-                .load("http://netforce.biz/renteeze/webservice/Products/delete_cart")
-                .setJsonObjectBody(jsonObject)
+                .load("http://netforce.biz/renteeze/webservice/Users/delete_address/" + cart_id)
                 .asJsonObject()
                 .setCallback(new FutureCallback<JsonObject>() {
                     @Override

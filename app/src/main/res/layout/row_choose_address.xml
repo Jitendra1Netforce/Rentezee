@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    >
+
+    <RelativeLayout
+        android:id="@+id/relativelayout"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        >
+
+        <LinearLayout
+            android:id="@+id/linearLayoutCheckbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+
+            <RadioButton
+                android:layout_width="30dp"
+                android:layout_height="30dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearlayoutAddress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_toRightOf="@+id/linearLayoutCheckbox"
+            android:layout_marginBottom="10dp"
+
+            >
+
+            <TextView
+                android:id="@+id/txtAddressheading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Address 1"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:layout_marginLeft="7dp"
+                />
+
+
+            <TextView
+                android:id="@+id/txtAddress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Home"
+                android:layout_marginLeft="7dp"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:layout_below="@+id/txtAddressheading"
+                android:layout_marginTop="5dp"
+                />
+
+            <TextView
+                android:id="@+id/txtAddressDetails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="4b/402 Kamal Nagar"
+                android:layout_below="@+id/txtAddress"
+                android:layout_marginTop="5dp"
+                android:textColor="@color/black"
+                android:layout_marginLeft="7dp"
+                />
+
+            <TextView
+                android:id="@+id/txtAddressCity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="New Delhi, Delhi-110055"
+                android:layout_below="@+id/txtAddressDetails"
+                android:textColor="@color/black"
+                android:layout_marginLeft="7dp"
+                />
+
+
+        </LinearLayout>
+
+
+        <ImageView
+            android:id="@+id/imgEditAddress"
+            android:layout_alignParentRight="true"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_edit_orange"
+            android:layout_marginRight="7dp"
+            />
+
+
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    >
+
+    <RelativeLayout
+        android:id="@+id/relativelayout"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:padding="15dp"
+        >
+
+
+            <TextView
+                android:id="@+id/txtAddressheading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Credit By : Referal"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:layout_marginLeft="7dp"
+                />
+
+
+            <TextView
+                android:id="@+id/txtAddress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Credit Amount"
+                android:layout_marginLeft="7dp"
+                android:textColor="@color/black"
+                android:layout_below="@+id/txtAddressheading"
+                android:layout_marginTop="10dp"
+                />
+
+            <TextView
+                android:id="@+id/txtAddressDetails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="\u20B9 500"
+                android:layout_below="@+id/txtAddressheading"
+                android:layout_toRightOf="@+id/txtAddress"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/green"
+                android:layout_marginLeft="10dp"
+                />
+
+            <TextView
+                android:id="@+id/txtAddressCity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="05 Aug"
+                android:textColor="@color/black"
+                android:layout_marginLeft="7dp"
+                android:layout_alignParentRight="true"
+
+                />
+
+
+
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>

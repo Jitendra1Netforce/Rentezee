@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -31,17 +32,19 @@ import java.util.ArrayList;
 public class AddressFragment extends Fragment implements  View.OnClickListener
         {
 
-        RecyclerView recyclerviewPastOrder;
-        Context context;
-        ArrayList<AddressData> addressdata = new ArrayList<>();
-        AddressAdapter addressAdapter;
-        BaseActivity baseActivity;
-        String id,user_id;
-        long  userId;
+       public static RecyclerView recyclerviewPastOrder;
+       public static Context context;
+        public static ArrayList<AddressData> addressdata = new ArrayList<>();
+       public static AddressAdapter addressAdapter;
+       public static BaseActivity baseActivity;
+       public static   String id,user_id;
+            long  userId;
         User user;
-        RelativeLayout relativeBottomLayout;TextView  txtAddAddressHeading;
-        LinearLayout linearlayout;
-        EditText Address_label,Address_line1,Address_line2, Locality,city, pincode;
+       public static RelativeLayout relativeBottomLayout;
+       public  static  TextView  txtAddAddressHeading,txtAddressId;
+       public static LinearLayout linearlayout;
+       public static EditText Address_label,Address_line1,Address_line2, Locality,city, pincode;
+       public static Button saveButton;
 
 
 
@@ -82,6 +85,8 @@ public class AddressFragment extends Fragment implements  View.OnClickListener
             city = (EditText) view.findViewById(R.id.edtCity);
             pincode = (EditText) view.findViewById(R.id.edtPincode);
 
+            saveButton = (Button) view.findViewById(R.id.buttonSave);
+
           linearlayout = (LinearLayout)  view.findViewById(R.id.linearlayout);
 
          txtAddAddressHeading = (TextView)  view.findViewById(R.id.txtAddAddressHeading);
@@ -111,72 +116,16 @@ public class AddressFragment extends Fragment implements  View.OnClickListener
                         public void onClick(View view)
                         {
 
-                            recyclerviewPastOrder.setVisibility(View.INVISIBLE);
-                            addressdata.clear();
+                            if(saveButton.getText().toString().equals("Update")){
 
-                            baseActivity.showProgressBar(context);
+                                update_address(AddressAdapter.product_id.toString());
+                            }
+                            else
+                            {
+                                add_address();
 
-                            final JsonObject jsonObject = new JsonObject();
-                            jsonObject.addProperty("user_id", user_id);
-                            jsonObject.addProperty("address_label", Address_label.getText().toString());
-                            jsonObject.addProperty("address_1", Address_line1.getText().toString());
-                            jsonObject.addProperty("address_2",  Address_line2.getText().toString());
-                            jsonObject.addProperty("city", Locality.getText().toString());
-                            jsonObject.addProperty("country", "");
-                            jsonObject.addProperty("zip_code",pincode.getText().toString());
+                            }
 
-                            Ion.with(getActivity())
-                                    .load("http://netforce.biz/renteeze/webservice/Users/addresses")
-                                    .setJsonObjectBody(jsonObject)
-                                    .asJsonObject()
-                                    .setCallback(new FutureCallback<JsonObject>()
-                                    {
-
-                                        @Override
-                                        public void onCompleted(Exception e, JsonObject result) {
-
-                                            if (result != null) {
-                                                System.out.println("data=====" + result.toString());
-
-                                                JsonArray productListArray = result.getAsJsonArray("data");
-                                                System.out.println("data=====" + result.toString());
-
-                                                for (int i = 0; i < productListArray.size(); i++) {
-                                                    JsonObject jsonObject = (JsonObject) productListArray.get(i);
-
-                                                    JsonObject address = jsonObject.getAsJsonObject("Address");
-
-                                                    String product_id = address.get("id").getAsString();
-                                                    String address_label = address.get("address_label").getAsString();
-                                                    String address1 = address.get("address_1").getAsString();
-                                                    String address2 = address.get("address_2").getAsString();
-                                                    String city = address.get("city").getAsString();
-                                                    String country = address.get("country").getAsString();
-                                                    String user_id = address.get("user_id").getAsString();
-                                                    String zip_code = address.get("zip_code").getAsString();
-
-                                                    addressdata.add(new AddressData(product_id, address_label, address1, address2, city, country, user_id, zip_code));
-                                                }
-                                                addressAdapter = new AddressAdapter(context, addressdata);
-                                                recyclerviewPastOrder.setAdapter(addressAdapter);
-                                                addressAdapter.notifyDataSetChanged();
-                                                recyclerviewPastOrder.setVisibility(View.VISIBLE);
-                                                baseActivity.dismissProgressBar();
-
-                                                recyclerviewPastOrder.setVisibility(View.VISIBLE);
-                                                txtAddAddressHeading.setVisibility(View.VISIBLE);
-                                                relativeBottomLayout.setVisibility(View.GONE);
-                                                linearlayout.setVisibility(View.GONE);
-
-
-                                            } else {
-
-                                                baseActivity.dismissProgressBar();
-                                                Log.e("error", e.toString());
-                                            }
-
-                                        }
-                                    });
 
                         }
                 });
@@ -185,8 +134,155 @@ public class AddressFragment extends Fragment implements  View.OnClickListener
         return view;
         }
 
+            public static void update_address(String address_id) {
 
-         private void fetchData(boolean reset)
+                recyclerviewPastOrder.setVisibility(View.INVISIBLE);
+                addressdata.clear();
+
+                baseActivity.showProgressBar(context);
+
+                final JsonObject jsonObject = new JsonObject();
+
+                jsonObject.addProperty("address_id", address_id);
+                jsonObject.addProperty("user_id", user_id);
+                jsonObject.addProperty("address_label", Address_label.getText().toString());
+                jsonObject.addProperty("address_1", Address_line1.getText().toString());
+                jsonObject.addProperty("address_2",  Address_line2.getText().toString());
+                jsonObject.addProperty("country", Locality.getText().toString());
+                jsonObject.addProperty("city", city.getText().toString());
+                jsonObject.addProperty("zip_code",pincode.getText().toString());
+
+
+                Ion.with(context)
+                        .load("http://netforce.biz/renteeze/webservice/Users/addresses")
+                        .setJsonObjectBody(jsonObject)
+                        .asJsonObject()
+                        .setCallback(new FutureCallback<JsonObject>()
+                        {
+
+                            @Override
+                            public void onCompleted(Exception e, JsonObject result) {
+
+                                if (result != null) {
+                                    System.out.println("data=====" + result.toString());
+
+                                    JsonArray productListArray = result.getAsJsonArray("data");
+                                    System.out.println("data=====" + result.toString());
+
+                                    for (int i = 0; i < productListArray.size(); i++) {
+                                        JsonObject jsonObject = (JsonObject) productListArray.get(i);
+
+                                        JsonObject address = jsonObject.getAsJsonObject("Address");
+
+                                        String product_id = address.get("id").getAsString();
+                                        String address_label = address.get("address_label").getAsString();
+                                        String address1 = address.get("address_1").getAsString();
+                                        String address2 = address.get("address_2").getAsString();
+                                        String city = address.get("city").getAsString();
+                                        String country = address.get("country").getAsString();
+                                        String user_id = address.get("user_id").getAsString();
+                                        String zip_code = address.get("zip_code").getAsString();
+
+                                        addressdata.add(new AddressData(product_id, address_label, address1, address2, city, country, user_id, zip_code));
+                                    }
+                                    addressAdapter = new AddressAdapter(context, addressdata);
+                                    recyclerviewPastOrder.setAdapter(addressAdapter);
+                                    addressAdapter.notifyDataSetChanged();
+                                    recyclerviewPastOrder.setVisibility(View.VISIBLE);
+                                    baseActivity.dismissProgressBar();
+
+                                    recyclerviewPastOrder.setVisibility(View.VISIBLE);
+                                    txtAddAddressHeading.setVisibility(View.VISIBLE);
+                                    relativeBottomLayout.setVisibility(View.GONE);
+                                    linearlayout.setVisibility(View.GONE);
+
+
+                                } else {
+
+                                    baseActivity.dismissProgressBar();
+                                    Log.e("error", e.toString());
+                                }
+
+                            }
+                        });
+
+            }
+
+            public static void add_address() {
+
+                recyclerviewPastOrder.setVisibility(View.INVISIBLE);
+                addressdata.clear();
+
+                baseActivity.showProgressBar(context);
+
+                final JsonObject jsonObject = new JsonObject();
+
+                jsonObject.addProperty("user_id", user_id);
+                jsonObject.addProperty("address_label", Address_label.getText().toString());
+                jsonObject.addProperty("address_1", Address_line1.getText().toString());
+                jsonObject.addProperty("address_2",  Address_line2.getText().toString());
+                jsonObject.addProperty("country", Locality.getText().toString());
+                jsonObject.addProperty("city", city.getText().toString());
+                jsonObject.addProperty("zip_code",pincode.getText().toString());
+
+
+                Ion.with(context)
+                        .load("http://netforce.biz/renteeze/webservice/Users/addresses")
+                        .setJsonObjectBody(jsonObject)
+                        .asJsonObject()
+                        .setCallback(new FutureCallback<JsonObject>()
+                        {
+
+                            @Override
+                            public void onCompleted(Exception e, JsonObject result) {
+
+                                if (result != null) {
+                                    System.out.println("data=====" + result.toString());
+
+                                    JsonArray productListArray = result.getAsJsonArray("data");
+                                    System.out.println("data=====" + result.toString());
+
+                                    for (int i = 0; i < productListArray.size(); i++) {
+                                        JsonObject jsonObject = (JsonObject) productListArray.get(i);
+
+                                        JsonObject address = jsonObject.getAsJsonObject("Address");
+
+                                        String product_id = address.get("id").getAsString();
+                                        String address_label = address.get("address_label").getAsString();
+                                        String address1 = address.get("address_1").getAsString();
+                                        String address2 = address.get("address_2").getAsString();
+                                        String city = address.get("city").getAsString();
+                                        String country = address.get("country").getAsString();
+                                        String user_id = address.get("user_id").getAsString();
+                                        String zip_code = address.get("zip_code").getAsString();
+
+                                        addressdata.add(new AddressData(product_id, address_label, address1, address2, city, country, user_id, zip_code));
+                                    }
+                                    addressAdapter = new AddressAdapter(context, addressdata);
+                                    recyclerviewPastOrder.setAdapter(addressAdapter);
+                                    addressAdapter.notifyDataSetChanged();
+                                    recyclerviewPastOrder.setVisibility(View.VISIBLE);
+                                    baseActivity.dismissProgressBar();
+
+                                    recyclerviewPastOrder.setVisibility(View.VISIBLE);
+                                    txtAddAddressHeading.setVisibility(View.VISIBLE);
+                                    relativeBottomLayout.setVisibility(View.GONE);
+                                    linearlayout.setVisibility(View.GONE);
+
+
+                                } else {
+
+                                    baseActivity.dismissProgressBar();
+                                    Log.e("error", e.toString());
+                                }
+
+                            }
+                        });
+
+            }
+
+
+            public static void fetchData(boolean reset)
         {
         if(reset)
         {
@@ -194,7 +290,7 @@ public class AddressFragment extends Fragment implements  View.OnClickListener
         }
         }
 
-         private void reset()
+         public static void reset()
         {
 
         recyclerviewPastOrder.setVisibility(View.INVISIBLE);
@@ -206,7 +302,7 @@ public class AddressFragment extends Fragment implements  View.OnClickListener
         jsonObject.addProperty("user_id",user_id);
 
 
-        Ion.with(this)
+        Ion.with(context)
         .load("http://netforce.biz/renteeze/webservice/Users/address_list")
         .setJsonObjectBody(jsonObject)
         .asJsonObject()
