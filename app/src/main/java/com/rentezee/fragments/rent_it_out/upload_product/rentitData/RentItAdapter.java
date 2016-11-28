@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.rentezee.fragments.profile.general.UserSessionManager;
+import com.rentezee.fragments.rentenzee_credit.CreditHolder;
 import com.rentezee.main.R;
 
 import java.io.File;
@@ -78,6 +79,29 @@ public class RentItAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
+
+        switch (holder.getItemViewType()) {
+            /*case CLICK:
+                SellHolderClick sellHolderClick = (SellHolderClick) holder;
+                sellHolderClick.imageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        showEditPicPopup();
+                    }
+                });
+                break;*/
+            case IMAGE:
+                RentItHolder sellHolderImage = (RentItHolder) holder;
+                if (position < (itemList.size())) {
+                    try {
+
+                        sellHolderImage.imageView.setImageBitmap(decodeUri(Uri.fromFile(new File(itemList.get(position).path))));
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                }
+                break;
+        }
 
 
     }
