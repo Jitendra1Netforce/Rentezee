@@ -1,23 +1,21 @@
-<RelativeLayout
+<android.support.v4.widget.NestedScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.rentezee.fragments.profile.general.address.AddressFragment">
-
+    android:layout_height="wrap_content"
+    tools:context="com.rentezee.fragments.profile.general.address.AddressFragment"
+    android:background="@color/screenbackground"
+    >
 
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        >
-        <android.support.v4.widget.NestedScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            >
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+     >
+
 
 
             <RelativeLayout
+                android:id="@+id/relativelayoutMain"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -61,6 +59,19 @@
                         android:layout_marginBottom="20dp"
                         android:textColor="@color/orange"
                         android:textStyle="bold"
+                        />
+
+
+                    <TextView
+                        android:id="@+id/txtAddressId"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Add New Address"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginBottom="20dp"
+                        android:textColor="@color/orange"
+                        android:textStyle="bold"
+                        android:visibility="gone"
                         />
 
 
@@ -110,6 +121,8 @@
                             android:layout_height="wrap_content"
                             android:textColor="@color/black"
                             android:textColorHint="@color/black"
+                            android:singleLine="true"
+                            android:imeOptions="actionNext"
                             android:hint="Address Line 2" />
 
                     </android.support.design.widget.TextInputLayout>
@@ -174,21 +187,19 @@
 
 
 
-        </android.support.v4.widget.NestedScrollView>
-    </RelativeLayout>
-
     <RelativeLayout
         android:id="@+id/relativeBottomLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="5dp"
         android:background="@color/colorPrimary"
-        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/relativelayoutMain"
         android:visibility="gone"
         >
 
 
         <Button
+            android:id="@+id/buttonSave"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableLeft="@mipmap/ic_profile_edit"
@@ -204,3 +215,5 @@
 
 </RelativeLayout>
 
+
+</android.support.v4.widget.NestedScrollView>

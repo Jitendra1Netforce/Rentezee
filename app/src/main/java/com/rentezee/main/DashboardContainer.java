@@ -68,6 +68,7 @@ import com.rentezee.fragments.my_cart.MyCart;
 import com.rentezee.fragments.notification.NotificationActivity;
 import com.rentezee.fragments.profile.ProfileSetting;
 import com.rentezee.fragments.rent_it_out.RentitOutActivity;
+import com.rentezee.fragments.rentenzee_credit.CreditActivity;
 import com.rentezee.fragments.wishlist.WishList;
 import com.rentezee.helpers.AppPreferenceManager;
 import com.rentezee.helpers.BaseActivity;
@@ -86,6 +87,7 @@ import com.rentezee.views.ExpandableHeightGridView;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import me.relex.circleindicator.CircleIndicator;
@@ -98,8 +100,11 @@ public class DashboardContainer extends BaseActivity implements NavigationView.O
         DialogInterface.OnCancelListener {
 
 
-    ArrayList<CategoriesData> categoryDatas = new ArrayList<>();
+   public ArrayList<CategoriesData> categoryDatas = new ArrayList<>();
     ArrayList<TrendingData> trendingDatas = new ArrayList<>();
+    public  static final ArrayList<String> category_data = new ArrayList<>();
+    public  static final ArrayList<String> category_id = new ArrayList<>();
+    public  static final HashMap<Integer, String> param_aux = new HashMap<Integer, String>();
     private final static String TAG = DashboardContainer.class.getSimpleName();
     private static final int MY_PERMISSIONS_REQUEST = 1001;
     private Context context;
@@ -119,7 +124,7 @@ public class DashboardContainer extends BaseActivity implements NavigationView.O
     private ExpandableHeightGridView gvTrending;
     private ImageView ivMore;
     private TextView tvTrending;
-    private ArrayList<CategoryData> fetchedCategoryDataList, categoryDataList;
+    public ArrayList<CategoryData> fetchedCategoryDataList, categoryDataList;
     private DashboardCategoriesAdapter dashboardCategoriesAdapterAdapter;
     private ArrayList<Slider> fetchedSliderDataList;
     private ArrayList<Trending> fetchedTrendingList;
@@ -483,6 +488,11 @@ public class DashboardContainer extends BaseActivity implements NavigationView.O
                 Intent rent_it_out=new Intent(context, RentitOutActivity.class);
                 gotoActivity(rent_it_out);
                 break;
+            case R.id.nav_rentezee_credits:
+                Intent credit=new Intent(context, CreditActivity.class);
+                gotoActivity(credit);
+                break;
+
 
         }
 
@@ -727,6 +737,7 @@ public class DashboardContainer extends BaseActivity implements NavigationView.O
                             viewPager.setAdapter(adapter);
                             indicator.setViewPager(viewPager);
 
+                            category_data.add("Choose Category");
 
                             for (int i = 0; i < categoruArray.size(); i++)
                             {
@@ -737,10 +748,11 @@ public class DashboardContainer extends BaseActivity implements NavigationView.O
                                 String name = category.get("name").getAsString();
                                 String image = "http://netforce.biz/renteeze/webservice/images/"+category.get("image").getAsString();
 
-
                                 System.out.println("imageurl ======================" + name);
                                 categoryDatas.add(new CategoriesData(id, name, image));
-
+                               category_data.add(name);
+                                category_id.add(id);
+                                param_aux.put(Integer.parseInt(id),name.toString());
                             }
                             dashboardCategoriesAdapterAdapter = new DashboardCategoriesAdapter(context, categoryDatas);
 
