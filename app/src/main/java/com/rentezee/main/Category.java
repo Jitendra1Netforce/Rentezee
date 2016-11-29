@@ -71,6 +71,8 @@ public class Category extends BaseActivity implements View.OnClickListener
         if(actionBar!=null){
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
+
+
         //find views
         coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinatorLayout);
         layoutBottom=(LinearLayout)findViewById(R.id.layoutBottom);
@@ -262,18 +264,14 @@ public class Category extends BaseActivity implements View.OnClickListener
 
     }
 
-
-
     private void load_refresh()
     {
         // recyclerView.setVisibility(View.GONE);
-
         // homeDatas.clear();
-
         showProgressBar(context);
 
         Ion.with(this)
-                .load("http://netforce.biz/renteeze/webservice/products/product_list?cat_id=1")
+                .load("http://netforce.biz/renteeze/webservice/products/product_list?cat_id="+categoryId)
 
                 .asJsonObject()
                 .setCallback(new FutureCallback<JsonObject>() {

@@ -27,7 +27,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 import com.afollestad.materialdialogs.DialogAction;
@@ -88,6 +90,8 @@ public class UploadProductFragment extends Fragment
     DashboardContainer dashboardContainer;
     ArrayList<String> arrayList;
     public  int cate_id =0;
+    CheckBox saleRadioButton,rentRadioButton;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -109,11 +113,15 @@ public class UploadProductFragment extends Fragment
 
         buttonSave = (Button) view.findViewById(R.id.buttonSave);
 
+        saleRadioButton = (CheckBox) view.findViewById(R.id.saleRadioButton);
+
+        rentRadioButton = (CheckBox) view.findViewById(R.id.rentRadioButton);
+
         dashboardContainer = new DashboardContainer();
 
         MaterialSpinner spinner = (MaterialSpinner) view.findViewById(R.id.spinner);
 
-       arrayList = new ArrayList<>();
+        arrayList = new ArrayList<>();
 
         ArrayList<String>  category_data = new ArrayList<>();
 
@@ -190,6 +198,46 @@ public class UploadProductFragment extends Fragment
 
             }
         });
+
+        saleRadioButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+
+                if(saleRadioButton.isChecked())
+                {
+                    // is checked
+                    rentRadioButton.setChecked(false);
+                }
+                else
+                {
+                    // not checked
+                }
+
+            }
+        });
+
+
+        rentRadioButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                if(rentRadioButton.isChecked())
+                {
+                    // is checked
+                    saleRadioButton.setChecked(false);
+                }
+                else
+                {
+                    // not checked
+                }
+
+            }
+        });
+
+
 
         return view;
     }
@@ -350,7 +398,6 @@ public class UploadProductFragment extends Fragment
             return;
         }
 
-
         if (security_amount.getText().toString().equals(""))
         {
             showError("Plase Enter Security Amount");
@@ -362,8 +409,6 @@ public class UploadProductFragment extends Fragment
             showError("Plase Enter Per Day Rent Amount");
             return;
         }
-
-
 
             baseActivity.showProgressBar(getActivity());
             System.out.println("image array size =====" + rentItDatas.size());
@@ -392,13 +437,21 @@ public class UploadProductFragment extends Fragment
                         @Override
                         public void onCompleted(Exception e, String result) {
                             Toast.makeText(getActivity(), result, Toast.LENGTH_SHORT).show();
-                            if (result == null) {
+                            if (result == null)
+                            {
+
 
                                 Toast.makeText(getActivity(), "error called", Toast.LENGTH_SHORT).show();
                                 e.printStackTrace();
                                 baseActivity.dismissProgressBar();
 
-                            } else {
+
+                            }
+                            else
+                            {
+
+
+
                                 Toast.makeText(getActivity(), "success called", Toast.LENGTH_SHORT).show();
                                 Log.e("result", result.toString());
 
@@ -409,7 +462,6 @@ public class UploadProductFragment extends Fragment
                                 rentItDatas.clear();
                                 adapter.notifyDataSetChanged();
                                 baseActivity.dismissProgressBar();
-
 
                             }
 

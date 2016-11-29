@@ -57,21 +57,25 @@
                     android:layout_below="@+id/recycler"
                     >
 
-                    <RadioButton
+                    <CheckBox
+                        android:id="@+id/saleRadioButton"
                         android:layout_weight="5"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:text="Sale"
-                        android:textColor="@color/black"
+                        android:textColor="#b2b2b2"
                         android:textSize="18sp"
+                        android:layout_marginLeft="10dp"
                         />
 
-                    <RadioButton
+
+                    <CheckBox
+                        android:id="@+id/rentRadioButton"
                         android:layout_weight="5"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:text="Rent"
-                        android:textColor="@color/black"
+                        android:textColor="#b2b2b2"
                         android:textSize="18sp"
                         />
 
