@@ -59,16 +59,18 @@ public abstract  class BaseActivity extends AppCompatActivity {
 
          tvCartCount = (TextView) view.findViewById(R.id.tvCartCount);
 
-      tvCartCount.setText(String.valueOf(DashboardContainer.cart_count));
+        //tvCartCount.setText(String.valueOf(DashboardContainer.cart_count));
 
-        ScaleAnimation scale = new ScaleAnimation(0, 1, 0, 1, ScaleAnimation.RELATIVE_TO_SELF, .5f, ScaleAnimation.RELATIVE_TO_SELF, .5f);
+     /*   ScaleAnimation scale = new ScaleAnimation(0, 1, 0, 1, ScaleAnimation.RELATIVE_TO_SELF, .5f, ScaleAnimation.RELATIVE_TO_SELF, .5f);
         scale.setDuration(300);
         scale.setRepeatMode(ScaleAnimation.INFINITE);
         scale.setRepeatCount(Integer.MAX_VALUE);
         scale.setInterpolator(new OvershootInterpolator());
-        tvCartCount.startAnimation(scale);
+        tvCartCount.startAnimation(scale);*/
 
         return true;
+
+
     }
 
     @Override

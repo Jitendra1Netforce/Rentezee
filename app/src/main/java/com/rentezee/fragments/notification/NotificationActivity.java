@@ -13,6 +13,7 @@ import com.google.gson.JsonObject;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 import com.rentezee.helpers.BaseActivity;
+import com.rentezee.main.DashboardContainer;
 import com.rentezee.main.R;
 
 import java.util.ArrayList;
@@ -25,7 +26,7 @@ public class NotificationActivity extends BaseActivity
     Context context;
     ArrayList<NotificationData> notificationDatas = new ArrayList<>();
     NotificationAdapter notificationAdapter;
-
+    DashboardContainer dashboardContainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -37,6 +38,7 @@ public class NotificationActivity extends BaseActivity
         setSupportActionBar(toolbar);
 
 
+
         context=this;
 
         ActionBar actionBar=getSupportActionBar();
@@ -45,6 +47,8 @@ public class NotificationActivity extends BaseActivity
             actionBar.setTitle("Notification");
         }
 
+        dashboardContainer = new DashboardContainer();
+        dashboardContainer.count_cart();
 
 
         recycler_notification=(RecyclerView)findViewById(R.id.lvNotification);
@@ -113,4 +117,24 @@ public class NotificationActivity extends BaseActivity
                 });
 
     }
+
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+
+        try {
+            invalidateOptionsMenu();
+        } catch (Exception e) {
+
+        }
+
+        dashboardContainer.count_cart();
+
+    }
+
+
+
 }

@@ -26,6 +26,7 @@ import java.util.List;
 public class ChooseAddressAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 {
 
+
     private static final int SIMPLE_TYPE = 0;
     private static final int IMAGE_TYPE = 1;
     private final LayoutInflater inflater;
@@ -79,7 +80,7 @@ public class ChooseAddressAdapter extends RecyclerView.Adapter<RecyclerView.View
                 chooseAddressActivity.pincode.setText(itemList.get(position).zip_code);
 
                 chooseAddressActivity.recyclerviewPastOrder.setVisibility(View.GONE);
-                chooseAddressActivity.txtAddAddressHeading.setVisibility(View.GONE);
+                chooseAddressActivity.txtAddAddressHeading.setText("View Address");
                 chooseAddressActivity.relativeBottomLayout.setVisibility(View.VISIBLE);
                 chooseAddressActivity.saveButton.setText("Update");
                 chooseAddressActivity.linearlayout.setVisibility(View.VISIBLE);

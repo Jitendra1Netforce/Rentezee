@@ -29,6 +29,7 @@ import com.rentezee.fragments.payment.PaymentActivity;
 import com.rentezee.fragments.payment.PaymentOptionActivity;
 import com.rentezee.helpers.BaseActivity;
 import com.rentezee.helpers.Constants;
+import com.rentezee.main.DashboardContainer;
 import com.rentezee.main.Detail;
 import com.rentezee.main.ProductListData;
 import com.rentezee.main.R;
@@ -45,9 +46,9 @@ public class MyCart extends BaseActivity {
     MyCartAdapter myCartAdapter;
     RelativeLayout relativeTotal;
     LinearLayout layoutContinue;
-    String device_id;
+    public String device_id;
     RelativeLayout relativeLayoutDetails;
-
+    DashboardContainer dashboardContainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -107,8 +108,12 @@ public class MyCart extends BaseActivity {
         });
 
 
-
         fetchData(true);
+
+        dashboardContainer = new DashboardContainer();
+        dashboardContainer.count_cart();
+
+
 
     }
 
@@ -187,6 +192,25 @@ public class MyCart extends BaseActivity {
                 });
 
     }
+
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+
+        try {
+            invalidateOptionsMenu();
+        } catch (Exception e) {
+
+        }
+
+        dashboardContainer.count_cart();
+
+    }
+
+
 
 
 }

@@ -82,7 +82,7 @@ public class UploadProductFragment extends Fragment
     String user_id;
     long  userId;
     User user;
-    EditText product_name, discription,security_amount,rent_per_day;
+    EditText product_name, discription,security_amount,rent_per_day,price;
     MaterialDialog dialog;
     BaseActivity baseActivity;
     int image_size = 2;
@@ -90,7 +90,7 @@ public class UploadProductFragment extends Fragment
     DashboardContainer dashboardContainer;
     ArrayList<String> arrayList;
     public  int cate_id =0;
-    CheckBox saleRadioButton,rentRadioButton;
+    CheckBox saleCheckButton,rentCheckButton;
 
 
     @Override
@@ -105,6 +105,8 @@ public class UploadProductFragment extends Fragment
 
         discription = (EditText) view.findViewById(R.id.edtDiscription);
 
+        price = (EditText) view.findViewById(R.id.edtPrice);
+
         security_amount = (EditText) view.findViewById(R.id.edtSecurityAmount);
 
         rent_per_day = (EditText) view.findViewById(R.id.edtRentPerDay);
@@ -113,9 +115,9 @@ public class UploadProductFragment extends Fragment
 
         buttonSave = (Button) view.findViewById(R.id.buttonSave);
 
-        saleRadioButton = (CheckBox) view.findViewById(R.id.saleRadioButton);
+        saleCheckButton = (CheckBox) view.findViewById(R.id.saleRadioButton);
 
-        rentRadioButton = (CheckBox) view.findViewById(R.id.rentRadioButton);
+        rentCheckButton = (CheckBox) view.findViewById(R.id.rentRadioButton);
 
         dashboardContainer = new DashboardContainer();
 
@@ -135,10 +137,12 @@ public class UploadProductFragment extends Fragment
 
             @Override public void onItemSelected(MaterialSpinner view, int position, long id, String item)
             {
-                if (position==0){
+                if (position==0)
+                {
                   cate_id= 0;
                 }
-                else {
+                else
+                {
                     Snackbar.make(view, "Clicked " + arrayList.get(position-1).toString(), Snackbar.LENGTH_LONG).show();
                     cate_id = Integer.parseInt(arrayList.get(position-1).toString());
                 }
@@ -199,16 +203,20 @@ public class UploadProductFragment extends Fragment
             }
         });
 
-        saleRadioButton.setOnClickListener(new View.OnClickListener()
+        saleCheckButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View view)
             {
 
-                if(saleRadioButton.isChecked())
+                if(saleCheckButton.isChecked())
                 {
                     // is checked
-                    rentRadioButton.setChecked(false);
+                    rentCheckButton.setChecked(false);
+                    price.setVisibility(View.VISIBLE);
+                    security_amount.setVisibility(View.GONE);
+                    rent_per_day.setVisibility(View.GONE);
+
                 }
                 else
                 {
@@ -219,15 +227,18 @@ public class UploadProductFragment extends Fragment
         });
 
 
-        rentRadioButton.setOnClickListener(new View.OnClickListener()
+        rentCheckButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View view)
             {
-                if(rentRadioButton.isChecked())
+                if(rentCheckButton.isChecked())
                 {
                     // is checked
-                    saleRadioButton.setChecked(false);
+                    saleCheckButton.setChecked(false);
+                    price.setVisibility(View.GONE);
+                    security_amount.setVisibility(View.VISIBLE);
+                    rent_per_day.setVisibility(View.VISIBLE);
                 }
                 else
                 {

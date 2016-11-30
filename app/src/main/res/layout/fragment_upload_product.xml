@@ -66,6 +66,7 @@
                         android:textColor="#b2b2b2"
                         android:textSize="18sp"
                         android:layout_marginLeft="10dp"
+                        android:checked="true"
                         />
 
 
@@ -137,6 +138,26 @@
 
                     </android.support.design.widget.TextInputLayout>
 
+
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <EditText
+                            android:id="@+id/edtPrice"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/black"
+                            android:hint="Price"
+                            android:imeOptions="actionNext"
+                            android:singleLine="true"
+                            android:inputType="number"
+                            />
+
+                    </android.support.design.widget.TextInputLayout>
+
+
                     <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
@@ -151,6 +172,7 @@
                             android:imeOptions="actionNext"
                             android:singleLine="true"
                             android:inputType="number"
+                            android:visibility="gone"
                             />
 
                     </android.support.design.widget.TextInputLayout>
@@ -170,6 +192,7 @@
                             android:imeOptions="actionDone"
                             android:singleLine="true"
                             android:inputType="number"
+                            android:visibility="gone"
                             />
 
                     </android.support.design.widget.TextInputLayout>

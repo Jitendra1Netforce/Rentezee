@@ -12,12 +12,15 @@ import android.support.v7.widget.Toolbar;
 import com.rentezee.fragments.profile.general.CustomViewPager;
 import com.rentezee.fragments.profile.general.WrapContentViewPager;
 import com.rentezee.helpers.BaseActivity;
+import com.rentezee.main.DashboardContainer;
 import com.rentezee.main.R;
 
 public class MyOrder extends BaseActivity {
 
 
     WrapContentViewPager viewPager;
+    DashboardContainer dashboardContainer;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -33,6 +36,9 @@ public class MyOrder extends BaseActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setTitle("My Order");
         }
+
+        dashboardContainer = new DashboardContainer();
+        dashboardContainer.count_cart();
 
         setupTab();
 
@@ -60,12 +66,10 @@ public class MyOrder extends BaseActivity {
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
 
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener()
-        {
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
 
             @Override
-            public void onTabSelected(TabLayout.Tab tab)
-            {
+            public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
 
             }
@@ -83,5 +87,23 @@ public class MyOrder extends BaseActivity {
 
 
     }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+
+        try {
+            invalidateOptionsMenu();
+        } catch (Exception e) {
+
+        }
+
+        dashboardContainer.count_cart();
+
+    }
+
+
 
 }

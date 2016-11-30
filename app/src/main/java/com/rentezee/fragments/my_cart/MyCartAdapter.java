@@ -18,6 +18,7 @@ import com.rentezee.helpers.Debugger;
 import com.rentezee.helpers.VolleyErrorHandler;
 import com.rentezee.helpers.VolleyGsonRequest;
 import com.rentezee.main.AppController;
+import com.rentezee.main.DashboardContainer;
 import com.rentezee.main.Detail;
 import com.rentezee.main.R;
 import com.rentezee.pojos.GenericResponse;
@@ -45,6 +46,8 @@ public class MyCartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     MyCartHolder myCartHolder;
     MyCart myCart;
 
+    DashboardContainer dashboardContainer;
+
 
     public MyCartAdapter(Context context, List<MyCartData> itemList, MyCart myCart)
     {
@@ -52,6 +55,8 @@ public class MyCartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         this.itemList = itemList;
         this.context = context;
         inflater = LayoutInflater.from(context);
+
+        dashboardContainer = new DashboardContainer();
     }
 
     @Override
@@ -137,6 +142,7 @@ public class MyCartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                         if (result != null) {
 
                             myCart.fetchData(true);
+                            dashboardContainer.count_cart();
 
                         }
 

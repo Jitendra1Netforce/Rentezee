@@ -17,11 +17,13 @@ import android.widget.TextView;
 import com.rentezee.fragments.profile.general.CustomViewPager;
 import com.rentezee.fragments.profile.general.WrapContentViewPager;
 import com.rentezee.helpers.BaseActivity;
+import com.rentezee.main.DashboardContainer;
 import com.rentezee.main.R;
 
 public class ProfileSetting extends BaseActivity {
 
     WrapContentViewPager viewPager;
+    DashboardContainer dashboardContainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -40,6 +42,8 @@ public class ProfileSetting extends BaseActivity {
             actionBar.setTitle("Profile Setting");
         }
 
+        dashboardContainer = new DashboardContainer();
+        dashboardContainer.count_cart();
 
         setupTab();
 
@@ -73,12 +77,10 @@ public class ProfileSetting extends BaseActivity {
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
 
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener()
-        {
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
 
             @Override
-            public void onTabSelected(TabLayout.Tab tab)
-            {
+            public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
                 tab.getIcon().setColorFilter(tabIconSelectedColor, PorterDuff.Mode.SRC_IN);
 
@@ -98,4 +100,23 @@ public class ProfileSetting extends BaseActivity {
 
 
     }
+
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+
+        try {
+            invalidateOptionsMenu();
+        } catch (Exception e) {
+
+        }
+
+        dashboardContainer.count_cart();
+
+    }
+
+
 }

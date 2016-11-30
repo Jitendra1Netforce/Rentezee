@@ -167,12 +167,10 @@
         <activity
             android:name="com.rentezee.fragments.chooseaddress.ChooseAddressActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-
-
         <activity
             android:name="com.rentezee.fragments.rentenzee_credit.CreditActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            ></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name="com.rentezee.fragments.rent_it_out.productview_details.ProductViewDetailsActivity"></activity>
     </application>
 
 </manifest>

@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -52,6 +53,7 @@ public class ProductsAdapter extends BaseAdapter {
         if (convertView == null) {
             convertView = LayoutInflater.from(context).inflate(R.layout.row_products, parent, false);
             viewHolder = new ViewHolder();
+            viewHolder.linearLayout = (LinearLayout) convertView.findViewById(R.id.linearlayout_productView);
             viewHolder.ivProductImage = (ImageView) convertView.findViewById(R.id.ivProductImage);
             viewHolder.tvProductName = (TextView) convertView.findViewById(R.id.tvProductName);
             viewHolder.tvProductCategoryName = (TextView) convertView.findViewById(R.id.tvProductCategoryName);
@@ -72,10 +74,16 @@ public class ProductsAdapter extends BaseAdapter {
         viewHolder.tvProductName.setText(list.get(position).product_name);
         viewHolder.tvProductCategoryName.setText(list.get(position).category_name);
         viewHolder.tvPrice.setText(rs + list.get(position).price + " per day");
+
+
+
+
         return convertView;
     }
 
-    private static class ViewHolder {
+    private static class ViewHolder
+    {
+        LinearLayout linearLayout;
         ImageView ivProductImage;
         TextView tvProductName, tvProductCategoryName, tvPrice;
     }

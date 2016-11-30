@@ -53,7 +53,7 @@ public class Category extends BaseActivity implements View.OnClickListener
      private ArrayList<Product> productList=new ArrayList<>();
      private ProductsAdapter productsAdapter;
      private int categoryId, page, sortBy;
-
+     DashboardContainer dashboardContainer;
 
 
     @Override
@@ -203,6 +203,9 @@ public class Category extends BaseActivity implements View.OnClickListener
             reset();
         }
        load_refresh();
+        dashboardContainer = new DashboardContainer();
+        dashboardContainer.count_cart();
+
        /* //Post data to sever
         JSONObject jsonObject = new JSONObject();
         try {
@@ -260,7 +263,6 @@ public class Category extends BaseActivity implements View.OnClickListener
             productList.addAll(list);
             productsAdapter.notifyDataSetChanged();
         }
-
 
     }
 
@@ -320,6 +322,20 @@ public class Category extends BaseActivity implements View.OnClickListener
     }
 
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+
+        try {
+            invalidateOptionsMenu();
+        } catch (Exception e) {
+
+        }
+
+        dashboardContainer.count_cart();
+
+    }
 
 
 }

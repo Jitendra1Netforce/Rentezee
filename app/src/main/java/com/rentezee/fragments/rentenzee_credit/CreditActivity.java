@@ -20,6 +20,7 @@ import com.koushikdutta.ion.Ion;
 import com.rentezee.fragments.my_cart.MyCartAdapter;
 import com.rentezee.fragments.my_cart.MyCartData;
 import com.rentezee.helpers.BaseActivity;
+import com.rentezee.main.DashboardContainer;
 import com.rentezee.main.R;
 
 import java.util.ArrayList;
@@ -38,7 +39,7 @@ public class CreditActivity extends BaseActivity
     LinearLayout layoutContinue;
     String device_id;
     RelativeLayout relativeLayoutDetails;
-
+    DashboardContainer dashboardContainer;
 
 
     @Override
@@ -62,6 +63,9 @@ public class CreditActivity extends BaseActivity
         creditAdapter = new CreditAdapter(context, creditDatas,this);
         creditProducts.setAdapter(creditAdapter);
         creditProducts.setLayoutManager(mLayoutManager);
+
+        dashboardContainer = new DashboardContainer();
+        dashboardContainer.count_cart();
 
         fetchData(true);
 
@@ -137,6 +141,22 @@ public class CreditActivity extends BaseActivity
                         }
                     }
                 });
+
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+
+        try {
+            invalidateOptionsMenu();
+        } catch (Exception e) {
+
+        }
+
+        dashboardContainer.count_cart();
 
     }
 
