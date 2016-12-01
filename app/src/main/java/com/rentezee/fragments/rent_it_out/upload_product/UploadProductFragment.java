@@ -27,7 +27,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 import com.afollestad.materialdialogs.DialogAction;
@@ -80,7 +82,7 @@ public class UploadProductFragment extends Fragment
     String user_id;
     long  userId;
     User user;
-    EditText product_name, discription,security_amount,rent_per_day;
+    EditText product_name, discription,security_amount,rent_per_day,price;
     MaterialDialog dialog;
     BaseActivity baseActivity;
     int image_size = 2;
@@ -88,6 +90,9 @@ public class UploadProductFragment extends Fragment
     DashboardContainer dashboardContainer;
     ArrayList<String> arrayList;
     public  int cate_id =0;
+    String product_price,security_price;
+    CheckBox saleCheckButton,rentCheckButton;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -101,6 +106,8 @@ public class UploadProductFragment extends Fragment
 
         discription = (EditText) view.findViewById(R.id.edtDiscription);
 
+        price = (EditText) view.findViewById(R.id.edtPrice);
+
         security_amount = (EditText) view.findViewById(R.id.edtSecurityAmount);
 
         rent_per_day = (EditText) view.findViewById(R.id.edtRentPerDay);
@@ -109,11 +116,15 @@ public class UploadProductFragment extends Fragment
 
         buttonSave = (Button) view.findViewById(R.id.buttonSave);
 
+        saleCheckButton = (CheckBox) view.findViewById(R.id.saleRadioButton);
+
+        rentCheckButton = (CheckBox) view.findViewById(R.id.rentRadioButton);
+
         dashboardContainer = new DashboardContainer();
 
         MaterialSpinner spinner = (MaterialSpinner) view.findViewById(R.id.spinner);
 
-       arrayList = new ArrayList<>();
+        arrayList = new ArrayList<>();
 
         ArrayList<String>  category_data = new ArrayList<>();
 
@@ -127,10 +138,12 @@ public class UploadProductFragment extends Fragment
 
             @Override public void onItemSelected(MaterialSpinner view, int position, long id, String item)
             {
-                if (position==0){
+                if (position==0)
+                {
                   cate_id= 0;
                 }
-                else {
+                else
+                {
                     Snackbar.make(view, "Clicked " + arrayList.get(position-1).toString(), Snackbar.LENGTH_LONG).show();
                     cate_id = Integer.parseInt(arrayList.get(position-1).toString());
                 }
@@ -190,6 +203,53 @@ public class UploadProductFragment extends Fragment
 
             }
         });
+
+        saleCheckButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+
+                if(saleCheckButton.isChecked())
+                {
+                    // is checked
+                    rentCheckButton.setChecked(false);
+                    price.setVisibility(View.VISIBLE);
+                    security_amount.setVisibility(View.GONE);
+                    rent_per_day.setVisibility(View.GONE);
+
+                }
+                else
+                {
+                    // not checked
+                }
+
+            }
+        });
+
+
+        rentCheckButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                if(rentCheckButton.isChecked())
+                {
+                    // is checked
+                    saleCheckButton.setChecked(false);
+                    price.setVisibility(View.GONE);
+                    security_amount.setVisibility(View.VISIBLE);
+                    rent_per_day.setVisibility(View.VISIBLE);
+                }
+                else
+                {
+                    // not checked
+                }
+
+            }
+        });
+
+
 
         return view;
     }
@@ -340,29 +400,56 @@ public class UploadProductFragment extends Fragment
 
         if (product_name.getText().toString().equals(""))
         {
-            showError("Please Enter Product Name");
+            showError("Please enter product name");
             return;
         }
 
         if (discription.getText().toString().equals("")) {
 
-            showError("Please Enter Discription");
+            showError("Please enter discription");
             return;
         }
 
+         if (security_amount.getVisibility()== View.VISIBLE)
+         {
 
-        if (security_amount.getText().toString().equals(""))
-        {
-            showError("Plase Enter Security Amount");
-            return;
+             if (security_amount.getText().toString().equals(""))
+             {
+                 showError("Please enter security amount");
+                 return;
+             }
+
+             security_price =security_amount.getText().toString();
+
+         }
+         else {
+
+             security_price = "0";
+
+         }
+
+
+        if(rent_per_day.getVisibility()== View.VISIBLE){
+
+            if (rent_per_day.getText().toString().equals(""))
+            {
+
+                showError("Please enter per day rent amount");
+                return;
+            }
+
         }
 
-        if (rent_per_day.getText().toString().equals("")) {
+            if(price.getVisibility()== View.VISIBLE){
 
-            showError("Plase Enter Per Day Rent Amount");
-            return;
-        }
+                if (price.getText().toString().equals(""))
+                {
 
+                    showError("Please enter price amount");
+                    return;
+                }
+
+            }
 
 
             baseActivity.showProgressBar(getActivity());
@@ -373,6 +460,20 @@ public class UploadProductFragment extends Fragment
                 files.add(new FilePart("image[]", savebitmap(rentItDatas.get(i).path)));
                 Log.e("sellDatas",files.toArray().toString());
             }
+
+            if(rent_per_day.getText().toString().equals(""))
+            {
+                product_price = price.getText().toString();
+
+            }
+            else
+            {
+
+                product_price = rent_per_day.getText().toString();
+            }
+
+
+            System.out.println("security_amount---"+security_price+"product price-------"+product_price);
 
             Log.e("sellDatas", files.toString());
             Ion.with(getActivity())
@@ -385,20 +486,28 @@ public class UploadProductFragment extends Fragment
                     .setMultipartParameter("product_name", product_name.getText().toString())
                     .setMultipartParameter("description", discription.getText().toString())
                     .setMultipartParameter("category_id", String.valueOf(cate_id))
-                    .setMultipartParameter("security_price", security_amount.getText().toString())
-                    .setMultipartParameter("price", rent_per_day.getText().toString())
+                    .setMultipartParameter("security_price", security_price)
+                    .setMultipartParameter("price", product_price)
                     .asString()
                     .setCallback(new FutureCallback<String>() {
                         @Override
                         public void onCompleted(Exception e, String result) {
                             Toast.makeText(getActivity(), result, Toast.LENGTH_SHORT).show();
-                            if (result == null) {
+                            if (result == null)
+                            {
+
 
                                 Toast.makeText(getActivity(), "error called", Toast.LENGTH_SHORT).show();
                                 e.printStackTrace();
                                 baseActivity.dismissProgressBar();
 
-                            } else {
+
+                            }
+                            else
+                            {
+
+
+                                System.out.println("result============="+ result);
                                 Toast.makeText(getActivity(), "success called", Toast.LENGTH_SHORT).show();
                                 Log.e("result", result.toString());
 
@@ -409,7 +518,6 @@ public class UploadProductFragment extends Fragment
                                 rentItDatas.clear();
                                 adapter.notifyDataSetChanged();
                                 baseActivity.dismissProgressBar();
-
 
                             }
 

@@ -84,7 +84,7 @@ public class AddressAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 AddressFragment.pincode.setText(itemList.get(position).zip_code);
 
                 AddressFragment.recyclerviewPastOrder.setVisibility(View.GONE);
-                AddressFragment.txtAddAddressHeading.setVisibility(View.GONE);
+                AddressFragment.txtAddAddressHeading.setText("View Address");
                 AddressFragment.relativeBottomLayout.setVisibility(View.VISIBLE);
                 AddressFragment.saveButton.setText("Update");
                 AddressFragment.linearlayout.setVisibility(View.VISIBLE);

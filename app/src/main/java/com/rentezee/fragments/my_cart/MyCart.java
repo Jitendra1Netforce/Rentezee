@@ -29,13 +29,22 @@ import com.rentezee.fragments.payment.PaymentActivity;
 import com.rentezee.fragments.payment.PaymentOptionActivity;
 import com.rentezee.helpers.BaseActivity;
 import com.rentezee.helpers.Constants;
+import com.rentezee.main.DashboardContainer;
 import com.rentezee.main.Detail;
 import com.rentezee.main.ProductListData;
 import com.rentezee.main.R;
+import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
+import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
+import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
-public class MyCart extends BaseActivity {
+public class MyCart extends BaseActivity implements TimePickerDialog.OnTimeSetListener,DatePickerDialog.OnDateSetListener
+{
 
     public CoordinatorLayout coordinatorLayout;
     RecyclerView mycartProducts;
@@ -45,9 +54,9 @@ public class MyCart extends BaseActivity {
     MyCartAdapter myCartAdapter;
     RelativeLayout relativeTotal;
     LinearLayout layoutContinue;
-    String device_id;
+    public String device_id;
     RelativeLayout relativeLayoutDetails;
-
+    DashboardContainer dashboardContainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -107,8 +116,12 @@ public class MyCart extends BaseActivity {
         });
 
 
-
         fetchData(true);
+
+        dashboardContainer = new DashboardContainer();
+        dashboardContainer.count_cart();
+
+
 
     }
 
@@ -187,6 +200,68 @@ public class MyCart extends BaseActivity {
                 });
 
     }
+
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+
+        try {
+            invalidateOptionsMenu();
+        } catch (Exception e) {
+
+        }
+
+        dashboardContainer.count_cart();
+
+    }
+
+
+
+    public void pick_date()
+    {
+        Calendar now = Calendar.getInstance();
+        DatePickerDialog dpd = DatePickerDialog.newInstance(
+                MyCart.this,
+                now.get(Calendar.YEAR),
+                now.get(Calendar.MONTH),
+                now.get(Calendar.DAY_OF_MONTH)
+        );
+        dpd.show(getFragmentManager(), "Datepickerdialog");
+    }
+
+
+    public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth)
+    {
+
+        if(MyCartAdapter.txt_from_date == true){
+            MyCartHolder.textview_from_date.setText(dayOfMonth+"/"+String.valueOf(monthOfYear+1)+"/"+year);
+
+
+        }
+        else
+        {
+
+            MyCartHolder.textview_to_date.setText(dayOfMonth+"/"+String.valueOf(monthOfYear+1)+"/"+year);
+
+        }
+
+    }
+
+
+
+    @Override
+    public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
+
+        String hourString = hourOfDay < 10 ? "0"+hourOfDay : ""+hourOfDay;
+        String minuteString = minute < 10 ? "0"+minute : ""+minute;
+        String secondString = second < 10 ? "0"+second : ""+second;
+        String time = "You picked the following time: "+hourString+"h"+minuteString+"m"+secondString+"s";
+        //month_txt.setText(time);
+    }
+
 
 
 }

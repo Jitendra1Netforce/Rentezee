@@ -119,14 +119,20 @@ public class ProductViewFragment extends Fragment implements  View.OnClickListen
                             {
                                 for (int i = 0; i < productListArray.size(); i++) {
                                     JsonObject jsonObject = (JsonObject) productListArray.get(i);
+
+                                    JsonObject category = jsonObject.getAsJsonObject("Category");
+                                    String category_name = category.get("name").getAsString();
+
+
                                     JsonObject product = jsonObject.getAsJsonObject("Product");
                                     String id = product.get("id").getAsString();
                                     String name = product.get("name").getAsString();
                                     String price = product.get("price").getAsString();
                                     String security_price = product.get("security_price").getAsString();
                                     String description = product.get("description").getAsString();
+
                                     String image = "http://netforce.biz/renteeze/webservice/files/products/" + product.get("images").getAsString();
-                                    productViewDatas.add(new ProductViewData(id, name, image, description, security_price, price));
+                                    productViewDatas.add(new ProductViewData(id, name, image, description, security_price, price,category_name));
 
                                 }
                                 productViewAdatpter = new ProductViewAdatpter(context, productViewDatas);

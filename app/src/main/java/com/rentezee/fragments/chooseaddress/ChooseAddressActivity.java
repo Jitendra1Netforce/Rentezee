@@ -1,6 +1,8 @@
 package com.rentezee.fragments.chooseaddress;
 
 import android.content.Context;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -44,7 +46,7 @@ public class ChooseAddressActivity extends BaseActivity
     public  LinearLayout linearlayout;
     public  EditText Address_label, Address_line1, Address_line2, Locality, city, pincode;
     public  Button saveButton;
-
+   CoordinatorLayout coordinatorLayout;
 
 
 
@@ -76,7 +78,7 @@ public class ChooseAddressActivity extends BaseActivity
 
         user_id = Long.toString(userId);
 
-
+        coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinatorLayout);
         relativeBottomLayout = (RelativeLayout) findViewById(R.id.relativeBottomLayout);
 
         Address_label = (EditText) findViewById(R.id.edtAddresslabel);
@@ -104,10 +106,34 @@ public class ChooseAddressActivity extends BaseActivity
             @Override
             public void onClick(View view) {
 
-                recyclerviewPastOrder.setVisibility(View.GONE);
-                txtAddAddressHeading.setVisibility(View.GONE);
-                relativeBottomLayout.setVisibility(View.VISIBLE);
-                linearlayout.setVisibility(View.VISIBLE);
+                if (txtAddAddressHeading.getText().toString().equals("+ Add Address"))
+                {
+
+                    txtAddAddressHeading.setText("View Address");
+                    Address_label.setText("");
+                    Address_line1.setText("");
+                    Address_line2.setText("");
+                    Locality.setText("");
+                    city.setText("");
+                    pincode.setText("");
+                    saveButton.setText("Save");
+
+                    recyclerviewPastOrder.setVisibility(View.GONE);
+                    relativeBottomLayout.setVisibility(View.VISIBLE);
+                    linearlayout.setVisibility(View.VISIBLE);
+
+                }
+                else
+                {
+
+                    txtAddAddressHeading.setText("+ Add Address");
+                    recyclerviewPastOrder.setVisibility(View.VISIBLE);
+                    txtAddAddressHeading.setVisibility(View.VISIBLE);
+                    relativeBottomLayout.setVisibility(View.GONE);
+                    linearlayout.setVisibility(View.GONE);
+
+                }
+
             }
         });
 
@@ -133,148 +159,286 @@ public class ChooseAddressActivity extends BaseActivity
 
     }
 
-    public  void update_address(String address_id) {
+    public  void update_address(String address_id)
+    {
 
-        recyclerviewPastOrder.setVisibility(View.INVISIBLE);
-        addressdata.clear();
+        String address_label = Address_label.getText().toString();
+        if (!address_label.isEmpty())
+        {
+            String address_line1 = Address_line1.getText().toString();
+            if (!address_line1.isEmpty())
+            {
 
-      showProgressBar(context);
+                String locality = Locality.getText().toString();
+                if (!locality.isEmpty())
+                {
 
-        final JsonObject jsonObject = new JsonObject();
+                    String city_d = city.getText().toString();
+                    if (!city_d.isEmpty())
+                    {
 
-        jsonObject.addProperty("address_id", address_id);
-        jsonObject.addProperty("user_id", user_id);
-        jsonObject.addProperty("address_label", Address_label.getText().toString());
-        jsonObject.addProperty("address_1", Address_line1.getText().toString());
-        jsonObject.addProperty("address_2", Address_line2.getText().toString());
-        jsonObject.addProperty("country", Locality.getText().toString());
-        jsonObject.addProperty("city", city.getText().toString());
-        jsonObject.addProperty("zip_code", pincode.getText().toString());
+                        String pin = pincode.getText().toString();
+                        if (!pin.isEmpty())
+                        {
+
+                            int pin_length = pincode.getText().length();
+                            if (pin_length == 6)
+                            {
+                                recyclerviewPastOrder.setVisibility(View.INVISIBLE);
+                                addressdata.clear();
+
+                                showProgressBar(context);
+
+                                final JsonObject jsonObject = new JsonObject();
+
+                                jsonObject.addProperty("address_id", address_id);
+                                jsonObject.addProperty("user_id", user_id);
+                                jsonObject.addProperty("address_label", Address_label.getText().toString());
+                                jsonObject.addProperty("address_1", Address_line1.getText().toString());
+                                jsonObject.addProperty("address_2", Address_line2.getText().toString());
+                                jsonObject.addProperty("country", Locality.getText().toString());
+                                jsonObject.addProperty("city", city.getText().toString());
+                                jsonObject.addProperty("zip_code", pincode.getText().toString());
 
 
-        Ion.with(context)
-                .load("http://netforce.biz/renteeze/webservice/Users/addresses")
-                .setJsonObjectBody(jsonObject)
-                .asJsonObject()
-                .setCallback(new FutureCallback<JsonObject>() {
+                                Ion.with(context)
+                                        .load("http://netforce.biz/renteeze/webservice/Users/addresses")
+                                        .setJsonObjectBody(jsonObject)
+                                        .asJsonObject()
+                                        .setCallback(new FutureCallback<JsonObject>() {
 
-                    @Override
-                    public void onCompleted(Exception e, JsonObject result) {
+                                            @Override
+                                            public void onCompleted(Exception e, JsonObject result) {
 
-                        if (result != null) {
-                            System.out.println("data=====" + result.toString());
+                                                if (result != null) {
+                                                    System.out.println("data=====" + result.toString());
 
-                            JsonArray productListArray = result.getAsJsonArray("data");
-                            System.out.println("data=====" + result.toString());
+                                                    JsonArray productListArray = result.getAsJsonArray("data");
+                                                    System.out.println("data=====" + result.toString());
 
-                            for (int i = 0; i < productListArray.size(); i++) {
-                                JsonObject jsonObject = (JsonObject) productListArray.get(i);
+                                                    for (int i = 0; i < productListArray.size(); i++) {
+                                                        JsonObject jsonObject = (JsonObject) productListArray.get(i);
 
-                                JsonObject address = jsonObject.getAsJsonObject("Address");
+                                                        JsonObject address = jsonObject.getAsJsonObject("Address");
 
-                                String product_id = address.get("id").getAsString();
-                                String address_label = address.get("address_label").getAsString();
-                                String address1 = address.get("address_1").getAsString();
-                                String address2 = address.get("address_2").getAsString();
-                                String city = address.get("city").getAsString();
-                                String country = address.get("country").getAsString();
-                                String user_id = address.get("user_id").getAsString();
-                                String zip_code = address.get("zip_code").getAsString();
+                                                        String product_id = address.get("id").getAsString();
+                                                        String address_label = address.get("address_label").getAsString();
+                                                        String address1 = address.get("address_1").getAsString();
+                                                        String address2 = address.get("address_2").getAsString();
+                                                        String city = address.get("city").getAsString();
+                                                        String country = address.get("country").getAsString();
+                                                        String user_id = address.get("user_id").getAsString();
+                                                        String zip_code = address.get("zip_code").getAsString();
 
-                                addressdata.add(new ChooseAddressData(product_id, address_label, address1, address2, city, country, user_id, zip_code));
+                                                        addressdata.add(new ChooseAddressData(product_id, address_label, address1, address2, city, country, user_id, zip_code));
+                                                    }
+                                                    addressAdapter = new ChooseAddressAdapter(context, addressdata,ChooseAddressActivity.this );
+                                                    recyclerviewPastOrder.setAdapter(addressAdapter);
+                                                    addressAdapter.notifyDataSetChanged();
+                                                    recyclerviewPastOrder.setVisibility(View.VISIBLE);
+                                                    dismissProgressBar();
+
+                                                    recyclerviewPastOrder.setVisibility(View.VISIBLE);
+                                                    txtAddAddressHeading.setVisibility(View.VISIBLE);
+                                                    txtAddAddressHeading.setText("+ Add Address");
+                                                    relativeBottomLayout.setVisibility(View.GONE);
+                                                    linearlayout.setVisibility(View.GONE);
+
+
+                                                } else {
+
+                                                    dismissProgressBar();
+                                                    Log.e("error", e.toString());
+                                                }
+
+                                            }
+                                        });
+
                             }
-                            addressAdapter = new ChooseAddressAdapter(context, addressdata,ChooseAddressActivity.this );
-                            recyclerviewPastOrder.setAdapter(addressAdapter);
-                            addressAdapter.notifyDataSetChanged();
-                            recyclerviewPastOrder.setVisibility(View.VISIBLE);
-                         dismissProgressBar();
+                            else{
 
-                            recyclerviewPastOrder.setVisibility(View.VISIBLE);
-                            txtAddAddressHeading.setVisibility(View.VISIBLE);
-                            relativeBottomLayout.setVisibility(View.GONE);
-                            linearlayout.setVisibility(View.GONE);
+                                Snackbar.make(coordinatorLayout, "Please enter 6 digit pincode", Snackbar.LENGTH_LONG).show();
 
+                            }
 
-                        } else {
+                        }
+                        else
+                        {
 
-                         dismissProgressBar();
-                            Log.e("error", e.toString());
+                            Snackbar.make(coordinatorLayout,"Please enter pincode", Snackbar.LENGTH_LONG).show();
+
                         }
 
                     }
-                });
+                    else
+                    {
+
+                        Snackbar.make(coordinatorLayout,"Please enter city", Snackbar.LENGTH_LONG).show();
+
+                    }
+                }
+                else {
+
+                    Snackbar.make(coordinatorLayout,"Please enter locality", Snackbar.LENGTH_LONG).show();
+
+                }
+            }
+            else
+            {
+                Snackbar.make(coordinatorLayout,"Please enter address line 1", Snackbar.LENGTH_LONG).show();
+            }
+
+        }
+        else
+        {
+
+            Snackbar.make(coordinatorLayout, "Please enter address label", Snackbar.LENGTH_LONG).show();
+        }
+
+
+
+
 
     }
 
     public  void add_address() {
 
-        recyclerviewPastOrder.setVisibility(View.INVISIBLE);
-        addressdata.clear();
+        String address_label = Address_label.getText().toString();
+        if (!address_label.isEmpty())
+        {
+            String address_line1 = Address_line1.getText().toString();
+            if (!address_line1.isEmpty())
+            {
 
-   showProgressBar(context);
+                String locality = Locality.getText().toString();
+                if (!locality.isEmpty())
+                {
 
-        final JsonObject jsonObject = new JsonObject();
+                    String city_d = city.getText().toString();
+                    if (!city_d.isEmpty())
+                    {
 
-        jsonObject.addProperty("user_id", user_id);
-        jsonObject.addProperty("address_label", Address_label.getText().toString());
-        jsonObject.addProperty("address_1", Address_line1.getText().toString());
-        jsonObject.addProperty("address_2", Address_line2.getText().toString());
-        jsonObject.addProperty("country", Locality.getText().toString());
-        jsonObject.addProperty("city", city.getText().toString());
-        jsonObject.addProperty("zip_code", pincode.getText().toString());
+                        String pin = pincode.getText().toString();
+                        if (!pin.isEmpty())
+                        {
+
+                            int pin_length = pincode.getText().length();
+                            if (pin_length == 6)
+                            {
+
+                                recyclerviewPastOrder.setVisibility(View.INVISIBLE);
+                                addressdata.clear();
+
+                                showProgressBar(context);
+
+                                final JsonObject jsonObject = new JsonObject();
+
+                                jsonObject.addProperty("user_id", user_id);
+                                jsonObject.addProperty("address_label", Address_label.getText().toString());
+                                jsonObject.addProperty("address_1", Address_line1.getText().toString());
+                                jsonObject.addProperty("address_2", Address_line2.getText().toString());
+                                jsonObject.addProperty("country", Locality.getText().toString());
+                                jsonObject.addProperty("city", city.getText().toString());
+                                jsonObject.addProperty("zip_code", pincode.getText().toString());
 
 
-        Ion.with(context)
-                .load("http://netforce.biz/renteeze/webservice/Users/addresses")
-                .setJsonObjectBody(jsonObject)
-                .asJsonObject()
-                .setCallback(new FutureCallback<JsonObject>() {
+                                Ion.with(context)
+                                        .load("http://netforce.biz/renteeze/webservice/Users/addresses")
+                                        .setJsonObjectBody(jsonObject)
+                                        .asJsonObject()
+                                        .setCallback(new FutureCallback<JsonObject>() {
 
-                    @Override
-                    public void onCompleted(Exception e, JsonObject result) {
+                                            @Override
+                                            public void onCompleted(Exception e, JsonObject result) {
 
-                        if (result != null) {
-                            System.out.println("data=====" + result.toString());
+                                                if (result != null) {
+                                                    System.out.println("data=====" + result.toString());
 
-                            JsonArray productListArray = result.getAsJsonArray("data");
-                            System.out.println("data=====" + result.toString());
+                                                    JsonArray productListArray = result.getAsJsonArray("data");
+                                                    System.out.println("data=====" + result.toString());
 
-                            for (int i = 0; i < productListArray.size(); i++) {
-                                JsonObject jsonObject = (JsonObject) productListArray.get(i);
+                                                    for (int i = 0; i < productListArray.size(); i++) {
+                                                        JsonObject jsonObject = (JsonObject) productListArray.get(i);
 
-                                JsonObject address = jsonObject.getAsJsonObject("Address");
+                                                        JsonObject address = jsonObject.getAsJsonObject("Address");
 
-                                String product_id = address.get("id").getAsString();
-                                String address_label = address.get("address_label").getAsString();
-                                String address1 = address.get("address_1").getAsString();
-                                String address2 = address.get("address_2").getAsString();
-                                String city = address.get("city").getAsString();
-                                String country = address.get("country").getAsString();
-                                String user_id = address.get("user_id").getAsString();
-                                String zip_code = address.get("zip_code").getAsString();
+                                                        String product_id = address.get("id").getAsString();
+                                                        String address_label = address.get("address_label").getAsString();
+                                                        String address1 = address.get("address_1").getAsString();
+                                                        String address2 = address.get("address_2").getAsString();
+                                                        String city = address.get("city").getAsString();
+                                                        String country = address.get("country").getAsString();
+                                                        String user_id = address.get("user_id").getAsString();
+                                                        String zip_code = address.get("zip_code").getAsString();
 
-                                addressdata.add(new ChooseAddressData(product_id, address_label, address1, address2, city, country, user_id, zip_code));
+                                                        addressdata.add(new ChooseAddressData(product_id, address_label, address1, address2, city, country, user_id, zip_code));
+                                                    }
+                                                    addressAdapter = new ChooseAddressAdapter(context, addressdata,ChooseAddressActivity.this );
+                                                    recyclerviewPastOrder.setAdapter(addressAdapter);
+                                                    addressAdapter.notifyDataSetChanged();
+                                                    recyclerviewPastOrder.setVisibility(View.VISIBLE);
+                                                    dismissProgressBar();
+
+                                                    recyclerviewPastOrder.setVisibility(View.VISIBLE);
+                                                    txtAddAddressHeading.setVisibility(View.VISIBLE);
+                                                    txtAddAddressHeading.setText("+ Add Address");
+                                                    relativeBottomLayout.setVisibility(View.GONE);
+                                                    linearlayout.setVisibility(View.GONE);
+
+
+                                                } else {
+
+                                                    dismissProgressBar();
+                                                    Log.e("error", e.toString());
+                                                }
+
+                                            }
+                                        });
+
+
                             }
-                            addressAdapter = new ChooseAddressAdapter(context, addressdata,ChooseAddressActivity.this );
-                            recyclerviewPastOrder.setAdapter(addressAdapter);
-                            addressAdapter.notifyDataSetChanged();
-                            recyclerviewPastOrder.setVisibility(View.VISIBLE);
-                            dismissProgressBar();
+                            else{
 
-                            recyclerviewPastOrder.setVisibility(View.VISIBLE);
-                            txtAddAddressHeading.setVisibility(View.VISIBLE);
-                            relativeBottomLayout.setVisibility(View.GONE);
-                            linearlayout.setVisibility(View.GONE);
+                                Snackbar.make(coordinatorLayout, "Please enter 6 digit pincode", Snackbar.LENGTH_LONG).show();
 
+                            }
 
-                        } else {
+                        }
+                        else
+                        {
 
-                           dismissProgressBar();
-                            Log.e("error", e.toString());
+                            Snackbar.make(coordinatorLayout,"Please enter pincode", Snackbar.LENGTH_LONG).show();
+
                         }
 
                     }
-                });
+                    else
+                    {
+
+                        Snackbar.make(coordinatorLayout,"Please enter city", Snackbar.LENGTH_LONG).show();
+
+                    }
+                }
+                else {
+
+                    Snackbar.make(coordinatorLayout,"Please enter locality", Snackbar.LENGTH_LONG).show();
+
+                }
+            }
+            else
+            {
+                Snackbar.make(coordinatorLayout,"Please enter address line 1", Snackbar.LENGTH_LONG).show();
+            }
+
+        }
+        else
+        {
+
+            Snackbar.make(coordinatorLayout, "Please enter address label", Snackbar.LENGTH_LONG).show();
+        }
+
+
+
 
     }
 

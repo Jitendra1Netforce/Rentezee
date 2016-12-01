@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.rentezee.fragments.profile.general.UserSessionManager;
+import com.rentezee.fragments.rent_it_out.upload_product.UploadProductFragment;
 import com.rentezee.fragments.rentenzee_credit.CreditHolder;
 import com.rentezee.main.R;
 
@@ -78,9 +79,24 @@ public class RentItAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position)
+    {
 
-        switch (holder.getItemViewType()) {
+        RentItHolder viewHolder =  (RentItHolder)  holder;
+
+        viewHolder.imageViewClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                UploadProductFragment.rentItDatas.remove(position);
+                notifyDataSetChanged();
+
+            }
+        });
+
+        switch (holder.getItemViewType())
+        {
+
             /*case CLICK:
                 SellHolderClick sellHolderClick = (SellHolderClick) holder;
                 sellHolderClick.imageView.setOnClickListener(new View.OnClickListener() {
@@ -102,6 +118,9 @@ public class RentItAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 }
                 break;
         }
+
+
+
 
 
     }

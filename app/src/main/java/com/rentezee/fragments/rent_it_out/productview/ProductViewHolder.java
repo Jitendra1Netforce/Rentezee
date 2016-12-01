@@ -16,7 +16,7 @@ public class ProductViewHolder extends RecyclerView.ViewHolder
 {
 
     View view;
-    TextView tvProductName,tvProductCategoryName,tvDescription,tvSecurityMoney,tvPerdayRent;
+    TextView tvProductName,tvProductCategoryName,tvDescription,tvSecurityMoney,tvPerdayRent,tvPriceData,tvPerdayHeading,tvSecurityheading;
     LinearLayout linearLayout;
     ImageView ivProductImage;
 
@@ -37,6 +37,13 @@ public class ProductViewHolder extends RecyclerView.ViewHolder
         tvSecurityMoney = (TextView) itemView.findViewById(R.id.tvSecurityMoney);
 
         tvPerdayRent = (TextView) itemView.findViewById(R.id.tvPerdayRent);
+
+        tvPriceData = (TextView) itemView.findViewById(R.id.tvPice);
+
+        tvPerdayHeading = (TextView) itemView.findViewById(R.id.txtPerdayHeading);
+
+        tvSecurityheading = (TextView) itemView.findViewById(R.id.txtSecurityheading);
+
 
         view = itemView;
     }

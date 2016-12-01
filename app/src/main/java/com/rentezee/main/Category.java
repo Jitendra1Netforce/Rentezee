@@ -53,7 +53,7 @@ public class Category extends BaseActivity implements View.OnClickListener
      private ArrayList<Product> productList=new ArrayList<>();
      private ProductsAdapter productsAdapter;
      private int categoryId, page, sortBy;
-
+     DashboardContainer dashboardContainer;
 
 
     @Override
@@ -71,6 +71,8 @@ public class Category extends BaseActivity implements View.OnClickListener
         if(actionBar!=null){
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
+
+
         //find views
         coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinatorLayout);
         layoutBottom=(LinearLayout)findViewById(R.id.layoutBottom);
@@ -201,6 +203,9 @@ public class Category extends BaseActivity implements View.OnClickListener
             reset();
         }
        load_refresh();
+        dashboardContainer = new DashboardContainer();
+        dashboardContainer.count_cart();
+
        /* //Post data to sever
         JSONObject jsonObject = new JSONObject();
         try {
@@ -259,21 +264,16 @@ public class Category extends BaseActivity implements View.OnClickListener
             productsAdapter.notifyDataSetChanged();
         }
 
-
     }
-
-
 
     private void load_refresh()
     {
         // recyclerView.setVisibility(View.GONE);
-
         // homeDatas.clear();
-
         showProgressBar(context);
 
         Ion.with(this)
-                .load("http://netforce.biz/renteeze/webservice/products/product_list?cat_id=1")
+                .load("http://netforce.biz/renteeze/webservice/products/product_list?cat_id="+categoryId)
 
                 .asJsonObject()
                 .setCallback(new FutureCallback<JsonObject>() {
@@ -322,6 +322,20 @@ public class Category extends BaseActivity implements View.OnClickListener
     }
 
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+
+        try {
+            invalidateOptionsMenu();
+        } catch (Exception e) {
+
+        }
+
+        dashboardContainer.count_cart();
+
+    }
 
 
 }

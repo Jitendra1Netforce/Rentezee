@@ -16,6 +16,7 @@ import com.koushikdutta.ion.Ion;
 import com.rentezee.helpers.AppPreferenceManager;
 import com.rentezee.helpers.BaseActivity;
 import com.rentezee.helpers.PreferenceKeys;
+import com.rentezee.main.DashboardContainer;
 import com.rentezee.main.R;
 import com.rentezee.pojos.User;
 
@@ -32,7 +33,7 @@ public class WishList extends BaseActivity {
     long  userId;
     User user;
     LinearLayoutManager linearLayoutManager;
-
+    DashboardContainer dashboardContainer;
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +50,10 @@ public class WishList extends BaseActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setTitle("My Wishlist");
         }
+
+        dashboardContainer = new DashboardContainer();
+        dashboardContainer.count_cart();
+
 
         user = (User) new AppPreferenceManager(context).getObject(PreferenceKeys.savedUser, User.class);
 
@@ -88,6 +93,24 @@ public class WishList extends BaseActivity {
     }
 
 
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+
+        try {
+            invalidateOptionsMenu();
+        } catch (Exception e) {
+
+        }
+
+        dashboardContainer.count_cart();
+
+    }
+
+
+
     public void load_refresh()
     {
         // recyclerView.setVisibility(View.GONE);
@@ -119,10 +142,10 @@ public class WishList extends BaseActivity {
                                 String product_id = jsonObject.get("product_id").getAsString();
                                 String name = jsonObject.get("name").getAsString();
                                 String price = jsonObject.get("price").getAsString();
+                                String security_price = jsonObject.get("security_price").getAsString();
                                 String category_name = jsonObject.get("categories_name").getAsString();
                                 String image = "http://netforce.biz/renteeze/webservice/files/products/" + jsonObject.get("image").getAsString();
-                                wishListDatas.add(new WishListData(wishlistid,product_id, name, image, price, category_name));
-
+                                wishListDatas.add(new WishListData(wishlistid,product_id, name, image, price, category_name,security_price));
 
 
                             }

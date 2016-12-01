@@ -10,8 +10,11 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.OvershootInterpolator;
+import android.view.animation.ScaleAnimation;
 import android.widget.TextView;
 
+import com.rentezee.main.DashboardContainer;
 import com.rentezee.main.R;
 import com.rentezee.main.Search;
 import com.rentezee.views.CircleProgressBar;
@@ -24,6 +27,9 @@ import com.rentezee.views.CircleProgressBar;
 public abstract  class BaseActivity extends AppCompatActivity {
 
     private Dialog dialog;
+    public static TextView tvCartCount ;
+
+
     public void showProgressBar(Context context) {
         try {
             dismissProgressBar();
@@ -50,16 +56,21 @@ public abstract  class BaseActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.dashboard_container, menu);
 
         View view = menu.findItem(R.id.menu_cart).getActionView();
-        TextView tvCartCount = (TextView) view.findViewById(R.id.tvCartCount);
-        /*
-        ScaleAnimation scale = new ScaleAnimation(0, 1, 0, 1, ScaleAnimation.RELATIVE_TO_SELF, .5f, ScaleAnimation.RELATIVE_TO_SELF, .5f);
+
+         tvCartCount = (TextView) view.findViewById(R.id.tvCartCount);
+
+        //tvCartCount.setText(String.valueOf(DashboardContainer.cart_count));
+
+     /*   ScaleAnimation scale = new ScaleAnimation(0, 1, 0, 1, ScaleAnimation.RELATIVE_TO_SELF, .5f, ScaleAnimation.RELATIVE_TO_SELF, .5f);
         scale.setDuration(300);
         scale.setRepeatMode(ScaleAnimation.INFINITE);
         scale.setRepeatCount(Integer.MAX_VALUE);
         scale.setInterpolator(new OvershootInterpolator());
-        tvCartCount.startAnimation(scale);
-        */
+        tvCartCount.startAnimation(scale);*/
+
         return true;
+
+
     }
 
     @Override

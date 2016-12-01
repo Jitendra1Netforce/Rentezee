@@ -26,6 +26,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Menu;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -99,7 +100,7 @@ public class DashboardContainer extends BaseActivity implements NavigationView.O
         ResultCallback<LocationSettingsResult>,
         DialogInterface.OnCancelListener {
 
-
+    public static  int cart_count;
    public ArrayList<CategoriesData> categoryDatas = new ArrayList<>();
     ArrayList<TrendingData> trendingDatas = new ArrayList<>();
     public  static final ArrayList<String> category_data = new ArrayList<>();
@@ -133,12 +134,17 @@ public class DashboardContainer extends BaseActivity implements NavigationView.O
     TextView tvNavName,tvNavEmail,tvNavMobile;
     LinearLayout layoutNavLogin,layoutNavEmailMobile,layoutLogout;
     CircleImageView circleImageView;
+    public static  int my_cart =0;
+    public static  String  device_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard_container);
         FacebookSdk.sdkInitialize(getApplicationContext());
+
+
+        device_id = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -246,7 +252,9 @@ public class DashboardContainer extends BaseActivity implements NavigationView.O
             tvNavName.setText("Welcome Guest!");
         }
 
-        setMenuCounter(R.id.nav_cart, 1);
+        System.out.println("my_cart==============" + my_cart);
+
+
         setMenuCounter(R.id.nav_notifications, 0);
         setMenuCredits(R.id.nav_rentezee_credits, 100);
 
@@ -329,9 +337,7 @@ public class DashboardContainer extends BaseActivity implements NavigationView.O
                     break;
                 }
             }*/
-
             checkPermissions();
-
         }
     }
 
@@ -690,6 +696,7 @@ public class DashboardContainer extends BaseActivity implements NavigationView.O
     }
 
 
+
     private void load_refresh()
     {
         String  device_id = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
@@ -705,12 +712,18 @@ public class DashboardContainer extends BaseActivity implements NavigationView.O
                 .asJsonObject()
                 .setCallback(new FutureCallback<JsonObject>() {
                     @Override
-                    public void onCompleted(Exception e, JsonObject result)
-                    {
+                    public void onCompleted(Exception e, JsonObject result) {
 
-                        if (result != null)
-                        {
+                        //System.out.println("data================" + result.toString());
+
+                        if (result != null) {
                             JsonObject v = result.getAsJsonObject("data");
+
+                            String my_cart_c = v.get("my_cart").getAsString();
+
+                            my_cart = Integer.parseInt(my_cart_c);
+
+                            System.out.println("my cart==============" + my_cart_c);
 
                             JsonArray sliderArray = v.getAsJsonArray("sliderData");
 
@@ -719,18 +732,18 @@ public class DashboardContainer extends BaseActivity implements NavigationView.O
                             JsonArray trendingsArray = v.getAsJsonArray("trendings");
 
                             ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-                            for (int i = 0; i < sliderArray.size(); i++)
-                            {
+
+                            for (int i = 0; i < sliderArray.size(); i++) {
                                 JsonObject jsonObject = (JsonObject) sliderArray.get(i);
                                 JsonObject vo = jsonObject.getAsJsonObject("Slider");
                                 String id = vo.get("id").getAsString();
                                 String name = vo.get("title").getAsString();
                                 String image = vo.get("image").getAsString();
-                                System.out.println("imageurl ======================"  + name);
+                                System.out.println("imageurl ======================" + name);
 
                                 Fragment fragment = new DashboardSliderImage();
                                 Bundle bundle = new Bundle();
-                                bundle.putString(Constants.URL, "http://netforce.biz/renteeze/webservice/images/slides/"+image);
+                                bundle.putString(Constants.URL, "http://netforce.biz/renteeze/webservice/images/slides/" + image);
                                 fragment.setArguments(bundle);
                                 adapter.addFragment(fragment, name);
                             }
@@ -739,20 +752,19 @@ public class DashboardContainer extends BaseActivity implements NavigationView.O
 
                             category_data.add("Choose Category");
 
-                            for (int i = 0; i < categoruArray.size(); i++)
-                            {
+                            for (int i = 0; i < categoruArray.size(); i++) {
                                 JsonObject jsonObject = (JsonObject) categoruArray.get(i);
                                 JsonObject category = jsonObject.getAsJsonObject("Category");
                                 String id = category.get("id").getAsString();
 
                                 String name = category.get("name").getAsString();
-                                String image = "http://netforce.biz/renteeze/webservice/images/"+category.get("image").getAsString();
+                                String image = "http://netforce.biz/renteeze/webservice/images/" + category.get("image").getAsString();
 
                                 System.out.println("imageurl ======================" + name);
                                 categoryDatas.add(new CategoriesData(id, name, image));
-                               category_data.add(name);
+                                category_data.add(name);
                                 category_id.add(id);
-                                param_aux.put(Integer.parseInt(id),name.toString());
+                                param_aux.put(Integer.parseInt(id), name.toString());
                             }
                             dashboardCategoriesAdapterAdapter = new DashboardCategoriesAdapter(context, categoryDatas);
 
@@ -760,8 +772,7 @@ public class DashboardContainer extends BaseActivity implements NavigationView.O
                             gvCategories.setAdapter(dashboardCategoriesAdapterAdapter);
                             gvCategories.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                 @Override
-                                public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-                                {
+                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                                     Intent intent = new Intent(context, Category.class);
                                     intent.putParcelableArrayListExtra(Constants.CATEGORIES, categoryDatas);
@@ -772,8 +783,7 @@ public class DashboardContainer extends BaseActivity implements NavigationView.O
                                 }
                             });
 
-                            for (int i = 0; i < trendingsArray.size(); i++)
-                            {
+                            for (int i = 0; i < trendingsArray.size(); i++) {
                                 JsonObject jsonObject = (JsonObject) trendingsArray.get(i);
                                 JsonObject trenging = jsonObject.getAsJsonObject("Product");
 
@@ -785,27 +795,28 @@ public class DashboardContainer extends BaseActivity implements NavigationView.O
                                 String name = trenging.get("name").getAsString();
                                 String price = trenging.get("price").getAsString();
                                 String special_price = trenging.get("special_price").getAsString();
-                                String image = "http://netforce.biz/renteeze/webservice/files/products/"+trenging.get("images").getAsString();
+                                String image = "http://netforce.biz/renteeze/webservice/files/products/" + trenging.get("images").getAsString();
 
                                 System.out.println("imageurl ======================" + name);
-                                trendingDatas.add(new TrendingData(id, name, image,price,special_price,category_name));
+                                trendingDatas.add(new TrendingData(id, name, image, price, special_price, category_name));
 
                             }
+                            setMenuCounter(R.id.nav_cart, 0);
+
+                            cart_count = my_cart;
+                            tvCartCount.setText(String.valueOf(cart_count));
 
                             if (trendingDatas != null) {
                                 tvTrending.setVisibility(View.VISIBLE);
-                                int width=displayMetrics.widthPixels-(int)getResources().getDimension(R.dimen.ten);
+                                int width = displayMetrics.widthPixels - (int) getResources().getDimension(R.dimen.ten);
                                 TrendingAdapter trendingAdapter = new TrendingAdapter(context, trendingDatas, width);
                                 gvTrending.setFocusable(false);
                                 gvTrending.setAdapter(trendingAdapter);
-                            }else{
+                            } else {
                                 tvTrending.setVisibility(View.GONE);
                             }
-
-
                             dismissProgressBar();
-                        } else
-                        {
+                        } else {
 
                             dismissProgressBar();
                             Log.e("error", e.toString());
@@ -814,8 +825,6 @@ public class DashboardContainer extends BaseActivity implements NavigationView.O
                 });
 
     }
-
-
 
 /*
 
@@ -919,9 +928,8 @@ public class DashboardContainer extends BaseActivity implements NavigationView.O
         gvCategories.setAdapter(dashboardCategoriesAdapterAdapter);
         gvCategories.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-            {
-                Intent intent=new Intent(context, Category.class);
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(context, Category.class);
                 intent.putParcelableArrayListExtra(Constants.CATEGORIES, fetchedCategoryDataList);
                 intent.putExtra(Constants.CATEGORY_ID, fetchedCategoryDataList.get(position).getCategoryId());
                 intent.putExtra(Constants.SELECTED_TAB_POSITION, position);
@@ -946,9 +954,68 @@ public class DashboardContainer extends BaseActivity implements NavigationView.O
     }
 
 
+    public  void count_cart(){
+
+        // recyclerView.setVisibility(View.GONE);
+        // homeDatas.clear();
+
+        System.out.println("device_id-------------" + device_id);
+
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("device_id", device_id);
+
+        Ion.with(this)
+                .load("http://netforce.biz/renteeze/webservice/Pages/dashboard.json")
+                .setJsonObjectBody(jsonObject)
+                .asJsonObject()
+                .setCallback(new FutureCallback<JsonObject>() {
+                    @Override
+                    public void onCompleted(Exception e, JsonObject result) {
+
+//                        System.out.println("data================" + result.toString());
+
+                        if (result != null)
+                        {
+                            JsonObject v = result.getAsJsonObject("data");
+
+                            String my_cart_c = v.get("my_cart").getAsString();
+
+                            int new_my_cart = Integer.parseInt(my_cart_c);
+
+
+                            tvCartCount.setText(String.valueOf(new_my_cart));
+
+                            System.out.println("reload------------------" + cart_count);
+
+                            //setMenuCounter(R.id.nav_cart, new_my_cart);
+
+                        }
+                        else
+                        {
+
+                            dismissProgressBar();
+                            Log.e("error", e.toString());
+                        }
+                    }
+                });
+
+
+    }
+
+
     @Override
-    protected void onPostResume() {
-        super.onPostResume();
+    protected void onResume()
+    {
+        super.onResume();
+
+
+        try {
+            invalidateOptionsMenu();
+        }catch (Exception e){
+
+    }
+
+        count_cart();
 
         User user = (User) new AppPreferenceManager(context).getObject(PreferenceKeys.savedUser, User.class);
 
@@ -963,12 +1030,13 @@ public class DashboardContainer extends BaseActivity implements NavigationView.O
 
             Glide.with(context)
                     .load(user.getImageUrl())
-                    .centerCrop()
-                            //.placeholder(R.mipmap.ic_loading)
+                    .centerCrop()//.placeholder(R.mipmap.ic_loading)
                     .crossFade()
                     .into(circleImageView);
 
-        } else {
+        }
+        else
+        {
             layoutLogout.setVisibility(View.GONE);
             layoutNavEmailMobile.setVisibility(View.GONE);
             layoutNavLogin.setVisibility(View.VISIBLE);
