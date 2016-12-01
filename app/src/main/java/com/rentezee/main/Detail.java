@@ -72,7 +72,7 @@ public class Detail extends BaseActivity
     MaterialFavoriteButton materialFavoriteButton;
     public static final String PREFERENCES = "WishListPrefs";
     SharedPreferences settings;
-    String id,user_id;
+    String id,user_id, user_mobile;
     long  userId;
     User user;
     DashboardContainer dashboardContainer;
@@ -121,20 +121,28 @@ public class Detail extends BaseActivity
 
         tvUserName = (TextView) findViewById(R.id.txtUsername);
 
+        tvUserEmail = (TextView) findViewById(R.id.txtUserEmail);
 
+        tvUserMobile = (TextView) findViewById(R.id.txtMobileNo);
 
         tvProductID = (TextView) findViewById(R.id.tvProductID);
 
         tvProductName=(TextView)findViewById(R.id.tvProductName);
+
         tvProductCategoryName=(TextView)findViewById(R.id.tvProductCategoryName);
+
         tvDescription=(TextView)findViewById(R.id.tvDescription);
+
         tvSecurityMoney=(TextView)findViewById(R.id.tvSecurityMoney);
+
         tvPerDayRent=(TextView)findViewById(R.id.tvPerDayRent);
 
         materialFavoriteButton = (MaterialFavoriteButton) findViewById(R.id.payment_salon_material_button);
 
         cardViewDescription=(CardView) findViewById(R.id.cardViewDescription);
+
         layoutPrice=(LinearLayout)findViewById(R.id.layoutPrice);
+
         layoutBottom=(LinearLayout)findViewById(R.id.layoutBottom);
 
         String cat_id = getIntent().getStringExtra(Constants.PRODUCT_ID);
@@ -459,7 +467,9 @@ public class Detail extends BaseActivity
                     @Override
                     public void onCompleted(Exception e, JsonObject result) {
 
-                        if (result != null) {
+                        if (result != null)
+                        {
+
                             System.out.println("result==============" + result);
 
                             JsonObject data = result.getAsJsonObject("data");
@@ -469,7 +479,9 @@ public class Detail extends BaseActivity
                             JsonArray productImage = data.getAsJsonArray("ProductImage");
 
                             ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-                            for (int i = 0; i < productImage.size(); i++) {
+
+                            for (int i = 0; i < productImage.size(); i++)
+                            {
                                 JsonObject jsonObject = (JsonObject) productImage.get(i);
 
                                 String id = jsonObject.get("product_id").getAsString();
@@ -496,14 +508,19 @@ public class Detail extends BaseActivity
 
                             String user_email = user_details.get("email").getAsString();
 
-
                             try {
+                                user_mobile = user_details.get("mobile").getAsString();
+
+                                System.out.println("user_mobile============"+user_mobile);
 
                             }catch (Exception exe){
 
-                                String user_mobile = user_details.get("mobile").getAsString();
 
                             }
+
+                            tvUserName.setText(user_name);
+                            tvUserEmail.setText(user_email);
+                            tvUserMobile.setText(user_mobile);
 
                             JsonObject product = data.getAsJsonObject("Product");
                             id = product.get("id").getAsString();

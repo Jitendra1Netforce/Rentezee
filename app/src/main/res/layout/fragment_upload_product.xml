@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/screenbackground"
+    android:background="#F5F5F5"
     tools:context="com.rentezee.fragments.rent_it_out.upload_product.UploadProductFragment"
 
     >
@@ -55,6 +55,7 @@
                     android:weightSum="10"
                     android:orientation="horizontal"
                     android:layout_below="@+id/recycler"
+
                     >
 
                     <CheckBox
@@ -63,7 +64,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:text="Sale"
-                        android:textColor="#b2b2b2"
+                        android:textColor="@color/black"
                         android:textSize="18sp"
                         android:layout_marginLeft="10dp"
                         android:checked="true"
@@ -76,11 +77,21 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:text="Rent"
-                        android:textColor="#b2b2b2"
+                        android:textColor="@color/black"
                         android:textSize="18sp"
                         />
 
                 </LinearLayout>
+
+                <View
+                    android:id="@+id/view1"
+                    android:layout_width="match_parent"
+                    android:layout_height="1.5dp"
+                    android:background="#EAEAEA"
+                    android:layout_marginTop="10dp"
+                    android:layout_below="@+id/linearlayout_radio"
+                    android:padding="10dp"
+                    ></View>
 
 
 
@@ -88,13 +99,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:layout_below="@+id/linearlayout_radio"
+                    android:layout_below="@+id/view1"
                     android:padding="10dp"
                     >
-
-                    <android.support.design.widget.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
 
                         <EditText
                             android:id="@+id/edtProductName"
@@ -103,26 +110,32 @@
                             android:textColor="@color/black"
                             android:textColorHint="@color/black"
                             android:hint="Product Name"
+                            android:layout_marginTop="15dp"
                             android:imeOptions="actionNext"
                             android:singleLine="true"
                             android:inputType="text"
+                            android:background="@drawable/upload_edittext_border"
+                            android:paddingTop="5dp"
+                            android:paddingBottom="5dp"
                             />
-
-                    </android.support.design.widget.TextInputLayout>
 
                     <com.jaredrummler.materialspinner.MaterialSpinner
                         android:id="@+id/spinner"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@color/orange"
                         android:layout_marginTop="15dp"
+                        app:ms_background_color="#F5F5F5"
+                        android:layout_marginLeft="-20dp"
+                        android:textColor="@color/black"
+                        android:textSize="18sp"
                         />
 
+                       <View
+                           android:layout_width="match_parent"
+                           android:layout_height="1.5dp"
+                           android:background="#EAEAEA"
+                           ></View>
 
-
-                    <android.support.design.widget.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
 
                         <EditText
                             android:id="@+id/edtDiscription"
@@ -134,14 +147,12 @@
                             android:imeOptions="actionNext"
                             android:singleLine="true"
                             android:inputType="text"
+                            android:paddingTop="5dp"
+                            android:paddingBottom="5dp"
+                            android:layout_marginTop="15dp"
+                            android:background="@drawable/upload_edittext_border"
                             />
 
-                    </android.support.design.widget.TextInputLayout>
-
-
-                    <android.support.design.widget.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
 
                         <EditText
                             android:id="@+id/edtPrice"
@@ -153,14 +164,11 @@
                             android:imeOptions="actionNext"
                             android:singleLine="true"
                             android:inputType="number"
+                            android:paddingTop="5dp"
+                            android:paddingBottom="5dp"
+                            android:layout_marginTop="15dp"
+                            android:background="@drawable/upload_edittext_border"
                             />
-
-                    </android.support.design.widget.TextInputLayout>
-
-
-                    <android.support.design.widget.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
 
                         <EditText
                             android:id="@+id/edtSecurityAmount"
@@ -173,14 +181,11 @@
                             android:singleLine="true"
                             android:inputType="number"
                             android:visibility="gone"
+                            android:paddingTop="5dp"
+                            android:paddingBottom="5dp"
+                            android:layout_marginTop="15dp"
+                            android:background="@drawable/upload_edittext_border"
                             />
-
-                    </android.support.design.widget.TextInputLayout>
-
-
-                    <android.support.design.widget.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
 
                         <EditText
                             android:id="@+id/edtRentPerDay"
@@ -193,15 +198,12 @@
                             android:singleLine="true"
                             android:inputType="number"
                             android:visibility="gone"
+                            android:paddingTop="5dp"
+                            android:paddingBottom="5dp"
+                            android:layout_marginTop="15dp"
+                            android:background="@drawable/upload_edittext_border"
                             />
 
-                    </android.support.design.widget.TextInputLayout>
-
-
-
-                    <android.support.design.widget.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
 
                         <EditText
                             android:id="@+id/edtPincode"
@@ -212,16 +214,16 @@
                             android:hint="Pincode"
                             android:editable="false"
                             android:visibility="invisible"
+                            android:paddingTop="5dp"
+                            android:paddingBottom="5dp"
+                            android:layout_marginTop="15dp"
+                            android:background="@drawable/upload_edittext_border"
                             />
-
-                    </android.support.design.widget.TextInputLayout>
 
                 </LinearLayout>
 
 
             </RelativeLayout>
-
-
 
 
         </RelativeLayout>
@@ -241,7 +243,7 @@
                 android:id="@+id/buttonSave"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableLeft="@mipmap/ic_profile_edit"
+                android:drawableLeft="@drawable/save_mdpi"
                 android:text="Save"
                 android:textAllCaps="false"
                 android:textColor="@color/white"

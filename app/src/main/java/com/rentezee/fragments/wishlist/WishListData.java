@@ -5,9 +5,9 @@ package com.rentezee.fragments.wishlist;
  */
 public class WishListData {
 
-    public String wishlist_id ,product_id,product_name,image_url,price,category_name;
+    public String wishlist_id ,product_id,product_name,image_url,price,category_name,security_price;
 
-    WishListData(String wishlist_id, String product_id, String product_name, String image_url,String price,String category_name)
+    WishListData(String wishlist_id, String product_id, String product_name, String image_url,String price,String category_name,String security_price)
     {
 
         this.wishlist_id = wishlist_id;
@@ -16,6 +16,6 @@ public class WishListData {
         this.image_url = image_url;
         this.price = price;
         this.category_name = category_name;
-
+        this.security_price= security_price;
     }
 }

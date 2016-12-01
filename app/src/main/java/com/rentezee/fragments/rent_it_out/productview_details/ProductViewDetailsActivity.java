@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.github.ivbaranov.mfb.MaterialFavoriteButton;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
@@ -61,9 +62,8 @@ public class ProductViewDetailsActivity extends BaseActivity
     private TextView tvProductName,tvProductCategoryName,tvDescription,tvProductID;
     private TextView tvSecurityMoney, tvPerDayRent;
     private CardView cardViewDescription;
-    private LinearLayout layoutPrice, layoutBottom;
+
     ActionBar actionBar;
-    LinearLayout layoutAddToWishlist,layoutAddToCart;
     String device_id;
     MaterialFavoriteButton materialFavoriteButton;
     public static final String PREFERENCES = "WishListPrefs";
@@ -106,9 +106,6 @@ public class ProductViewDetailsActivity extends BaseActivity
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
 
-        layoutAddToWishlist = (LinearLayout) findViewById(R.id.layoutAddToWishlist);
-
-        layoutAddToCart = (LinearLayout) findViewById(R.id.layoutAddToCart);
 
         //find views
         coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinatorLayout);
@@ -127,8 +124,6 @@ public class ProductViewDetailsActivity extends BaseActivity
         materialFavoriteButton = (MaterialFavoriteButton) findViewById(R.id.payment_salon_material_button);
 
         cardViewDescription=(CardView) findViewById(R.id.cardViewDescription);
-        layoutPrice=(LinearLayout)findViewById(R.id.layoutPrice);
-        layoutBottom=(LinearLayout)findViewById(R.id.layoutBottom);
 
         String cat_id = getIntent().getStringExtra(Constants.PRODUCT_ID);
 
@@ -145,73 +140,7 @@ public class ProductViewDetailsActivity extends BaseActivity
         user_id = Long.toString(userId);
 
 
-        System.out.println("user_id---------------"+ user_id);
-
-        layoutAddToWishlist.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view)
-            {
-                SharedPreferences.Editor editor = settings.edit();
-
-                System.out.println("material favorite status========" + materialFavoriteButton.isFavorite());
-
-                if(user != null){
-
-                    if(materialFavoriteButton.isFavorite() )
-                    {
-                        add_wish_list(id, user_id);
-                        System.out.println("favorite============" + materialFavoriteButton.isFavorite());
-                        materialFavoriteButton.setAnimateFavorite(true);
-                        materialFavoriteButton.setBounceDuration(300);
-                        materialFavoriteButton.setRotationAngle(360);
-                        materialFavoriteButton.setRotationDuration(100);
-                        materialFavoriteButton.setNotFavoriteResource(R.mipmap.ic_add_to_wishlist);
-                        materialFavoriteButton.setFavorite(false);
-                        /*  editor.putBoolean(id, false);
-                        editor.commit();*/
-
-                    }
-                    else
-                    {
-                        add_wish_list(id, user_id);
-                        System.out.println(" product_id============" + id);
-                        materialFavoriteButton.setAnimateUnfavorite(true);
-                        materialFavoriteButton.setBounceDuration(300);
-                        materialFavoriteButton.setRotationAngle(360);
-                        materialFavoriteButton.setRotationDuration(100);
-                        materialFavoriteButton.setFavoriteResource(R.mipmap.ic_favorite_hdpi);
-                        materialFavoriteButton.setFavorite(true);
-                  /*  editor.putBoolean(id, true);
-                    editor.commit();*/
-
-                    }
-                }
-                else
-                {
-
-                    Intent intent = new Intent(ProductViewDetailsActivity.this,Login.class);
-                    startActivity(intent);
-
-                }
-
-
-
-            }
-        });
-
-
-
-        layoutAddToCart.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view)
-            {
-
-                add_to_cart(device_id, id);
-                dashboardContainer.count_cart();
-            }
-        });
+        System.out.println("user_id---------------" + user_id);
 
 
         // fetchDetail(Integer.parseInt(cat_id));
@@ -290,9 +219,7 @@ public class ProductViewDetailsActivity extends BaseActivity
 
         tvSecurityMoney.setText(String.format(Locale.ENGLISH, "%s%s", rs, String.valueOf(productDetail.getSecurityPrice())));
         tvPerDayRent.setText(String.format(Locale.ENGLISH, "%s%s", rs, String.valueOf(productDetail.getPrice())));
-        layoutPrice.setVisibility(View.VISIBLE);
 
-        layoutBottom.setVisibility(View.VISIBLE);
     }
 
 
@@ -446,15 +373,15 @@ public class ProductViewDetailsActivity extends BaseActivity
         Ion.with(this)
                 .load("http://netforce.biz/renteeze/webservice/products/product_details")
                 .setJsonObjectBody(json)
-                .asString()
-                .setCallback(new FutureCallback<String>() {
+                .asJsonObject()
+                .setCallback(new FutureCallback<JsonObject>() {
                     @Override
-                    public void onCompleted(Exception e, String result) {
+                    public void onCompleted(Exception e, JsonObject result) {
 
                         if (result != null) {
                             System.out.println("result==============" + result);
 
-                         /*   JsonObject data = result.getAsJsonObject("data");
+                            JsonObject data = result.getAsJsonObject("data");
 
                              String wishlist_status = result.get("wishlist").getAsString();
 
@@ -497,39 +424,8 @@ public class ProductViewDetailsActivity extends BaseActivity
                             String rs = getString(R.string.rs);
                             tvSecurityMoney.setText(String.format(Locale.ENGLISH, "%s%s", rs, security_price));
                             tvPerDayRent.setText(String.format(Locale.ENGLISH, "%s%s", rs, price));
-                            layoutPrice.setVisibility(View.VISIBLE);
-
-                            layoutBottom.setVisibility(View.VISIBLE);
-
-                          //  Boolean yourLocked = settings.getBoolean(id, false);
-
-                            System.out.println("wishlist_status==============" + wishlist_status);
-
-                            if (wishlist_status.equals("1")) {
-
-                                System.out.println("data============" + settings.getBoolean(id, true));
-
-                                materialFavoriteButton.setFavoriteResource(R.mipmap.ic_favorite_hdpi);
-                                materialFavoriteButton.setAnimateFavorite(true);
-                                materialFavoriteButton.setBounceDuration(300);
-                                materialFavoriteButton.setRotationAngle(360);
-                                materialFavoriteButton.setRotationDuration(100);
-                                materialFavoriteButton.setFavorite(true);
 
 
-                            }
-                            else {
-                                System.out.println("not favo============" + settings.getBoolean(id, true));
-                                materialFavoriteButton.setAnimateUnfavorite(true);
-                                materialFavoriteButton.setBounceDuration(300);
-                                materialFavoriteButton.setRotationAngle(360);
-                                materialFavoriteButton.setRotationDuration(100);
-                                materialFavoriteButton.setFavoriteResource(R.mipmap.ic_add_to_wishlist);
-                                materialFavoriteButton.setFavorite(false);
-
-
-                            }
-*/
 
                             dismissProgressBar();
 

@@ -90,6 +90,7 @@ public class UploadProductFragment extends Fragment
     DashboardContainer dashboardContainer;
     ArrayList<String> arrayList;
     public  int cate_id =0;
+    String product_price,security_price;
     CheckBox saleCheckButton,rentCheckButton;
 
 
@@ -399,27 +400,57 @@ public class UploadProductFragment extends Fragment
 
         if (product_name.getText().toString().equals(""))
         {
-            showError("Please Enter Product Name");
+            showError("Please enter product name");
             return;
         }
 
         if (discription.getText().toString().equals("")) {
 
-            showError("Please Enter Discription");
+            showError("Please enter discription");
             return;
         }
 
-        if (security_amount.getText().toString().equals(""))
-        {
-            showError("Plase Enter Security Amount");
-            return;
+         if (security_amount.getVisibility()== View.VISIBLE)
+         {
+
+             if (security_amount.getText().toString().equals(""))
+             {
+                 showError("Please enter security amount");
+                 return;
+             }
+
+             security_price =security_amount.getText().toString();
+
+         }
+         else {
+
+             security_price = "0";
+
+         }
+
+
+        if(rent_per_day.getVisibility()== View.VISIBLE){
+
+            if (rent_per_day.getText().toString().equals(""))
+            {
+
+                showError("Please enter per day rent amount");
+                return;
+            }
+
         }
 
-        if (rent_per_day.getText().toString().equals("")) {
+            if(price.getVisibility()== View.VISIBLE){
 
-            showError("Plase Enter Per Day Rent Amount");
-            return;
-        }
+                if (price.getText().toString().equals(""))
+                {
+
+                    showError("Please enter price amount");
+                    return;
+                }
+
+            }
+
 
             baseActivity.showProgressBar(getActivity());
             System.out.println("image array size =====" + rentItDatas.size());
@@ -429,6 +460,20 @@ public class UploadProductFragment extends Fragment
                 files.add(new FilePart("image[]", savebitmap(rentItDatas.get(i).path)));
                 Log.e("sellDatas",files.toArray().toString());
             }
+
+            if(rent_per_day.getText().toString().equals(""))
+            {
+                product_price = price.getText().toString();
+
+            }
+            else
+            {
+
+                product_price = rent_per_day.getText().toString();
+            }
+
+
+            System.out.println("security_amount---"+security_price+"product price-------"+product_price);
 
             Log.e("sellDatas", files.toString());
             Ion.with(getActivity())
@@ -441,8 +486,8 @@ public class UploadProductFragment extends Fragment
                     .setMultipartParameter("product_name", product_name.getText().toString())
                     .setMultipartParameter("description", discription.getText().toString())
                     .setMultipartParameter("category_id", String.valueOf(cate_id))
-                    .setMultipartParameter("security_price", security_amount.getText().toString())
-                    .setMultipartParameter("price", rent_per_day.getText().toString())
+                    .setMultipartParameter("security_price", security_price)
+                    .setMultipartParameter("price", product_price)
                     .asString()
                     .setCallback(new FutureCallback<String>() {
                         @Override
@@ -462,7 +507,7 @@ public class UploadProductFragment extends Fragment
                             {
 
 
-
+                                System.out.println("result============="+ result);
                                 Toast.makeText(getActivity(), "success called", Toast.LENGTH_SHORT).show();
                                 Log.e("result", result.toString());
 

@@ -13,13 +13,19 @@ import com.rentezee.main.R;
 /**
  * Created by John on 11/10/2016.
  */
-public class MyCartHolder extends RecyclerView.ViewHolder {
+public class MyCartHolder extends RecyclerView.ViewHolder
+{
+
+
 
         View view;
+        public static TextView textview_from_date,textview_to_date,tv_rent_duration;
         TextView tvProductName,tvCategoriesName,tvRentPrice,tvSecurytiFee,tvTotal;
         ImageView imProductImage;
         RelativeLayout relativelayout;
         LinearLayout layoutRemove,layoutMoveToCart;
+
+
 
 
         public MyCartHolder(View itemView)
@@ -27,6 +33,13 @@ public class MyCartHolder extends RecyclerView.ViewHolder {
             super(itemView);
 
             relativelayout = (RelativeLayout) itemView.findViewById(R.id.relativelayout);
+
+
+            textview_from_date = (TextView) itemView.findViewById(R.id.textview_from_date);
+
+            textview_to_date = (TextView) itemView.findViewById(R.id.textview_to_date);
+
+            tv_rent_duration = (TextView) itemView.findViewById(R.id.tv_rent_duration);
 
             layoutRemove = (LinearLayout) itemView.findViewById(R.id.layoutRemove);
 

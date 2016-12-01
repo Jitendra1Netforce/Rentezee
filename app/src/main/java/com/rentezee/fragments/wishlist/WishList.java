@@ -142,10 +142,10 @@ public class WishList extends BaseActivity {
                                 String product_id = jsonObject.get("product_id").getAsString();
                                 String name = jsonObject.get("name").getAsString();
                                 String price = jsonObject.get("price").getAsString();
+                                String security_price = jsonObject.get("security_price").getAsString();
                                 String category_name = jsonObject.get("categories_name").getAsString();
                                 String image = "http://netforce.biz/renteeze/webservice/files/products/" + jsonObject.get("image").getAsString();
-                                wishListDatas.add(new WishListData(wishlistid,product_id, name, image, price, category_name));
-
+                                wishListDatas.add(new WishListData(wishlistid,product_id, name, image, price, category_name,security_price));
 
 
                             }

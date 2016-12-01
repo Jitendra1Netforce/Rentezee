@@ -50,14 +50,33 @@
                     android:layout_alignParentLeft="true"
                     />
 
-                <TextView
-                    android:id="@+id/txtMobileNo"
+
+                <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="9811531065"
-                    android:textColor="@color/black"
                     android:layout_alignParentRight="true"
-                    />
+                    >
+
+                    <ImageView
+                        android:id="@+id/imageView1"
+                        android:layout_width="20dp"
+                        android:layout_height="17dp"
+                       android:src="@drawable/call_hdpi"
+                        />
+
+                    <TextView
+                        android:layout_toRightOf="@+id/imageView1"
+                        android:id="@+id/txtMobileNo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="9811531065"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        android:layout_marginLeft="3dp"
+                        />
+
+                </RelativeLayout>
+
 
             </RelativeLayout>
 

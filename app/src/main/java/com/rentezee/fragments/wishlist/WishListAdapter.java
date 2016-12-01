@@ -70,8 +70,14 @@ public class WishListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
         WishListHolder homeHolder = (WishListHolder) holder;
         homeHolder.tvProductName.setText(itemList.get(position).product_name);
-        homeHolder.tvRentPrice.setText("Rs"+itemList.get(position).price+" per day");
 
+        if(itemList.get(position).security_price.toString().equals("0")){
+
+            homeHolder.tvRentPrice.setText("\u20B9 " + itemList.get(position).price);
+        }
+        else {
+            homeHolder.tvRentPrice.setText("\u20B9 " + itemList.get(position).price + " per day");
+        }
         homeHolder.tvCategoriesName.setText(itemList.get(position).category_name);
 
         Glide.with(context)
@@ -81,11 +87,9 @@ public class WishListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 .into(homeHolder.imProductImage);
 
 
-
         homeHolder.layoutRemove.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view)
-            {
+            public void onClick(View view) {
                 delete_wihlist(itemList.get(position).wishlist_id.toString());
             }
         });
@@ -94,6 +98,21 @@ public class WishListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         {
             @Override
             public void onClick(View view) {
+
+
+                Intent intent = new Intent(context, Detail.class);
+                intent.putExtra(Constants.PRODUCT_ID, itemList.get(position).product_id);
+                context.startActivity(intent);
+            }
+        });
+
+        homeHolder.linearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view)
+            {
+                Intent intent = new Intent(context, Detail.class);
+                intent.putExtra(Constants.PRODUCT_ID, itemList.get(position).product_id);
+                context.startActivity(intent);
 
             }
         });
@@ -141,6 +160,11 @@ public class WishListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     });
 
     }
+
+
+
+
+
 
     }
 

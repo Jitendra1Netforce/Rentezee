@@ -815,8 +815,6 @@ public class DashboardContainer extends BaseActivity implements NavigationView.O
                             } else {
                                 tvTrending.setVisibility(View.GONE);
                             }
-
-
                             dismissProgressBar();
                         } else {
 
@@ -827,8 +825,6 @@ public class DashboardContainer extends BaseActivity implements NavigationView.O
                 });
 
     }
-
-
 
 /*
 
@@ -976,7 +972,7 @@ public class DashboardContainer extends BaseActivity implements NavigationView.O
                     @Override
                     public void onCompleted(Exception e, JsonObject result) {
 
-                        System.out.println("data================" + result.toString());
+//                        System.out.println("data================" + result.toString());
 
                         if (result != null)
                         {

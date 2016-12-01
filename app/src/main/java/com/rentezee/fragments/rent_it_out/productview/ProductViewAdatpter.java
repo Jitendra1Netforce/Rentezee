@@ -1,6 +1,7 @@
 package com.rentezee.fragments.rent_it_out.productview;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,9 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.rentezee.fragments.myorder.PastOrder.PastOrderData;
 import com.rentezee.fragments.myorder.PastOrder.PastOrderHolder;
+import com.rentezee.fragments.rent_it_out.productview_details.ProductViewDetailsActivity;
+import com.rentezee.helpers.Constants;
+import com.rentezee.main.Detail;
 import com.rentezee.main.R;
 
 import java.text.SimpleDateFormat;
@@ -61,15 +65,46 @@ public class ProductViewAdatpter extends RecyclerView.Adapter<RecyclerView.ViewH
                 .crossFade()
                 .into(homeHolder.ivProductImage);
 
+        if(itemList.get(position).security_price.toString().equals("0")){
+
+            homeHolder.tvPerdayHeading.setVisibility(View.GONE);
+            homeHolder.tvSecurityheading.setVisibility(View.GONE);
+            homeHolder.tvSecurityMoney.setVisibility(View.GONE);
+            homeHolder.tvPerdayRent.setVisibility(View.GONE);
+            homeHolder.tvPriceData.setVisibility(View.VISIBLE);
+        }
+        else
+        {
+            homeHolder.tvPerdayHeading.setVisibility(View.VISIBLE);
+            homeHolder.tvSecurityheading.setVisibility(View.VISIBLE);
+            homeHolder.tvSecurityMoney.setVisibility(View.VISIBLE);
+            homeHolder.tvPerdayRent.setVisibility(View.VISIBLE);
+            homeHolder.tvPriceData.setVisibility(View.GONE);
+
+        }
+
         homeHolder.tvProductName.setText(itemList.get(position).product_name);
 
         homeHolder.tvDescription.setText(itemList.get(position).description);
 
-        homeHolder.tvProductCategoryName.setText(itemList.get(position).product_name);
+        homeHolder.tvProductCategoryName.setText(itemList.get(position).category_name);
 
         homeHolder.tvSecurityMoney.setText("\u20B9"+itemList.get(position).security_price);
 
         homeHolder.tvPerdayRent.setText("\u20B9" + itemList.get(position).price +" Per day");
+
+        homeHolder.tvPriceData.setText("\u20B9" + itemList.get(position).price );
+
+        homeHolder.linearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(context, ProductViewDetailsActivity.class);
+                intent.putExtra(Constants.PRODUCT_ID, itemList.get(position).product_id);
+                context.startActivity(intent);
+
+            }
+        });
 
     }
 
@@ -77,7 +112,6 @@ public class ProductViewAdatpter extends RecyclerView.Adapter<RecyclerView.ViewH
     {
         Toast.makeText(context, s, Toast.LENGTH_SHORT).show();
     }
-
 
     @Override
     public int getItemCount()
