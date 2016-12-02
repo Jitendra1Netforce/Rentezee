@@ -1,6 +1,7 @@
 package com.rentezee.fragments.chooseaddress;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
@@ -26,6 +27,7 @@ import com.rentezee.fragments.profile.general.address.AddressData;
 import com.rentezee.helpers.AppPreferenceManager;
 import com.rentezee.helpers.BaseActivity;
 import com.rentezee.helpers.PreferenceKeys;
+import com.rentezee.main.Login;
 import com.rentezee.main.R;
 import com.rentezee.pojos.User;
 
@@ -46,7 +48,9 @@ public class ChooseAddressActivity extends BaseActivity
     public  LinearLayout linearlayout;
     public  EditText Address_label, Address_line1, Address_line2, Locality, city, pincode;
     public  Button saveButton;
-   CoordinatorLayout coordinatorLayout;
+    CoordinatorLayout coordinatorLayout;
+
+
 
 
 
@@ -68,15 +72,7 @@ public class ChooseAddressActivity extends BaseActivity
             actionBar.setTitle("Select Address");
         }
 
-        user = (User) new AppPreferenceManager(getApplicationContext()).getObject(PreferenceKeys.savedUser, User.class);
 
-        if (user != null)
-        {
-
-            userId = user.getUserId();
-        }
-
-        user_id = Long.toString(userId);
 
         coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinatorLayout);
         relativeBottomLayout = (RelativeLayout) findViewById(R.id.relativeBottomLayout);
@@ -100,7 +96,26 @@ public class ChooseAddressActivity extends BaseActivity
         recyclerviewPastOrder.setLayoutManager(mLayoutManager);
 
         recyclerviewPastOrder.setNestedScrollingEnabled(true);
-        fetchData(true);
+
+
+
+        user = (User) new AppPreferenceManager(getApplicationContext()).getObject(PreferenceKeys.savedUser, User.class);
+
+        if (user != null)
+        {
+
+            userId = user.getUserId();
+            user_id = Long.toString(userId);
+            fetchData(true);
+        }
+        else{
+
+            Intent i = new Intent(ChooseAddressActivity.this, Login.class);
+            startActivity(i);
+            finish();
+
+        }
+
 
         txtAddAddressHeading.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -211,10 +226,10 @@ public class ChooseAddressActivity extends BaseActivity
                                             public void onCompleted(Exception e, JsonObject result) {
 
                                                 if (result != null) {
-                                                    System.out.println("data=====" + result.toString());
+                                                   // System.out.println("data=====" + result.toString());
 
                                                     JsonArray productListArray = result.getAsJsonArray("data");
-                                                    System.out.println("data=====" + result.toString());
+                                                   // System.out.println("data=====" + result.toString());
 
                                                     for (int i = 0; i < productListArray.size(); i++) {
                                                         JsonObject jsonObject = (JsonObject) productListArray.get(i);
@@ -468,33 +483,43 @@ public class ChooseAddressActivity extends BaseActivity
 
                     @Override
                     public void onCompleted(Exception e, JsonObject result) {
-                        if (result != null) {
+                        if (result != null)
+                        {
                             System.out.println("data=====" + result.toString());
 
                             JsonArray productListArray = result.getAsJsonArray("data");
-                            System.out.println("data=====" + result.toString());
 
-                            for (int i = 0; i < productListArray.size(); i++) {
-                                JsonObject jsonObject = (JsonObject) productListArray.get(i);
+                            if(productListArray != null){
 
-                                JsonObject address = jsonObject.getAsJsonObject("Address");
+                                for (int i = 0; i < productListArray.size(); i++) {
+                                    JsonObject jsonObject = (JsonObject) productListArray.get(i);
 
-                                String product_id = address.get("id").getAsString();
-                                String address_label = address.get("address_label").getAsString();
-                                String address1 = address.get("address_1").getAsString();
-                                String address2 = address.get("address_2").getAsString();
-                                String city = address.get("city").getAsString();
-                                String country = address.get("country").getAsString();
-                                String user_id = address.get("user_id").getAsString();
-                                String zip_code = address.get("zip_code").getAsString();
+                                    JsonObject address = jsonObject.getAsJsonObject("Address");
 
-                                addressdata.add(new ChooseAddressData(product_id, address_label, address1, address2, city, country, user_id, zip_code));
+                                    String product_id = address.get("id").getAsString();
+                                    String address_label = address.get("address_label").getAsString();
+                                    String address1 = address.get("address_1").getAsString();
+                                    String address2 = address.get("address_2").getAsString();
+                                    String city = address.get("city").getAsString();
+                                    String country = address.get("country").getAsString();
+                                    String user_id = address.get("user_id").getAsString();
+                                    String zip_code = address.get("zip_code").getAsString();
+
+                                    addressdata.add(new ChooseAddressData(product_id, address_label, address1, address2, city, country, user_id, zip_code));
+                                }
+                                addressAdapter = new ChooseAddressAdapter(context, addressdata,ChooseAddressActivity.this );
+                                recyclerviewPastOrder.setAdapter(addressAdapter);
+                                addressAdapter.notifyDataSetChanged();
+                                recyclerviewPastOrder.setVisibility(View.VISIBLE);
+                                dismissProgressBar();
+
+
                             }
-                            addressAdapter = new ChooseAddressAdapter(context, addressdata,ChooseAddressActivity.this );
-                            recyclerviewPastOrder.setAdapter(addressAdapter);
-                            addressAdapter.notifyDataSetChanged();
-                            recyclerviewPastOrder.setVisibility(View.VISIBLE);
-                            dismissProgressBar();
+                            else {
+
+                                dismissProgressBar();
+                                Log.e("error", e.toString());
+                            }
 
 
                         } else {

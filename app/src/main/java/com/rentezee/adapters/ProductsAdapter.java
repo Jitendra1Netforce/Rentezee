@@ -73,10 +73,19 @@ public class ProductsAdapter extends BaseAdapter {
 
         viewHolder.tvProductName.setText(list.get(position).product_name);
         viewHolder.tvProductCategoryName.setText(list.get(position).category_name);
-        viewHolder.tvPrice.setText(rs + list.get(position).price + " per day");
 
+        System.out.println("security amount============="+ list.get(position).security_price.toString());
 
+        if(list.get(position).security_price.toString().equals("0"))
+        {
 
+            viewHolder.tvPrice.setText(rs + list.get(position).price);
+
+        }
+        else
+        {
+            viewHolder.tvPrice.setText(rs + list.get(position).price + " per day");
+        }
 
         return convertView;
     }

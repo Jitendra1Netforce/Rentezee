@@ -9,6 +9,7 @@ import android.content.IntentFilter;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -256,7 +257,7 @@ public class DashboardContainer extends BaseActivity implements NavigationView.O
 
 
         setMenuCounter(R.id.nav_notifications, 0);
-        setMenuCredits(R.id.nav_rentezee_credits, 100);
+        setMenuCredits(R.id.nav_rentezee_credits, 0);
 
         //check permissions
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -463,7 +464,6 @@ public class DashboardContainer extends BaseActivity implements NavigationView.O
     {
         switch (item.getItemId())
         {
-
             case R.id.nav_home:
                 Intent dashboard=new Intent(context, DashboardContainer.class);
                 gotoActivity(dashboard);
@@ -498,9 +498,19 @@ public class DashboardContainer extends BaseActivity implements NavigationView.O
                 Intent credit=new Intent(context, CreditActivity.class);
                 gotoActivity(credit);
                 break;
+            case R.id.nav_share:
+                shareData();
+                break;
+            case R.id.nav_callus:
+                /*Intent callIntent = new Intent(Intent.ACTION_CALL);
+                callIntent.setData(Uri.parse("tel:123456789"));
+                startActivity(callIntent);*/
+                break;
 
 
         }
+
+
 
         /*if (id == R.id.nav_cart) {
             // Handle the camera action
@@ -1044,5 +1054,16 @@ public class DashboardContainer extends BaseActivity implements NavigationView.O
             tvNavName.setText("Welcome Guest!");
         }
 
+    }
+
+
+    private void shareData()
+    {
+        String shareBody = "This is Rentenzee Referal code";
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, shareBody);
+        sendIntent.setType("text/plain");
+        startActivity(Intent.createChooser(sendIntent, "This is my referal code"));
     }
 }

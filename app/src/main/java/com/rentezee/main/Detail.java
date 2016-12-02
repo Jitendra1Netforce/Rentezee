@@ -18,6 +18,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -56,16 +57,15 @@ import me.relex.circleindicator.CircleIndicator;
 
 public class Detail extends BaseActivity
 {
-
     private static  final String TAG=Detail.class.getSimpleName();
     private Context context;
     private CoordinatorLayout coordinatorLayout;
     private ViewPager viewPager;
     private CircleIndicator indicator;
     private TextView tvUserName,tvUserEmail,tvUserMobile,tvProductName,tvProductCategoryName,tvDescription,tvProductID;
-    private TextView tvSecurityMoney, tvPerDayRent;
+    private TextView tvSecurityMoney, tvPerDayRent,tvSecurityMoneyHeading,tvPerDayRentHeading,tvPriceHeading,tvPrice;
     private CardView cardViewDescription;
-    private LinearLayout layoutPrice, layoutBottom;
+    private LinearLayout layoutPrice, layoutBottom,layoutSecurityPrice,layoutRentPrice;
     ActionBar actionBar;
     LinearLayout layoutAddToWishlist,layoutAddToCart;
     String device_id;
@@ -76,6 +76,7 @@ public class Detail extends BaseActivity
     long  userId;
     User user;
     DashboardContainer dashboardContainer;
+    ImageView imageView1;
 
 
     @Override
@@ -119,7 +120,13 @@ public class Detail extends BaseActivity
         viewPager.getLayoutParams().height = (int) (displayMetrics.widthPixels * .719);
         indicator = (CircleIndicator) findViewById(R.id.indicator);
 
+        imageView1 = (ImageView) findViewById(R.id.imageView1);
+
         tvUserName = (TextView) findViewById(R.id.txtUsername);
+
+        tvPriceHeading = (TextView) findViewById(R.id.tvPriceHeading);
+
+        tvPrice = (TextView) findViewById(R.id.tvPrice);
 
         tvUserEmail = (TextView) findViewById(R.id.txtUserEmail);
 
@@ -137,11 +144,20 @@ public class Detail extends BaseActivity
 
         tvPerDayRent=(TextView)findViewById(R.id.tvPerDayRent);
 
+        tvSecurityMoneyHeading = (TextView) findViewById(R.id.tvSecurityMoneyHeading);
+
+        tvPerDayRentHeading = (TextView) findViewById(R.id.tvPerDayRentHeading);
+
         materialFavoriteButton = (MaterialFavoriteButton) findViewById(R.id.payment_salon_material_button);
 
         cardViewDescription=(CardView) findViewById(R.id.cardViewDescription);
 
         layoutPrice=(LinearLayout)findViewById(R.id.layoutPrice);
+
+        layoutSecurityPrice = (LinearLayout) findViewById(R.id.layoutSecurityPrice);
+
+        layoutRentPrice= (LinearLayout) findViewById(R.id.layoutRentPrice);
+
 
         layoutBottom=(LinearLayout)findViewById(R.id.layoutBottom);
 
@@ -508,12 +524,30 @@ public class Detail extends BaseActivity
 
                             String user_email = user_details.get("email").getAsString();
 
+
+
                             try {
+
                                 user_mobile = user_details.get("mobile").getAsString();
 
-                                System.out.println("user_mobile============"+user_mobile);
 
-                            }catch (Exception exe){
+                                System.out.println("user_mobile============="+user_mobile.toString());
+
+                               /* if(user_mobile.toString().equals("null")){
+
+                                    imageView1.setVisibility(View.INVISIBLE);
+                                }
+                                else
+                                {
+                                    imageView1.setVisibility(View.VISIBLE);
+
+                                }
+
+                                System.out.println("user_mobile============"+user_mobile);*/
+
+                            }
+                            catch (Exception exe)
+                            {
 
 
                             }
@@ -536,9 +570,34 @@ public class Detail extends BaseActivity
                             cardViewDescription.setVisibility(View.VISIBLE);
 
                             String rs = getString(R.string.rs);
-                            tvSecurityMoney.setText(String.format(Locale.ENGLISH, "%s%s", rs, security_price));
-                            tvPerDayRent.setText(String.format(Locale.ENGLISH, "%s%s", rs, price));
-                            layoutPrice.setVisibility(View.VISIBLE);
+
+                            if(security_price.equals("0"))
+                            {
+
+                                System.out.println("hi data=============");
+
+                                tvPriceHeading.setVisibility(View.VISIBLE);
+                                tvPrice.setVisibility(View.VISIBLE);
+
+                                tvPrice.setText(String.format(Locale.ENGLISH, "%s%s", rs, price));
+
+                                layoutPrice.setVisibility(View.GONE);
+
+                            }
+                            else
+                            {
+                                tvPriceHeading.setVisibility(View.GONE);
+                                tvPrice.setVisibility(View.GONE);
+
+                                tvSecurityMoney.setText(String.format(Locale.ENGLISH, "%s%s", rs, security_price));
+                                tvPerDayRent.setText(String.format(Locale.ENGLISH, "%s%s", rs, price));
+                                layoutPrice.setVisibility(View.VISIBLE);
+                                layoutRentPrice.setVisibility(View.VISIBLE);
+
+
+                            }
+
+
 
                             layoutBottom.setVisibility(View.VISIBLE);
 

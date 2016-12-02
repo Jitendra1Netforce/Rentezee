@@ -1,6 +1,8 @@
 package com.rentezee.fragments.chooseaddress;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +12,8 @@ import android.widget.Toast;
 import com.google.gson.JsonObject;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
+import com.rentezee.fragments.payment.PaymentActivity;
+import com.rentezee.fragments.payment.PaymentOptionActivity;
 import com.rentezee.fragments.profile.general.address.AddressData;
 import com.rentezee.fragments.profile.general.address.AddressFragment;
 import com.rentezee.fragments.profile.general.address.AddressHolder;
@@ -26,7 +30,6 @@ import java.util.List;
 public class ChooseAddressAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 {
 
-
     private static final int SIMPLE_TYPE = 0;
     private static final int IMAGE_TYPE = 1;
     private final LayoutInflater inflater;
@@ -36,15 +39,22 @@ public class ChooseAddressAdapter extends RecyclerView.Adapter<RecyclerView.View
     ChooseAddressHolder addressHolder;
     public  static  String product_id;
     ChooseAddressActivity chooseAddressActivity;
+    ArrayList<Boolean> booleanGames = new ArrayList<>();
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
+    int selectedPostition=0;
 
     public ChooseAddressAdapter(Context context, List<ChooseAddressData> itemList, ChooseAddressActivity chooseAddressActivity)
     {
-
         this.itemList = itemList;
         this.context = context;
         this.chooseAddressActivity = chooseAddressActivity;
         inflater = LayoutInflater.from(context);
+        sharedPreferences = context.getSharedPreferences("MyPref", Context.MODE_PRIVATE);
+        editor = sharedPreferences.edit();
+
     }
+
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
@@ -59,14 +69,38 @@ public class ChooseAddressAdapter extends RecyclerView.Adapter<RecyclerView.View
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position)
     {
+        final ChooseAddressHolder homeHolder = (ChooseAddressHolder) holder;
 
-        ChooseAddressHolder homeHolder = (ChooseAddressHolder) holder;
         int n = position+1;
         homeHolder.txtAddressheading.setText("Address "+n);
         homeHolder.txtAddress.setText(itemList.get(position).address_label);
         homeHolder.txtAddressDetails.setText(itemList.get(position).address_1);
         homeHolder.txtAddressCity.setText(itemList.get(position).city+","+itemList.get(position).zip_code);
 
+        if(selectedPostition==position)
+        {
+            homeHolder.radioButtonAddress.setChecked(true);
+        }
+        else
+        {
+            homeHolder.radioButtonAddress.setChecked(false);
+        }
+
+        homeHolder.relativeLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view)
+            {
+                selectedPostition=position;
+                homeHolder.radioButtonAddress.setChecked(true);
+
+                Intent i = new Intent(context, PaymentActivity
+                        .class);
+                context.startActivity(i);
+                notifyDataSetChanged();
+
+
+            }
+        });
 
         homeHolder.imgEditAddress.setOnClickListener(new View.OnClickListener() {
             @Override

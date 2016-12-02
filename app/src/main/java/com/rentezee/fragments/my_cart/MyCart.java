@@ -14,24 +14,17 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
-import com.rentezee.adapters.ProductsAdapter;
 import com.rentezee.fragments.chooseaddress.ChooseAddressActivity;
-import com.rentezee.fragments.payment.PaymentActivity;
-import com.rentezee.fragments.payment.PaymentOptionActivity;
 import com.rentezee.helpers.BaseActivity;
-import com.rentezee.helpers.Constants;
 import com.rentezee.main.DashboardContainer;
-import com.rentezee.main.Detail;
-import com.rentezee.main.ProductListData;
 import com.rentezee.main.R;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
@@ -57,6 +50,11 @@ public class MyCart extends BaseActivity implements TimePickerDialog.OnTimeSetLi
     public String device_id;
     RelativeLayout relativeLayoutDetails;
     DashboardContainer dashboardContainer;
+    TextView tvService_tax,tvOthertax,tvSerciceCharge,tv_total;
+
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -84,6 +82,14 @@ public class MyCart extends BaseActivity implements TimePickerDialog.OnTimeSetLi
         layoutContinue = (LinearLayout)findViewById(R.id.layoutContinue);
 
         relativeLayoutDetails = (RelativeLayout) findViewById(R.id.relativeLayoutDetails);
+
+        tvService_tax= (TextView) findViewById(R.id.tv_servicetax);
+
+        tvSerciceCharge= (TextView) findViewById(R.id.tv_services_charges);
+
+        tvOthertax= (TextView) findViewById(R.id.tv_othertax);
+
+        tv_total = (TextView) findViewById(R.id.tv_total);
 
         mycartProducts=(RecyclerView)findViewById(R.id.lvMyCart);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
@@ -159,8 +165,22 @@ public class MyCart extends BaseActivity implements TimePickerDialog.OnTimeSetLi
 
                         if (result != null)
                         {
-
                             System.out.println("data "+ result);
+
+                            JsonObject details = result.getAsJsonObject("details");
+
+                            String service_charge = details.get("service_charge").getAsString();
+
+                            String other_tax = details.get("other_tax").getAsString();
+
+                            String service_tax_percentage = details.get("service_tax_percentage").getAsString();
+
+                            tvService_tax.setText(service_tax_percentage);
+
+                            tvSerciceCharge.setText(service_charge);
+
+                            tvOthertax.setText(other_tax);
+
                             JsonArray productListArray = result.getAsJsonArray("data");
 
                             System.out.println("data=====" + productListArray.size());
@@ -169,6 +189,7 @@ public class MyCart extends BaseActivity implements TimePickerDialog.OnTimeSetLi
 
                                 relativeLayoutDetails.setVisibility(View.GONE);
                             }
+
 
                             for (int i = 0; i < productListArray.size(); i++)
                             {
@@ -207,14 +228,16 @@ public class MyCart extends BaseActivity implements TimePickerDialog.OnTimeSetLi
     protected void onResume() {
         super.onResume();
 
+        dashboardContainer = new DashboardContainer();
 
         try {
             invalidateOptionsMenu();
+            dashboardContainer.count_cart();
         } catch (Exception e) {
 
         }
 
-        dashboardContainer.count_cart();
+
 
     }
 
@@ -235,7 +258,7 @@ public class MyCart extends BaseActivity implements TimePickerDialog.OnTimeSetLi
 
     public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth)
     {
-
+/*
         if(MyCartAdapter.txt_from_date == true){
             MyCartHolder.textview_from_date.setText(dayOfMonth+"/"+String.valueOf(monthOfYear+1)+"/"+year);
 
@@ -246,7 +269,7 @@ public class MyCart extends BaseActivity implements TimePickerDialog.OnTimeSetLi
 
             MyCartHolder.textview_to_date.setText(dayOfMonth+"/"+String.valueOf(monthOfYear+1)+"/"+year);
 
-        }
+        }*/
 
     }
 

@@ -72,7 +72,6 @@ public class Category extends BaseActivity implements View.OnClickListener
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-
         //find views
         coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinatorLayout);
         layoutBottom=(LinearLayout)findViewById(R.id.layoutBottom);
@@ -278,40 +277,35 @@ public class Category extends BaseActivity implements View.OnClickListener
                 .asJsonObject()
                 .setCallback(new FutureCallback<JsonObject>() {
                     @Override
-                    public void onCompleted(Exception e, JsonObject result)
-                    {
+                    public void onCompleted(Exception e, JsonObject result) {
 
-                        if (result != null)
-                        {
+                        if (result != null) {
 
                             JsonArray productListArray = result.getAsJsonArray("data");
 
-                            System.out.println("data====="+ result);
+                            System.out.println("data=====" + result);
 
-                            for (int i = 0; i < productListArray.size(); i++)
-                            {
+                            for (int i = 0; i < productListArray.size(); i++) {
                                 JsonObject jsonObject = (JsonObject) productListArray.get(i);
                                 JsonObject product = jsonObject.getAsJsonObject("Product");
                                 JsonObject category = jsonObject.getAsJsonObject("Category");
 
-                                String categories_name =  category.get("name").getAsString();
+                                String categories_name = category.get("name").getAsString();
                                 String id = product.get("id").getAsString();
                                 String name = product.get("name").getAsString();
                                 String price = product.get("price").getAsString();
-                               // String special_price = product.get("special_price").getAsString();
-                                String image = "http://netforce.biz/renteeze/webservice/files/products/"+product.get("images").getAsString();
-                                productListDatas.add(new ProductListData(id, name, image,price,categories_name));
+                                String security_price = product.get("security_price").getAsString();
+                                String image = "http://netforce.biz/renteeze/webservice/files/products/" + product.get("images").getAsString();
+                                productListDatas.add(new ProductListData(id, name, image, price, categories_name,security_price));
 
                             }
-                            productsAdapter=new ProductsAdapter(context, productListDatas);
+                            productsAdapter = new ProductsAdapter(context, productListDatas);
                             lvProducts.setAdapter(productsAdapter);
                             productsAdapter.notifyDataSetChanged();
 
                             dismissProgressBar();
                             layoutBottom.setVisibility(View.VISIBLE);
-                        }
-                        else
-                        {
+                        } else {
 
                             dismissProgressBar();
                             Log.e("error", e.toString());
@@ -322,13 +316,15 @@ public class Category extends BaseActivity implements View.OnClickListener
     }
 
 
+
     @Override
     protected void onResume() {
         super.onResume();
-
+        dashboardContainer = new DashboardContainer();
 
         try {
             invalidateOptionsMenu();
+
         } catch (Exception e) {
 
         }
@@ -336,6 +332,7 @@ public class Category extends BaseActivity implements View.OnClickListener
         dashboardContainer.count_cart();
 
     }
+
 
 
 }

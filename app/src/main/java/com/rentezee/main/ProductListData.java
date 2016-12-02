@@ -5,15 +5,16 @@ package com.rentezee.main;
  */
 public class ProductListData {
 
-    public String product_id,product_name,image_url,price,category_name;
+    public String product_id,product_name,image_url,price,category_name,security_price;
 
-    ProductListData(String product_id, String product_name, String image_url,String price,String category_name)
+    ProductListData(String product_id, String product_name, String image_url,String price,String category_name,String security_price)
     {
         this.product_id = product_id;
         this.product_name = product_name;
         this.image_url = image_url;
         this.price = price;
         this.category_name = category_name;
+        this.security_price = security_price;
 
     }
 }
