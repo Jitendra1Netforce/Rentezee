@@ -17,15 +17,13 @@ public class MyCartHolder extends RecyclerView.ViewHolder
 {
 
 
-
         View view;
-        public static TextView textview_from_date,textview_to_date,tv_rent_duration;
-        TextView tvProductName,tvCategoriesName,tvRentPrice,tvSecurytiFee,tvTotal;
+        public  TextView textview_from_date,textview_to_date,tv_rent_duration;
+        TextView tvProductName,tvCategoriesName,tvRentPrice,tvSecurytiFee,tvtotal;
+        TextView tvRentalHeading,tvsecurityheading,tvrentDurationHeading;
         ImageView imProductImage;
         RelativeLayout relativelayout;
         LinearLayout layoutRemove,layoutMoveToCart;
-
-
 
 
         public MyCartHolder(View itemView)
@@ -34,6 +32,11 @@ public class MyCartHolder extends RecyclerView.ViewHolder
 
             relativelayout = (RelativeLayout) itemView.findViewById(R.id.relativelayout);
 
+            tvRentalHeading = (TextView) itemView.findViewById(R.id.tv_rental_heading);
+
+            tvsecurityheading = (TextView) itemView.findViewById(R.id.tv_security_fee_heading);
+
+            tvrentDurationHeading = (TextView) itemView.findViewById(R.id.tv_rent_duration_heading);
 
             textview_from_date = (TextView) itemView.findViewById(R.id.textview_from_date);
 
@@ -55,11 +58,10 @@ public class MyCartHolder extends RecyclerView.ViewHolder
 
             tvSecurytiFee = (TextView) itemView.findViewById(R.id.tv_security_fee);
 
-            tvTotal = (TextView) itemView.findViewById(R.id.tvTotal);
+            tvtotal = (TextView) itemView.findViewById(R.id.tvTotaldata);
 
             view = itemView;
         }
-
 
 
         }

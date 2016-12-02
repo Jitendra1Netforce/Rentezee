@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -20,12 +21,15 @@ public class ChooseAddressHolder extends RecyclerView.ViewHolder
     TextView txtAddressheading,txtAddress,txtAddressDetails,txtAddressCity;
     ImageView imgEditAddress;
     RelativeLayout relativeLayout;
+    RadioButton radioButtonAddress;
 
     public ChooseAddressHolder(View itemView)
     {
         super(itemView);
 
         relativeLayout = (RelativeLayout) itemView.findViewById(R.id.relativelayout);
+
+        radioButtonAddress = (RadioButton) itemView.findViewById(R.id.radioButtonAddress);
 
         imgEditAddress = (ImageView)  itemView.findViewById(R.id.imgEditAddress);
 

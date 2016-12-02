@@ -41,7 +41,7 @@ public class CreditHolder extends RecyclerView.ViewHolder {
 
         tvSecurytiFee = (TextView) itemView.findViewById(R.id.tv_security_fee);
 
-        tvTotal = (TextView) itemView.findViewById(R.id.tvTotal);
+        tvTotal = (TextView) itemView.findViewById(R.id.tvTotaldata);
 
         view = itemView;
     }

@@ -23,6 +23,19 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/cardViewDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:padding="10dp"
+                android:elevation="2dp"
+                app:cardCornerRadius="2dp">
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -33,7 +46,7 @@
                     android:id="@+id/txtUsername"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Arvind"
+                    android:text=""
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:textColor="@color/black"
@@ -44,7 +57,7 @@
                     android:id="@+id/txtUserEmail"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="arvindkumaryadav937@gmail.com"
+                    android:text=""
                     android:textColor="@color/black"
                     android:layout_below="@+id/txtUsername"
                     android:layout_alignParentLeft="true"
@@ -69,7 +82,7 @@
                         android:id="@+id/txtMobileNo"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="9811531065"
+                        android:text=""
                         android:textColor="@color/black"
                         android:textStyle="bold"
                         android:layout_marginLeft="3dp"
@@ -79,6 +92,19 @@
 
 
             </RelativeLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:padding="10dp"
+                android:elevation="2dp"
+                app:cardCornerRadius="2dp">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -98,6 +124,8 @@
                     app:ci_drawable_unselected="@drawable/indicator_unselected" />
             </RelativeLayout>
 
+            </android.support.v7.widget.CardView>
+
             <TextView
                 android:id="@+id/tvProductID"
                 style="@style/MyTextViewNormal"
@@ -113,10 +141,7 @@
                 android:textAllCaps="true"
                 android:textStyle="bold" />
 
-
             <android.support.v7.widget.CardView
-
-                android:id="@+id/cardViewDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="10dp"
@@ -124,6 +149,7 @@
                 android:layout_marginRight="10dp"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="20dp"
+                android:layout_marginBottom="10dp"
                 android:padding="10dp"
                 android:elevation="2dp"
                 app:cardCornerRadius="2dp">
@@ -183,68 +209,98 @@
                         android:layout_marginBottom="20dp"
                         />
 
+                    <TextView
+                        android:id="@+id/tvPriceHeading"
+                        style="@style/MyTextViewSmall"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:maxLines="1"
+                        android:text="Price"
+                        android:textStyle="bold" />
+
+
+                    <TextView
+                        android:id="@+id/tvPrice"
+                        style="@style/MyTextViewSmall"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Security Money Rent"
+                        android:layout_marginTop="10dp"
+                        android:textColor="@color/black"
+                        android:layout_marginLeft="2dp"
+                        android:textStyle="bold"
+
+                         />
+
+                    <LinearLayout
+
+                        android:id="@+id/layoutPrice"
+                        android:layout_marginTop="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <LinearLayout
+                            android:id="@+id/layoutSecurityPrice"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/tvSecurityMoneyHeading"
+                                style="@style/MyTextViewSmall"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:maxLines="1"
+                                android:text="Security Money Rent"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/tvSecurityMoney"
+                                style="@style/MyTextViewSmall"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="10dp"
+                                android:maxLines="1"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/layoutRentPrice"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/tvPerDayRentHeading"
+                                style="@style/MyTextViewSmall"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:maxLines="1"
+                                android:text="Per Day Rent"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/tvPerDayRent"
+                                style="@style/MyTextViewSmall"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="10dp"
+                                android:maxLines="1"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+
                 </LinearLayout>
 
             </android.support.v7.widget.CardView>
 
-            <LinearLayout
 
-                android:id="@+id/layoutPrice"
-                android:layout_margin="10dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
 
-                    <TextView
-                        style="@style/MyTextViewSmall"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:maxLines="1"
-                        android:text="Security Money Rent"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/tvSecurityMoney"
-                        style="@style/MyTextViewSmall"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        android:maxLines="1"
-                        android:textStyle="bold" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <TextView
-                        style="@style/MyTextViewSmall"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:maxLines="1"
-                        android:text="Per Day Rent"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/tvPerDayRent"
-                        style="@style/MyTextViewSmall"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        android:maxLines="1"
-                        android:textStyle="bold" />
-                </LinearLayout>
-            </LinearLayout
->
 
         </LinearLayout>
     </ScrollView>
