@@ -51,6 +51,7 @@
 
 
                 <TextView
+                    android:id="@+id/tvItemTotal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="ITEM TOTAL"
@@ -63,6 +64,7 @@
 
 
                 <TextView
+                    android:id="@+id/tvTotalSecurity"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="(RENTAL + SECURITY)"
@@ -217,18 +219,39 @@
             </RelativeLayout>
 
 
-            <TextView
-                android:id="@+id/tvTotaldata"
+            <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/relativeData"
                 android:layout_marginLeft="10dp"
                 android:layout_alignParentRight="true"
-                android:layout_marginTop="10dp"
-                android:text="\u20B9 28,500"
-                android:textColor="@color/black"
-                android:textStyle="bold"
-                />
+
+                >
+
+                <TextView
+                    android:id="@+id/tvRupees"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="\u20B9"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    />
+
+                <TextView
+                    android:id="@+id/tvTotaldata"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="28,500"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:layout_toRightOf="@+id/tvRupees"
+                    android:layout_marginLeft="2dp"
+                    />
+
+            </RelativeLayout>
+
 
         </RelativeLayout>
 

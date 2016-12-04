@@ -15,12 +15,10 @@ import com.rentezee.main.R;
  */
 public class MyCartHolder extends RecyclerView.ViewHolder
 {
-
-
         View view;
         public  TextView textview_from_date,textview_to_date,tv_rent_duration;
         TextView tvProductName,tvCategoriesName,tvRentPrice,tvSecurytiFee,tvtotal;
-        TextView tvRentalHeading,tvsecurityheading,tvrentDurationHeading;
+        TextView tvRentalHeading,tvsecurityheading,tvrentDurationHeading,tv_to,tvItemTotal,tvTotalSecurity;
         ImageView imProductImage;
         RelativeLayout relativelayout;
         LinearLayout layoutRemove,layoutMoveToCart;
@@ -57,6 +55,12 @@ public class MyCartHolder extends RecyclerView.ViewHolder
             tvRentPrice = (TextView) itemView.findViewById(R.id.tv_rental);
 
             tvSecurytiFee = (TextView) itemView.findViewById(R.id.tv_security_fee);
+
+            tv_to = (TextView) itemView.findViewById(R.id.tv_to);
+
+            tvItemTotal = (TextView) itemView.findViewById(R.id.tvItemTotal);
+
+            tvTotalSecurity = (TextView) itemView.findViewById(R.id.tvTotalSecurity);
 
             tvtotal = (TextView) itemView.findViewById(R.id.tvTotaldata);
 

@@ -51,7 +51,7 @@ public class MyCart extends BaseActivity implements TimePickerDialog.OnTimeSetLi
     RelativeLayout relativeLayoutDetails;
     DashboardContainer dashboardContainer;
     TextView tvService_tax,tvOthertax,tvSerciceCharge,tv_total;
-
+    int total_per_item;
 
 
 
@@ -202,7 +202,16 @@ public class MyCart extends BaseActivity implements TimePickerDialog.OnTimeSetLi
                                 String category_name = jsonObject.get("categories_name").getAsString();
                                 String security_price = jsonObject.get("security_price").getAsString();
                                 String image = jsonObject.get("image").getAsString();
-                                myCartDatas.add(new MyCartData(cart_id,product_id, name, image, price, security_price,category_name));
+                                if(security_price.equals("0"))
+                                {
+                                    total_per_item = Integer.valueOf(price);
+                                }
+                                else
+                                {
+
+                                    total_per_item = Integer.valueOf(price)*1+Integer.valueOf(security_price);
+                                }
+                                myCartDatas.add(new MyCartData(cart_id,product_id, name, image, price, security_price,category_name,String.valueOf(total_per_item)));
                                 relativeLayoutDetails.setVisibility(View.VISIBLE);
 
                             }
