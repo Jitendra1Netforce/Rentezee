@@ -58,6 +58,8 @@ public class MyCartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     int payable_amount =0;
 
 
+
+
     public MyCartAdapter(Context context, List<MyCartData> itemList, MyCart myCart)
     {
 
@@ -68,13 +70,11 @@ public class MyCartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         dashboardContainer = new DashboardContainer();
 
 
-
-
-
     }
 
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
+    {
 
         View view = inflater.inflate(R.layout.row_my_cart, parent, false);
         myCartHolder = new MyCartHolder(view);
@@ -84,31 +84,54 @@ public class MyCartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         myCartHolder.textview_from_date.setText(current_date);
 
         myCartHolder.textview_to_date.setText(current_date);
+
+        myCartHolder.tvtotal.setText(String.valueOf(itemList.get(parent.getChildCount()).total_per_item));
+
+        payable_amount = payable_amount+Integer.valueOf(itemList.get(parent.getChildCount()).total_per_item);
+
+        myCart.tv_total.setText(String.valueOf(payable_amount));
+
+        System.out.println("arvind data============"+parent.getChildCount());
+
+
+
         return myCartHolder;
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position)
+    {
 
         final MyCartHolder homeHolder = (MyCartHolder) holder;
-
-
 
         if (itemList.get(position).security_price.toString().equals("0"))
         {
 
-            homeHolder.tvRentalHeading.setText("Duration");
+            homeHolder.tvRentalHeading.setText("Discription");
 
-            homeHolder.tvRentalHeading.setText(itemList.get(position).category_name);
+            homeHolder.tvsecurityheading.setText(itemList.get(position).category_name);
 
-            homeHolder.tvRentPrice.setVisibility(View.GONE);
-            homeHolder.tvSecurytiFee.setVisibility(View.GONE);
+            homeHolder.tvRentPrice.setVisibility(View.INVISIBLE);
+            homeHolder.tvSecurytiFee.setVisibility(View.INVISIBLE);
 
-            homeHolder.tvrentDurationHeading.setVisibility(View.GONE);
-            homeHolder.tv_rent_duration.setVisibility(View.GONE);
+            homeHolder.tvrentDurationHeading.setVisibility(View.INVISIBLE);
+            homeHolder.tv_rent_duration.setVisibility(View.INVISIBLE);
 
-            homeHolder.textview_from_date.setVisibility(View.GONE);
-            homeHolder.textview_to_date.setVisibility(View.GONE);
+            homeHolder.textview_from_date.setVisibility(View.INVISIBLE);
+            homeHolder.textview_to_date.setVisibility(View.INVISIBLE);
+
+            homeHolder.tvTotalSecurity.setText("ITEM TOTAL");
+
+            homeHolder.tv_to.setVisibility(View.INVISIBLE);
+
+            homeHolder.tvItemTotal.setVisibility(View.INVISIBLE);
+
+            Glide.with(context)
+                    .load(itemList.get(position).image_url)
+                    .centerCrop()
+                    //.placeholder(R.mipmap.ic_loading)
+                    .crossFade()
+                    .into(homeHolder.imProductImage);
 
         }
         else
@@ -125,11 +148,15 @@ public class MyCartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
             homeHolder.textview_from_date.setVisibility(View.VISIBLE);
             homeHolder.textview_to_date.setVisibility(View.VISIBLE);
+            homeHolder.tv_to.setVisibility(View.VISIBLE);
+            homeHolder.tvItemTotal.setVisibility(View.VISIBLE);
 
             homeHolder.tvProductName.setText(itemList.get(position).product_name);
             homeHolder.tvRentPrice.setText(itemList.get(position).rental_price);
             homeHolder.tvSecurytiFee.setText(itemList.get(position).security_price);
             homeHolder.tvCategoriesName.setText(itemList.get(position).category_name);
+
+            homeHolder.tvTotalSecurity.setText("RENTAL + SECURITY");
 
             // homeHolder.tvTotal.setText(Integer.parseInt(homeHolder.tvRentPrice.getText().toString())+Integer.parseInt(homeHolder.tvSecurytiFee.getText().toString()));
             Glide.with(context)
@@ -138,20 +165,16 @@ public class MyCartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                             //.placeholder(R.mipmap.ic_loading)
                     .crossFade()
                     .into(homeHolder.imProductImage);
-            String current_date = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
 
+           /* String current_date = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
 
             int total_amount = Integer.valueOf(homeHolder.tvRentPrice.getText().toString())*1+Integer.valueOf(homeHolder.tvSecurytiFee.getText().toString());
 
             System.out.println("total_amount=============" + total_amount);
 
-            homeHolder.tvtotal.setText("\u20B9" + String.valueOf(total_amount));
-
              payable_amount = payable_amount +total_amount;
 
-            myCart.tv_total.setText(String.valueOf(payable_amount));
-
-
+            myCart.tv_total.setText(String.valueOf(payable_amount));*/
 
 
         }
@@ -168,6 +191,10 @@ public class MyCartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 String cart_id = itemList.get(position).my_cart_id.toString();
                 delete_to_cart(cart_id);
 
+                int pre_tvtotal = Integer.valueOf(itemList.get(position).total_per_item);
+                payable_amount = payable_amount -pre_tvtotal;
+
+                myCart.tv_total.setText(String.valueOf(payable_amount));
 
             }
         });
@@ -264,6 +291,7 @@ public class MyCartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
                             myCart.fetchData(true);
                             dashboardContainer.count_cart();
+                            notifyDataSetChanged();
 
                         }
 
@@ -301,12 +329,22 @@ public class MyCartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
                     System.out.println("total_amount============="+total_amount);
 
-                    this.tvtotal.setText("\u20B9" + String.valueOf(total_amount));
+                    this.tvtotal.setText(String.valueOf(total_amount));
+
+                    System.out.println("my data ============"+this.tvtotal.getText().toString());
+
+                    notifyDataSetChanged();
+
+                    payable_amount = payable_amount +total_amount-pre_tvtotal;
+
+                    myCart.tv_total.setText(String.valueOf(payable_amount));
 
                   /*  int new_total = Integer.valueOf(myCart.tv_total.getText().toString()) - pre_tvtotal+ total_amount;
 
                      myCart.tv_total.setText(String.valueOf(new_total));
-*/
+                  */
+
+
 
                 }
 
@@ -314,7 +352,7 @@ public class MyCartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 e.printStackTrace();
             }
 
-            notifyDataSetChanged();
+
 
         } else {
             toFlag = true;
@@ -333,11 +371,20 @@ public class MyCartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                     String day = String.valueOf(TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS));
 
                     this.textViewDuration.setText(day + "days");
+
+                    int pre_tvtotal = Integer.valueOf(this.tvtotal.getText().toString());
+
                     int total_amount = Integer.valueOf(this.tvRentPrice.getText().toString())*Integer.valueOf(day)+Integer.valueOf(this.tvSecurytiFee.getText().toString());
 
                     System.out.println("total_amount============="+total_amount);
 
-                    this.tvtotal.setText("\u20B9"+String.valueOf(total_amount));
+                    this.tvtotal.setText(String.valueOf(total_amount));
+
+                    System.out.println("my data ============"+this.tvtotal.getText().toString());
+
+                    payable_amount = payable_amount +total_amount-pre_tvtotal;
+
+                    myCart.tv_total.setText(String.valueOf(payable_amount));
 
                 }
             } catch (ParseException e) {
