@@ -102,7 +102,7 @@ public class DashboardContainer extends BaseActivity implements NavigationView.O
         DialogInterface.OnCancelListener {
 
     public static  int cart_count;
-   public ArrayList<CategoriesData> categoryDatas = new ArrayList<>();
+    public ArrayList<CategoriesData> categoryDatas = new ArrayList<>();
     ArrayList<TrendingData> trendingDatas = new ArrayList<>();
     public  static final ArrayList<String> category_data = new ArrayList<>();
     public  static final ArrayList<String> category_id = new ArrayList<>();
@@ -992,7 +992,6 @@ public class DashboardContainer extends BaseActivity implements NavigationView.O
 
                             int new_my_cart = Integer.parseInt(my_cart_c);
 
-
                             tvCartCount.setText(String.valueOf(new_my_cart));
 
                             System.out.println("reload------------------" + cart_count);
@@ -1017,13 +1016,11 @@ public class DashboardContainer extends BaseActivity implements NavigationView.O
     protected void onResume()
     {
         super.onResume();
-
-
         try {
             invalidateOptionsMenu();
         }catch (Exception e){
 
-    }
+        }
 
         count_cart();
 

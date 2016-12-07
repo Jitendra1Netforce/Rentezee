@@ -14,6 +14,7 @@ import android.view.animation.OvershootInterpolator;
 import android.view.animation.ScaleAnimation;
 import android.widget.TextView;
 
+import com.rentezee.fragments.my_cart.MyCart;
 import com.rentezee.main.DashboardContainer;
 import com.rentezee.main.R;
 import com.rentezee.main.Search;
@@ -83,6 +84,7 @@ public abstract  class BaseActivity extends AppCompatActivity {
                 gotoActivity(Search.class);
                 break;
             case R.id.menu_cart:
+                gotoActivity(MyCart.class);
                 break;
             case android.R.id.home:
                 onBackPressed();

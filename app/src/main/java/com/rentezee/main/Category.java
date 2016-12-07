@@ -7,12 +7,16 @@ import android.os.Handler;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
@@ -21,72 +25,177 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
-import com.rentezee.adapters.DashboardCategoriesAdapter;
-import com.rentezee.adapters.ProductsAdapter;
-import com.rentezee.adapters.TrendingAdapter;
-import com.rentezee.adapters.ViewPagerAdapter;
-import com.rentezee.fragments.DashboardSliderImage;
+
+import com.rentezee.adapters.ProductAdapterNew;
+
 import com.rentezee.helpers.BaseActivity;
 import com.rentezee.helpers.Constants;
-import com.rentezee.helpers.Debugger;
-import com.rentezee.helpers.JToast;
-import com.rentezee.helpers.Util;
-import com.rentezee.helpers.VolleyErrorHandler;
-import com.rentezee.helpers.VolleyGsonRequest;
-import com.rentezee.pojos.mcategory.Product;
-import com.rentezee.pojos.mdashboard.CategoryData;
 
-import org.json.JSONObject;
+import com.rentezee.pojos.mcategory.Product;
 
 import java.util.ArrayList;
 
-public class Category extends BaseActivity implements View.OnClickListener
+public class Category extends BaseActivity implements View.OnClickListener,SwipeRefreshLayout.OnRefreshListener
 {
 
      private static  final String TAG=Category.class.getSimpleName();
      private Context context;
      private CoordinatorLayout coordinatorLayout;
      private LinearLayout layoutBottom;
-     ListView lvProducts;
+     RecyclerView lvProducts;
      ArrayList<ProductListData> productListDatas = new ArrayList<>();
      ArrayList<CategoriesData> fetchedCategoryDataList;
      private ArrayList<Product> productList=new ArrayList<>();
-     private ProductsAdapter productsAdapter;
+     ProductAdapterNew productsAdapter;
      private int categoryId, page, sortBy;
      DashboardContainer dashboardContainer;
+     AlertDialog.Builder alertDialog;
+     AlertDialog alert;
+     SwipeRefreshLayout mSwipyRefreshLayout;
+     int product_count = 1;
+     Boolean loadingMore= false;
+     LinearLayoutManager mLayoutManager;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
+
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_category);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        context=this;
+        context = this;
 
-        ActionBar actionBar=getSupportActionBar();
-        if(actionBar!=null){
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
+
         //find views
         coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinatorLayout);
-        layoutBottom=(LinearLayout)findViewById(R.id.layoutBottom);
+        layoutBottom = (LinearLayout) findViewById(R.id.layoutBottom);
 
-        lvProducts=(ListView)findViewById(R.id.lvProducts);
+        lvProducts = (RecyclerView) findViewById(R.id.lvProducts);
+
+        mSwipyRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipyrefreshlayout);
+
+        // mSwipyRefreshLayout.setRefreshing(true);
+
+        mSwipyRefreshLayout.setOnRefreshListener(this);
 
 
-        lvProducts.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        mLayoutManager = new LinearLayoutManager(getApplicationContext());
+        productsAdapter = new ProductAdapterNew(context, productListDatas);
+        lvProducts.setAdapter(productsAdapter);
+        lvProducts.setLayoutManager(mLayoutManager);
+
+
+        lvProducts.setOnScrollListener(new RecyclerView.OnScrollListener()
+        {
+
+            public void onScrollStateChanged(RecyclerView view, int scrollState)
+            {
+
+                super.onScrollStateChanged(lvProducts, scrollState);
+
+            }
+
+
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy)
+            {
+                super.onScrolled(recyclerView, dx, dy);
+
+                int totalItemCount = mLayoutManager.getItemCount();
+
+                int firstVisibleItem = mLayoutManager.findFirstVisibleItemPosition();
+
+                int lastVisibleItemCount = mLayoutManager.findLastVisibleItemPosition();
+
+                if (totalItemCount > 0)
+                {
+                    if ((totalItemCount - 1) == lastVisibleItemCount)
+                    {
+
+                        product_count=   product_count + 1;
+
+                        Log.e("product_count==",product_count+"");
+
+                         load_new_data(product_count);
+
+                        System.out.println("count===="+product_count);
+                    }
+                    else
+                    {
+                        //loadingProgress.setVisibility(View.GONE);
+                    }
+
+                }
+
+            }
+
+
+        });
+
+
+       /* lvProducts.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(context, Detail.class);
                 intent.putExtra(Constants.PRODUCT_ID, productListDatas.get(position).product_id);
                 gotoActivity(intent);
             }
+        });*/
+   /*
+
+        lvProducts.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView absListView, int i) {
+
+            }
+
+            @Override
+            public void onScroll(AbsListView absListView, int firstVisibleItem, int visibleItemCount, int totalItemCount)
+            {
+
+                 int lastItem = firstVisibleItem + visibleItemCount;
+
+                System.out.println("totalitem===="+totalItemCount+"firstVisibleItem--------"+ firstVisibleItem+ "visibleItemCount==========="+visibleItemCount);
+
+                if (totalItemCount > 0)
+                {
+                    if (lastItem == totalItemCount)
+                    {
+                        //loadMore();//your HTTP stuff goes in this method
+                        //loadingProgress.setVisibility(View.VISIBLE);
+
+                        System.out.println("lastItem===="+lastItem);
+
+                        product_count=   product_count + 1;
+
+                        Log.e("product_count==",product_count+"");
+
+
+                       // load_new_data(product_count);
+
+                        System.out.println("count===="+product_count);
+
+                    }
+                    else
+                    {
+                        //loadingProgress.setVisibility(View.GONE);
+                    }
+
+                }
+
+            }
         });
+*/
 
         TabLayout tabLayout = (TabLayout)findViewById(R.id.tabLayout);
 
@@ -110,12 +219,128 @@ public class Category extends BaseActivity implements View.OnClickListener
             return;
         }*/
 
-        if(selectedTabPosition == 0){
+
+
+
+        if(selectedTabPosition == 0)
+        {
             fetchData(true);
         }
 
 
 
+    }
+
+    private void load_new_data(int limit) {
+
+
+        loadingMore =true;
+        Ion.with(this)
+                .load("http://netforce.biz/renteeze/webservice/products/product_list?cat_id="+categoryId+"&limit="+limit)
+
+                .asJsonObject()
+                .setCallback(new FutureCallback<JsonObject>() {
+                    @Override
+                    public void onCompleted(Exception e, JsonObject result) {
+
+                        if (result != null) {
+
+                            JsonArray productListArray = result.getAsJsonArray("data");
+
+                            System.out.println("data=====" + result);
+
+                            for (int i = 0; i < productListArray.size(); i++) {
+                                JsonObject jsonObject = (JsonObject) productListArray.get(i);
+                                JsonObject product = jsonObject.getAsJsonObject("Product");
+                                JsonObject category = jsonObject.getAsJsonObject("Category");
+
+                                String categories_name = category.get("name").getAsString();
+                                String id = product.get("id").getAsString();
+                                String name = product.get("name").getAsString();
+                                String price = product.get("price").getAsString();
+                                String security_price = product.get("security_price").getAsString();
+                                String image = "http://netforce.biz/renteeze/webservice/files/products/" + product.get("images").getAsString();
+                                productListDatas.add(new ProductListData(id, name, image, price, categories_name,security_price));
+
+                            }
+
+                            productsAdapter.notifyDataSetChanged();
+                            loadingMore =false;
+                            mSwipyRefreshLayout.setRefreshing(false);
+
+                            layoutBottom.setVisibility(View.VISIBLE);
+                        } else {
+
+                            dismissProgressBar();
+                            Log.e("error", e.toString());
+                        }
+                    }
+                });
+    }
+
+
+    @Override
+    public void onRefresh()
+    {
+               mSwipyRefreshLayout.setRefreshing(true);
+
+                layoutBottom.setVisibility(View.GONE);
+
+                productListDatas.clear();
+
+                  product_count = 1;
+                load_refresh_layout(1);
+                dashboardContainer = new DashboardContainer();
+                dashboardContainer.count_cart();
+
+    }
+
+    public void load_refresh_layout(int limit)
+    {
+
+        loadingMore = true;
+        mSwipyRefreshLayout.setRefreshing(true);
+        Ion.with(this)
+                .load("http://netforce.biz/renteeze/webservice/products/product_list?cat_id="+categoryId+"&limit="+limit+"&sort="+"")
+
+                .asJsonObject()
+                .setCallback(new FutureCallback<JsonObject>() {
+                    @Override
+                    public void onCompleted(Exception e, JsonObject result) {
+
+                        if (result != null) {
+
+                            JsonArray productListArray = result.getAsJsonArray("data");
+
+                            System.out.println("data=====" + result);
+
+                            for (int i = 0; i < productListArray.size(); i++) {
+                                JsonObject jsonObject = (JsonObject) productListArray.get(i);
+                                JsonObject product = jsonObject.getAsJsonObject("Product");
+                                JsonObject category = jsonObject.getAsJsonObject("Category");
+
+                                String categories_name = category.get("name").getAsString();
+                                String id = product.get("id").getAsString();
+                                String name = product.get("name").getAsString();
+                                String price = product.get("price").getAsString();
+                                String security_price = product.get("security_price").getAsString();
+                                String image = "http://netforce.biz/renteeze/webservice/files/products/" + product.get("images").getAsString();
+                                productListDatas.add(new ProductListData(id, name, image, price, categories_name,security_price));
+
+                            }
+
+                            productsAdapter.notifyDataSetChanged();
+                            loadingMore =false;
+                            mSwipyRefreshLayout.setRefreshing(false);
+
+                            layoutBottom.setVisibility(View.VISIBLE);
+                        } else {
+
+                            dismissProgressBar();
+                            Log.e("error", e.toString());
+                        }
+                    }
+                });
     }
 
     private void setUpTabs(final TabLayout tabLayout, final int selectedTabPosition){
@@ -165,16 +390,64 @@ public class Category extends BaseActivity implements View.OnClickListener
         options.add("Relevance");
         options.add("Price low to high");
         options.add("Price high to low");
-        options.add("Popularity");
         options.add("Latest Additions");
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
+
+        alertDialog = new AlertDialog.Builder(context);
+
+         alert = alertDialog.create();
+
+
         LayoutInflater inflater = getLayoutInflater();
         View convertView = inflater.inflate(R.layout.sort_popup, null);
         alertDialog.setView(convertView);
-        ListView lv = (ListView) convertView.findViewById(R.id.list);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,options);
+        final ListView lv = (ListView) convertView.findViewById(R.id.list);
+        final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,options);
         lv.setAdapter(adapter);
         alertDialog.show();
+
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l)
+            {
+
+
+                if(adapter.getItem(i).toString().equals("Relevance"))
+                {
+
+                    load_sort("relevance");
+                    alert.dismiss();
+                }
+
+                if (adapter.getItem(i).toString().equals("Price low to high"))
+                {
+
+                    load_sort("low_price");
+                    alert.dismiss();
+                }
+
+                if (adapter.getItem(i).toString().equals("Price high to low"))
+                {
+                    load_sort("high_price");
+                    alert.dismiss();
+
+                }
+
+                if (adapter.getItem(i).toString().equals("Latest Additions"))
+                {
+
+                     load_sort("latest");
+                    alert.dismiss();
+
+                }
+
+                System.out.println("item=============="+adapter.getItem(i).toString());
+               // load_sort(adapter.getItem(i).toString());
+
+
+            }
+        });
+
+
     }
 
     @Override
@@ -198,10 +471,13 @@ public class Category extends BaseActivity implements View.OnClickListener
     private void fetchData(final boolean reset)
     {
         System.out.println("fetch data=====");
+
         if(reset){
             reset();
         }
-       load_refresh();
+        product_count = 1;
+
+       load_refresh(1);
         dashboardContainer = new DashboardContainer();
         dashboardContainer.count_cart();
 
@@ -265,14 +541,14 @@ public class Category extends BaseActivity implements View.OnClickListener
 
     }
 
-    private void load_refresh()
+    private void load_refresh(int limit)
     {
         // recyclerView.setVisibility(View.GONE);
         // homeDatas.clear();
         showProgressBar(context);
-
+         loadingMore = true;
         Ion.with(this)
-                .load("http://netforce.biz/renteeze/webservice/products/product_list?cat_id="+categoryId)
+                .load("http://netforce.biz/renteeze/webservice/products/product_list?cat_id="+categoryId+"&limit="+limit+"&sort="+"")
 
                 .asJsonObject()
                 .setCallback(new FutureCallback<JsonObject>() {
@@ -299,8 +575,64 @@ public class Category extends BaseActivity implements View.OnClickListener
                                 productListDatas.add(new ProductListData(id, name, image, price, categories_name,security_price));
 
                             }
-                            productsAdapter = new ProductsAdapter(context, productListDatas);
-                            lvProducts.setAdapter(productsAdapter);
+
+                            productsAdapter.notifyDataSetChanged();
+
+                            loadingMore =false;
+
+                            dismissProgressBar();
+                            layoutBottom.setVisibility(View.VISIBLE);
+                        } else {
+
+                            dismissProgressBar();
+                            Log.e("error", e.toString());
+                        }
+                    }
+                });
+
+    }
+
+
+
+
+
+    private void load_sort(String sort)
+    {
+        layoutBottom.setVisibility(View.GONE);
+        page=1;
+        sortBy=0;
+        productListDatas.clear();
+
+        showProgressBar(context);
+
+        Ion.with(this)
+                .load("http://netforce.biz/renteeze/webservice/products/product_list?cat_id="+categoryId+"&sort="+sort)
+                .asJsonObject()
+                .setCallback(new FutureCallback<JsonObject>() {
+                    @Override
+                    public void onCompleted(Exception e, JsonObject result) {
+
+                        if (result != null) {
+
+                            JsonArray productListArray = result.getAsJsonArray("data");
+
+                            System.out.println("data=====" + result);
+
+                            for (int i = 0; i < productListArray.size(); i++) {
+                                JsonObject jsonObject = (JsonObject) productListArray.get(i);
+                                JsonObject product = jsonObject.getAsJsonObject("Product");
+                                JsonObject category = jsonObject.getAsJsonObject("Category");
+
+                                String categories_name = category.get("name").getAsString();
+                                String id = product.get("id").getAsString();
+                                String name = product.get("name").getAsString();
+                                String price = product.get("price").getAsString();
+                                String security_price = product.get("security_price").getAsString();
+                                String image = "http://netforce.biz/renteeze/webservice/files/products/" + product.get("images").getAsString();
+                                productListDatas.add(new ProductListData(id, name, image, price, categories_name,security_price));
+
+                            }
+
                             productsAdapter.notifyDataSetChanged();
 
                             dismissProgressBar();
