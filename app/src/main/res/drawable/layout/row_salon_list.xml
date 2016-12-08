@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/salon_list_item"
+    android:layout_width="match_parent"
+    android:layout_height="220dp"
+    android:layout_marginTop="20dp"
+    android:background="@drawable/salon_list"
+    >
+
+    <Button
+        android:id="@+id/flagButton"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:text="FLAGSHIP"
+        android:layout_alignParentRight="true"
+        android:layout_margin="5dp"
+        android:background="@drawable/circle_background"
+        android:textColor="#FFFFFF"
+        />
+
+    <ImageView
+        android:id="@+id/men_image"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:src="@drawable/salon_list"
+        android:scaleType="centerCrop"
+        android:visibility="gone"
+        />
+
+
+
+
+    <TextView
+        android:id="@+id/salon_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/services_background"
+        android:padding="8dp"
+        android:text="Havigo F Salon Paris, Greater Kailash - 11"
+        android:gravity="center_horizontal"
+        android:textColor="@color/white"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/men_image"
+        />
+
+</RelativeLayout>

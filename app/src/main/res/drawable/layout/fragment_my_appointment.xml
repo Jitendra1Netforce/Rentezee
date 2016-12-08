@@ -1,0 +1,82 @@
+<android.support.v4.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/nail_header_back"
+    >
+
+    <!-- TODO: Update blank fragment layout -->
+    <TextView
+        android:id="@+id/upcoming_appointment_heading"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/upcoming_appointment_txt"
+        android:padding="20dp"
+        android:textColor="@color/black"
+        />
+
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/upcoming_appointment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/upcoming_appointment_heading"
+        >
+
+
+    </android.support.v7.widget.RecyclerView>
+
+    <TextView
+        android:id="@+id/complete_appointment_heading"
+        android:textColor="@color/black"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/complete_appointment"
+        android:padding="20dp"
+        android:layout_below="@+id/upcoming_appointment"
+        />
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/complete_appointment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/complete_appointment_heading"
+        >
+
+
+    </android.support.v7.widget.RecyclerView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+       android:layout_alignParentBottom="true"
+        android:padding="10dp"
+        android:background="@color/white"
+        android:visibility="gone"
+        >
+
+        <Button
+            android:id="@+id/continueButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="30dp"
+            android:layout_marginLeft="30dp"
+            android:text="BOOK APPOINTMENT"
+            android:background="@drawable/button_selector"
+            android:textColor="@drawable/button_text_color"
+            />
+
+
+
+    </LinearLayout>
+
+
+</RelativeLayout>
+
+</android.support.v4.widget.NestedScrollView>

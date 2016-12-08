@@ -1,0 +1,86 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/chat_back"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    >
+
+    <RelativeLayout
+        android:id="@+id/chat_layout"
+        android:layout_width="match_parent"
+        android:layout_marginRight="10dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_alignParentTop="true"
+        android:layout_above="@+id/linearLayoutBotttom"
+        >
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/chat_recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/chat_back"
+            >
+
+
+        </android.support.v7.widget.RecyclerView>
+
+
+
+    </RelativeLayout>
+
+
+
+    <LinearLayout
+        android:id="@+id/linearLayoutBotttom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        android:weightSum="10"
+        android:background="@color/chat_back"
+        >
+
+
+        <ImageView
+            android:id="@+id/imageView_message"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_add"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
+            />
+
+        <EditText
+            android:id="@+id/messageEditext"
+            android:layout_width="0dp"
+            android:layout_weight="8"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/imageView_message"
+            android:background="@drawable/chat_edittext_back"
+            android:padding="10dp"
+            android:inputType="textEmailAddress"
+            android:hint="Message.."
+            android:imeOptions="actionNext"
+            android:singleLine="true"
+            />
+
+
+        <ImageView
+            android:id="@+id/sendMessage"
+            android:layout_toRightOf="@+id/messageEditext"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_add"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="10dp"
+            />
+
+    </LinearLayout>
+
+</RelativeLayout>

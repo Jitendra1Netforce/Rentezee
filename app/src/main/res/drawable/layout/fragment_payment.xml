@@ -1,0 +1,111 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.chat.laptop.hivego.payment.PaymentFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <TextView
+        android:id="@+id/total_rupees"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TOTAL: ₹ 3660"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:textSize="18sp"
+        android:textColor="@color/black"
+        />
+
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_below="@+id/total_rupees"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        >
+
+
+        <TextView
+            android:id="@+id/payonline_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pay Online (5% Off)"
+            android:textColor="@color/black"
+            android:layout_alignParentLeft="true"
+            android:layout_marginTop="15dp"
+            />
+
+
+        <com.github.ivbaranov.mfb.MaterialFavoriteButton
+            android:id="@+id/payonline_material_button"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_alignParentRight="true"
+            app:mfb_animate_favorite="true"
+            app:mfb_animate_unfavorite="false"
+            app:mfb_padding="12"
+            app:mfb_favorite_image="@drawable/ic_select"
+            app:mfb_not_favorite_image="@drawable/ic_add_service"
+            app:mfb_rotation_duration="100"
+            app:mfb_rotation_angle="360"
+            app:mfb_bounce_duration="300"
+            app:mfb_color="black"
+            app:mfb_type="star"
+            />
+
+        <TextView
+            android:id="@+id/payAtsalon_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pay Online (5% Off)"
+            android:textColor="@color/black"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/payonline_txt"
+            android:layout_marginTop="40dp"
+            />
+
+
+        <com.github.ivbaranov.mfb.MaterialFavoriteButton
+            android:id="@+id/payat_salon_material_button"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_alignParentRight="true"
+            app:mfb_animate_favorite="true"
+            app:mfb_animate_unfavorite="false"
+            app:mfb_padding="12"
+            app:mfb_favorite_image="@drawable/ic_select"
+            app:mfb_not_favorite_image="@drawable/ic_add_service"
+            app:mfb_rotation_duration="100"
+            app:mfb_rotation_angle="360"
+            app:mfb_bounce_duration="300"
+            app:mfb_color="black"
+            app:mfb_type="star"
+            android:layout_below="@+id/payonline_txt"
+            android:layout_marginTop="25dp"
+            />
+
+    </RelativeLayout>
+
+
+    <Button
+        android:id="@+id/payButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="PAY"
+        android:padding="12dp"
+        android:layout_marginLeft="30dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="30dp"
+        android:layout_marginBottom="30dp"
+        android:textColor="@drawable/button_text_color"
+        android:background="@drawable/button_selector"
+        />
+
+
+
+
+</RelativeLayout>

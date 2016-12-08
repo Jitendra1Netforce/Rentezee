@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_confirm"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+   >
+
+    <include
+        layout="@layout/toolbar_layout" />
+
+
+    <TextView
+        android:id="@+id/titleTxt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="MAKE SURE YOUR INFORMTION IS CORRECT BEFORE CONTINUING"
+        android:layout_marginTop="15dp"
+        android:textColor="#000000"
+        android:gravity="center_horizontal"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        />
+
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/google_button_background"
+        android:padding="15dp"
+        android:inputType="text"
+        android:hint="FIRST NAME"
+        android:imeOptions="actionNext"
+        android:singleLine="true"
+        android:textColor="@color/black"
+        />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/google_button_background"
+        android:padding="15dp"
+        android:inputType="text"
+        android:hint="LAST NAME"
+        android:imeOptions="actionNext"
+        android:singleLine="true"
+        android:textColor="@color/black"
+        />
+
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/google_button_background"
+        android:padding="15dp"
+        android:inputType="textEmailAddress"
+        android:imeOptions="actionNext"
+        android:singleLine="true"
+        android:textColor="@color/black"
+        android:hint="EMAIL"
+        />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/google_button_background"
+        android:padding="15dp"
+        android:inputType="number"
+        android:hint="MOBILE NUMBER"
+        android:imeOptions="actionDone"
+        android:singleLine="true"
+        android:textColor="@color/black"
+        android:maxLength="10"
+        />
+
+
+    <Button
+        android:id="@+id/confirmButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="15dp"
+        android:text="CONTINUE"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:textColor="@drawable/button_text_color"
+        android:background="@drawable/button_selector"
+        />
+
+
+</LinearLayout>
