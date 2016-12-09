@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +32,7 @@ import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -43,33 +45,33 @@ import java.util.concurrent.TimeUnit;
  * Created by John on 11/10/2016.
  */
 public class MyCartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements TimePickerDialog.OnTimeSetListener, DatePickerDialog.OnDateSetListener {
+
+
     private static final int SIMPLE_TYPE = 0;
     private static final int IMAGE_TYPE = 1;
     private final LayoutInflater inflater;
     ArrayList<Integer> values = new ArrayList<>();
-    private List<MyCartData> itemList;
+    public static ArrayList<MyCartData> itemList;
+    public  ArrayList<MyCartData> new_mycart_data = new ArrayList<>();
     private Context context;
     MyCartHolder myCartHolder;
     MyCart myCart;
     DashboardContainer dashboardContainer;
     public static Boolean txt_from_date = true;
-    TextView textViewFrom, textViewTo, textViewDuration,tvtotal,tvRentPrice,tvSecurytiFee;
+    TextView textViewFrom, textViewTo, textViewDuration, tvtotal, tvRentPrice, tvSecurytiFee;
     boolean fromFlag = false, toFlag = false;
-    int payable_amount =0;
+    double payable_amount = 0, all_text_charge, total_payable_amount;
+
+   public static   int myposition;
 
 
-
-
-    public MyCartAdapter(Context context, List<MyCartData> itemList, MyCart myCart)
+    public MyCartAdapter(Context context, ArrayList<MyCartData> itemList, MyCart myCart)
     {
-
         this.myCart = myCart;
         this.itemList = itemList;
         this.context = context;
         inflater = LayoutInflater.from(context);
         dashboardContainer = new DashboardContainer();
-
-
     }
 
     @Override
@@ -77,35 +79,75 @@ public class MyCartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     {
 
         View view = inflater.inflate(R.layout.row_my_cart, parent, false);
+
         myCartHolder = new MyCartHolder(view);
 
+        MyCartAdapter.this.textViewFrom = myCartHolder.textview_from_date;
+
+        MyCartAdapter.this.textViewTo = myCartHolder.textview_to_date;
+
+        MyCartAdapter.this.textViewDuration = myCartHolder.tv_rent_duration;
+
+        MyCartAdapter.this.tvtotal = myCartHolder.tvtotal;
+
+        MyCartAdapter.this.tvRentPrice = myCartHolder.tvRentPrice;
+
+        MyCartAdapter.this.tvSecurytiFee = myCartHolder.tvSecurytiFee;
+
         String current_date = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
+        String nextday = "";
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        Calendar c = Calendar.getInstance();
+        try {
+            c.setTime(sdf.parse(current_date));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        c.add(Calendar.DATE, 1);  // number of days to add
+        nextday = sdf.format(c.getTime());  // dt is now the new date
+        this.textViewFrom.setText(current_date);
 
-        myCartHolder.textview_from_date.setText(current_date);
+        this.textViewTo.setText(nextday);
 
-        myCartHolder.textview_to_date.setText(current_date);
 
         myCartHolder.tvtotal.setText(String.valueOf(itemList.get(parent.getChildCount()).total_per_item));
 
-        payable_amount = payable_amount+Integer.valueOf(itemList.get(parent.getChildCount()).total_per_item);
+        payable_amount = payable_amount + Double.valueOf(itemList.get(parent.getChildCount()).total_per_item);
 
         myCart.tv_total.setText(String.valueOf(payable_amount));
 
-        System.out.println("arvind data============"+parent.getChildCount());
+        System.out.println("arvind data============" + parent.getChildCount());
 
+
+        if (itemList.size() == parent.getChildCount() + 1)
+        {
+
+            System.out.println("this is pisitiion==========" + parent.getChildCount() + 1 + "itemList.size()=======" + itemList.size());
+
+            myCart.tvOthertax.setText(String.valueOf(Double.valueOf(myCart.tv_total.getText().toString()) * 2 / 100));
+
+            myCart.tvService_tax.setText(String.valueOf(Double.valueOf(myCart.tv_total.getText().toString()) * 12 / 100));
+
+            all_text_charge = Double.valueOf(myCart.tv_total.getText().toString()) * 12 / 100 + Double.valueOf(myCart.tv_total.getText().toString()) * 2 / 100 + Double.valueOf(myCart.tvSerciceCharge.getText().toString());
+
+            System.out.println("all_txt_===============" + all_text_charge);
+
+            total_payable_amount = Double.valueOf(myCart.tv_total.getText().toString()) + all_text_charge;
+
+            myCart.tv_total.setText(String.valueOf(total_payable_amount));
+
+        }
 
 
         return myCartHolder;
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position)
-    {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
 
         final MyCartHolder homeHolder = (MyCartHolder) holder;
 
-        if (itemList.get(position).security_price.toString().equals("0"))
-        {
+        if (itemList.get(position).security_price.toString().equals("0")) {
 
             homeHolder.tvRentalHeading.setText("Discription");
 
@@ -133,9 +175,10 @@ public class MyCartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                     .crossFade()
                     .into(homeHolder.imProductImage);
 
-        }
-        else
-        {
+
+
+
+        } else {
 
             homeHolder.tvRentalHeading.setText("Rental:");
             homeHolder.tvSecurytiFee.setText("Security Fee:");
@@ -151,6 +194,7 @@ public class MyCartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             homeHolder.tv_to.setVisibility(View.VISIBLE);
             homeHolder.tvItemTotal.setVisibility(View.VISIBLE);
 
+
             homeHolder.tvProductName.setText(itemList.get(position).product_name);
             homeHolder.tvRentPrice.setText(itemList.get(position).rental_price);
             homeHolder.tvSecurytiFee.setText(itemList.get(position).security_price);
@@ -162,7 +206,7 @@ public class MyCartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             Glide.with(context)
                     .load(itemList.get(position).image_url)
                     .centerCrop()
-                            //.placeholder(R.mipmap.ic_loading)
+                    //.placeholder(R.mipmap.ic_loading)
                     .crossFade()
                     .into(homeHolder.imProductImage);
 
@@ -191,30 +235,35 @@ public class MyCartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 String cart_id = itemList.get(position).my_cart_id.toString();
                 delete_to_cart(cart_id);
 
-                int pre_tvtotal = Integer.valueOf(itemList.get(position).total_per_item);
-                payable_amount = payable_amount -pre_tvtotal;
+                double pre_tvtotal = Double.valueOf(itemList.get(position).total_per_item);
+                payable_amount = payable_amount - pre_tvtotal;
 
                 myCart.tv_total.setText(String.valueOf(payable_amount));
 
             }
         });
 
-        homeHolder.textview_from_date.setOnClickListener(new View.OnClickListener()
-        {
+        homeHolder.textview_from_date.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view)
-            {
+            public void onClick(View view) {
+
+                myposition = position;
                 txt_from_date = true;
 
                 MyCartAdapter.this.textViewDuration = homeHolder.tv_rent_duration;
 
+                MyCartAdapter.this.textViewTo = homeHolder.textview_to_date;
+
                 MyCartAdapter.this.textViewFrom = homeHolder.textview_from_date;
 
-                MyCartAdapter.this.tvtotal= homeHolder.tvtotal;
+                MyCartAdapter.this.tvtotal = homeHolder.tvtotal;
 
-                MyCartAdapter.this.tvRentPrice= homeHolder.tvRentPrice;
+                MyCartAdapter.this.tvRentPrice = homeHolder.tvRentPrice;
 
-                MyCartAdapter.this.tvSecurytiFee= homeHolder.tvSecurytiFee;
+                MyCartAdapter.this.tvSecurytiFee = homeHolder.tvSecurytiFee;
+
+                Calendar calendar = Calendar.getInstance();
+                calendar.add(Calendar.DATE, 0);
 
                 Calendar now = Calendar.getInstance();
 
@@ -224,9 +273,13 @@ public class MyCartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                         now.get(Calendar.MONTH),
                         now.get(Calendar.DAY_OF_MONTH)
                 );
+
+                dpd.setMinDate(calendar);
                 dpd.show(((AppCompatActivity) context).getFragmentManager(), "Datepickerdialog");
 
-                // myCart.pick_date();
+
+
+
 
             }
         });
@@ -236,11 +289,23 @@ public class MyCartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             public void onClick(View view) {
 
 
+                myposition = position;
                 MyCartAdapter.this.textViewTo = homeHolder.textview_to_date;
+
+                MyCartAdapter.this.textViewFrom = homeHolder.textview_from_date;
+
                 MyCartAdapter.this.textViewDuration = homeHolder.tv_rent_duration;
 
+                MyCartAdapter.this.tvtotal = homeHolder.tvtotal;
+
+                MyCartAdapter.this.tvRentPrice = homeHolder.tvRentPrice;
+
+                MyCartAdapter.this.tvSecurytiFee = homeHolder.tvSecurytiFee;
 
                 txt_from_date = false;
+
+                Calendar calendar = Calendar.getInstance();
+                calendar.add(Calendar.DATE, 1);
 
                 Calendar now = Calendar.getInstance();
 
@@ -250,7 +315,20 @@ public class MyCartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                         now.get(Calendar.MONTH),
                         now.get(Calendar.DAY_OF_MONTH)
                 );
+                dpd.setMinDate(calendar);
                 dpd.show(((AppCompatActivity) context).getFragmentManager(), "Datepickerdialog");
+
+                //new_mycart_data.add()
+
+                System.out.println("from_date========="+position);
+
+
+
+              //  myCart.myCartDatas.set(position,new MyCartData(itemList.get(position).my_cart_id,itemList.get(position).product_id, itemList.get(position).product_name, itemList.get(position).image_url, itemList.get(position).rental_price, itemList.get(position).security_price,itemList.get(position).category_name,MyCartAdapter.this.textViewDuration.getText().toString(),MyCartAdapter.this.textViewFrom.getText().toString(),MyCartAdapter.this.textViewTo.getText().toString(),MyCartAdapter.this.tvtotal.getText().toString()));
+
+
+
+
             }
         });
 
@@ -302,95 +380,145 @@ public class MyCartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     }
 
 
-    public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
+    public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth)
+    {
 
-        if (txt_from_date) {
-            fromFlag = true;
+
+        if (txt_from_date)
+        {
+            //            fromFlag = true;
             this.textViewFrom.setText(dayOfMonth + "/" + String.valueOf(monthOfYear + 1) + "/" + year);
 
-            SimpleDateFormat myFormat = new SimpleDateFormat("dd/MM/yyyy");
+            if(validateDate(this.textViewFrom.getText().toString(),this.textViewTo.getText().toString()))
+            {
 
-            try {
-                Date date1 = myFormat.parse(this.textViewFrom.getText().toString());
-                if (toFlag)
-                {
-                    Date date2 = myFormat.parse(MyCartAdapter.this.textViewTo.getText().toString());
-                    long diff = date2.getTime() - date1.getTime();
+                SimpleDateFormat myFormat = new SimpleDateFormat("dd/MM/yyyy");
 
-                    System.out.println("Days: " + TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS));
+                try {
+                    Date date1 = myFormat.parse(this.textViewFrom.getText().toString());
+                    if (true) {
+                        Date date2 = myFormat.parse(MyCartAdapter.this.textViewTo.getText().toString());
+                        long diff = date2.getTime() - date1.getTime();
 
-                    String day = String.valueOf(TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS));
+                        System.out.println("Days: " + TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS));
 
-                    int pre_tvtotal = Integer.valueOf(this.tvtotal.getText().toString());
+                        String day = String.valueOf(TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS));
 
-                    this.textViewDuration.setText(day + "days");
+                        double pre_tvtotal = Double.valueOf(this.tvtotal.getText().toString());
 
-                    int total_amount = Integer.valueOf(this.tvRentPrice.getText().toString())*Integer.valueOf(day)+Integer.valueOf(this.tvSecurytiFee.getText().toString());
+                        this.textViewDuration.setText(day + "days");
 
-                    System.out.println("total_amount============="+total_amount);
+                        double total_amount = Double.valueOf(this.tvRentPrice.getText().toString()) * Double.valueOf(day) + Double.valueOf(this.tvSecurytiFee.getText().toString());
 
-                    this.tvtotal.setText(String.valueOf(total_amount));
+                        System.out.println("total_amount=============" + total_amount);
 
-                    System.out.println("my data ============"+this.tvtotal.getText().toString());
+                        this.tvtotal.setText(String.valueOf(total_amount));
 
-                    notifyDataSetChanged();
+                        System.out.println("my data ============" + this.tvtotal.getText().toString());
 
-                    payable_amount = payable_amount +total_amount-pre_tvtotal;
+                        notifyDataSetChanged();
 
-                    myCart.tv_total.setText(String.valueOf(payable_amount));
+                        payable_amount = payable_amount + total_amount - pre_tvtotal;
+
+                        myCart.tv_total.setText(String.valueOf(payable_amount));
 
                   /*  int new_total = Integer.valueOf(myCart.tv_total.getText().toString()) - pre_tvtotal+ total_amount;
-
                      myCart.tv_total.setText(String.valueOf(new_total));
                   */
 
+                        all_text_charge = Double.valueOf(myCart.tv_total.getText().toString()) * 12 / 100 + Double.valueOf(myCart.tv_total.getText().toString()) * 2 / 100 + Double.valueOf(myCart.tvSerciceCharge.getText().toString());
 
 
+                        myCart.tvOthertax.setText(String.valueOf(Double.valueOf(myCart.tv_total.getText().toString()) * 2 / 100));
+
+                        myCart.tvService_tax.setText(String.valueOf(Double.valueOf(myCart.tv_total.getText().toString()) * 12 / 100));
+
+                        System.out.println("all_txt_===============" + all_text_charge);
+
+                        total_payable_amount = Double.valueOf(myCart.tv_total.getText().toString()) + all_text_charge;
+
+                        myCart.tv_total.setText(String.valueOf(total_payable_amount));
+
+
+                        MyCart.myCartDatas.set(myposition,new MyCartData(itemList.get(myposition).my_cart_id,itemList.get(myposition).product_id, itemList.get(myposition).product_name, itemList.get(myposition).image_url, itemList.get(myposition).rental_price, itemList.get(myposition).security_price,itemList.get(myposition).category_name,MyCartAdapter.this.textViewDuration.getText().toString(),MyCartAdapter.this.textViewFrom.getText().toString(),MyCartAdapter.this.textViewTo.getText().toString(),MyCartAdapter.this.tvtotal.getText().toString()));
+
+                        notifyDataSetChanged();
+                    }
+
+
+                } catch (ParseException e) {
+                    e.printStackTrace();
                 }
-
-            } catch (ParseException e) {
-                e.printStackTrace();
             }
+            notifyDataSetChanged();
 
 
-
-        } else {
-            toFlag = true;
+        }
+        else
+        {
+            //toFlag = true;
             this.textViewTo.setText(dayOfMonth + "/" + String.valueOf(monthOfYear + 1) + "/" + year);
 
-            SimpleDateFormat myFormat = new SimpleDateFormat("dd/MM/yyyy");
+            if(validateDate(this.textViewFrom.getText().toString(),this.textViewTo.getText().toString())) {
 
-            try {
-                Date date2 = myFormat.parse(this.textViewTo.getText().toString());
-                if (fromFlag) {
-                    Date date1 = myFormat.parse(this.textViewFrom.getText().toString());
-                    long diff = date2.getTime() - date1.getTime();
+                SimpleDateFormat myFormat = new SimpleDateFormat("dd/MM/yyyy");
 
-                    System.out.println("Days: " + TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS));
+                try {
+                    Date date2 = myFormat.parse(this.textViewTo.getText().toString());
+                    if (true) {
+                        Date date1 = myFormat.parse(this.textViewFrom.getText().toString());
+                        long diff = date2.getTime() - date1.getTime();
 
-                    String day = String.valueOf(TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS));
+                        System.out.println("Days: " + TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS));
 
-                    this.textViewDuration.setText(day + "days");
+                        String day = String.valueOf(TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS));
 
-                    int pre_tvtotal = Integer.valueOf(this.tvtotal.getText().toString());
+                        this.textViewDuration.setText(day + "days");
 
-                    int total_amount = Integer.valueOf(this.tvRentPrice.getText().toString())*Integer.valueOf(day)+Integer.valueOf(this.tvSecurytiFee.getText().toString());
+                        double pre_tvtotal = Double.valueOf(this.tvtotal.getText().toString());
 
-                    System.out.println("total_amount============="+total_amount);
+                        double total_amount = Double.valueOf(this.tvRentPrice.getText().toString()) * Double.valueOf(day) + Double.valueOf(this.tvSecurytiFee.getText().toString());
 
-                    this.tvtotal.setText(String.valueOf(total_amount));
+                        System.out.println("total_amount=============" + total_amount);
 
-                    System.out.println("my data ============"+this.tvtotal.getText().toString());
+                        this.tvtotal.setText(String.valueOf(total_amount));
 
-                    payable_amount = payable_amount +total_amount-pre_tvtotal;
+                        System.out.println("my data ============" + this.tvtotal.getText().toString());
 
-                    myCart.tv_total.setText(String.valueOf(payable_amount));
+                        payable_amount = payable_amount + total_amount - pre_tvtotal;
 
+                        myCart.tv_total.setText(String.valueOf(payable_amount));
+
+                        all_text_charge = Double.valueOf(myCart.tv_total.getText().toString()) * 12 / 100 + Double.valueOf(myCart.tv_total.getText().toString()) * 2 / 100 + Double.valueOf(myCart.tvSerciceCharge.getText().toString());
+
+                        myCart.tvOthertax.setText(String.valueOf(Double.valueOf(myCart.tv_total.getText().toString()) * 2 / 100));
+
+                        myCart.tvService_tax.setText(String.valueOf(Double.valueOf(myCart.tv_total.getText().toString()) * 12 / 100));
+
+
+                        System.out.println("all_txt_===============" + all_text_charge);
+
+                        total_payable_amount = Double.valueOf(myCart.tv_total.getText().toString()) + all_text_charge;
+
+                        myCart.tv_total.setText(String.valueOf(total_payable_amount));
+
+
+                        Log.i("mycart",myCart.myCartDatas.get(0).to_date.toString());
+                        MyCart.myCartDatas.set(myposition,new MyCartData(itemList.get(myposition).my_cart_id,itemList.get(myposition).product_id, itemList.get(myposition).product_name, itemList.get(myposition).image_url, itemList.get(myposition).rental_price, itemList.get(myposition).security_price,itemList.get(myposition).category_name,this.textViewDuration.getText().toString(),MyCartAdapter.this.textViewFrom.getText().toString(),MyCartAdapter.this.textViewTo.getText().toString(),MyCartAdapter.this.tvtotal.getText().toString()));
+
+                        // MyCart.myCartDatas.get(myposition).to_date=MyCartAdapter.this.textViewTo.getText().toString();
+                        notifyDataSetChanged();
+
+                        Log.i("mycart",myCart.myCartDatas.get(0).to_date.toString());
+                        System.out.println("to date--------"+ itemList.get(myposition).to_date.toString());
+
+
+
+                    }
+                } catch (ParseException e) {
+                    e.printStackTrace();
                 }
-            } catch (ParseException e) {
-                e.printStackTrace();
             }
-
             notifyDataSetChanged();
         }
 
@@ -398,14 +526,73 @@ public class MyCartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     }
 
 
+
+
     @Override
     public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
-
         String hourString = hourOfDay < 10 ? "0" + hourOfDay : "" + hourOfDay;
         String minuteString = minute < 10 ? "0" + minute : "" + minute;
         String secondString = second < 10 ? "0" + second : "" + second;
         String time = "You picked the following time: " + hourString + "h" + minuteString + "m" + secondString + "s";
         //month_txt.setText(time);
+    }
+
+    private boolean validateDate(String date1 , String date2)
+    {
+        Date etd, eta, returnetd, returneta;
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        Log.i("datecheck", date1 + ":" + date2);
+        try {
+            etd = dateFormat.parse(date1);
+        } catch (ParseException e) {
+            showMessage("Departure date not set");
+            return false;
+        }
+        try {
+            eta = dateFormat.parse(date2);
+        } catch (ParseException e) {
+            showMessage("Arival date not set");
+            return false;
+        }
+        Log.i("datecheck", etd.toString() + ":" + eta.toString());
+        if (etd.after(eta)) {
+
+            showMessage("From date should be after To date");
+            return false;
+        }
+
+
+      /*  if (returnFlag) {
+            String date3 = textViewReturnETD.getText().toString();
+            String date4 = textViewReturnETA.getText().toString();
+            try {
+                returnetd = dateFormat.parse(date3);
+            } catch (ParseException e) {
+                showMessage("Departure date not set");
+                return false;
+            }
+            try {
+                returneta = dateFormat.parse(date4);
+            } catch (ParseException e) {
+                showMessage("Arival date not set");
+                return false;
+            }
+            Log.i("datecheck", returnetd.toString() + ":" + returneta.toString());
+            if (returnetd.after(returneta)) {
+
+                showMessage("Arival time should be after Departure time");
+                return false;
+            }
+            if (etd.after(returnetd)) {
+                showMessage("Return time should be after out trip time");
+                return false;
+            }
+
+        }*/
+        return true;
+
+
     }
 
 

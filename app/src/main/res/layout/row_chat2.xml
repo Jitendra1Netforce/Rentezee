@@ -1,0 +1,198 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:orientation="vertical"
+    >
+
+    <RelativeLayout
+        android:id="@+id/AdminLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        >
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/profile_image"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:src="@drawable/mele"
+        app:civ_border_width="0dp"
+        />
+
+        <ImageView
+            android:id="@+id/adminImage"
+            android:layout_width="wrap_content"
+            android:layout_height="15dp"
+            android:src="@drawable/admin"
+            android:layout_toRightOf="@+id/profile_image"
+            android:layout_below="@+id/profile_image"
+            android:scaleType="fitXY"
+            />
+
+    <LinearLayout
+        android:id="@+id/messageLayout"
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/profile_image"
+        android:layout_below="@+id/adminImage"
+       android:layout_marginTop="-2dp"
+        android:background="@drawable/color_chat_bubble_back"
+        >
+
+
+
+        <TextView
+            android:id="@+id/user_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="cns nbsd"
+            android:textColor="@color/black"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:layout_below="@+id/product_image"
+
+            />
+
+    </LinearLayout>
+
+
+    <RelativeLayout
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="5dp"
+        android:layout_below="@+id/messageLayout"
+        android:layout_toRightOf="@+id/profile_image"
+        android:layout_marginTop="5dp"
+        >
+
+        <TextView
+            android:id="@+id/day_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Today"
+            android:layout_alignParentLeft="true"
+            android:textColor="@color/black"
+            android:textSize="10sp"
+            android:textStyle="bold"
+            />
+
+        <TextView
+            android:id="@+id/time_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="11:45"
+            android:layout_alignParentLeft="true"
+            android:textColor="@color/black"
+            android:textSize="10sp"
+            android:layout_below="@+id/day_txt"
+            android:textStyle="bold"
+            />
+
+    </RelativeLayout>
+
+
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/UserLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        >
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/profile_image2"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@drawable/mele"
+            app:civ_border_width="0dp"
+            android:layout_alignParentRight="true"
+            />
+
+        <ImageView
+            android:id="@+id/UserImage"
+            android:layout_width="wrap_content"
+            android:layout_height="15dp"
+            android:src="@drawable/user"
+            android:layout_toLeftOf="@+id/profile_image2"
+            android:layout_below="@+id/profile_image2"
+            android:scaleType="fitXY"
+            />
+
+
+        <LinearLayout
+            android:id="@+id/messageLayout2"
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/profile_image2"
+            android:layout_below="@+id/UserImage"
+            android:background="@drawable/color_chat_blue_back"
+            android:layout_marginTop="-2dp"
+            >
+
+
+
+            <TextView
+                android:id="@+id/user_message2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="cns nbsd"
+                android:textColor="@color/black"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp"
+                android:layout_below="@+id/product_image"
+
+                />
+
+        </LinearLayout>
+
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:layout_below="@+id/messageLayout2"
+            android:layout_toLeftOf="@+id/profile_image2"
+            android:layout_marginTop="5dp"
+            >
+
+            <TextView
+                android:id="@+id/day_txt2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Today"
+                android:layout_alignParentLeft="true"
+                android:textColor="@color/black"
+                android:textSize="10sp"
+                android:textStyle="bold"
+                />
+
+            <TextView
+                android:id="@+id/time_txt2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="11:45"
+                android:layout_alignParentLeft="true"
+                android:textColor="@color/black"
+                android:textSize="10sp"
+                android:layout_below="@+id/day_txt2"
+                android:textStyle="bold"
+                />
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+</LinearLayout>

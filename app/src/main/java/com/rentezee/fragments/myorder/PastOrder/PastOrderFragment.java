@@ -37,7 +37,7 @@ public class PastOrderFragment extends Fragment implements  View.OnClickListener
     String id,user_id;
     long  userId;
     User user;
-
+    String price;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -108,9 +108,7 @@ public class PastOrderFragment extends Fragment implements  View.OnClickListener
                     public void onCompleted(Exception e, JsonObject result) {
                         if (result != null)
                         {
-
                             System.out.println("data=====" + result.toString());
-
 
                             JsonArray productListArray = result.getAsJsonArray("data");
 
@@ -122,11 +120,19 @@ public class PastOrderFragment extends Fragment implements  View.OnClickListener
 
                                 String product_id = jsonObject.get("product_id").getAsString();
                                 String order_date = jsonObject.get("order_date").getAsString();
-                                String price = jsonObject.get("total_amount").getAsString();
+
+                              try {
+
+                                   price = jsonObject.get("total_amount").getAsString();
+                                  if (price == null){
+                                      price = "";
+                                  }
+                              }catch (Exception t){
+
+
+                              }
                                 String product_status = jsonObject.get("order_status").getAsString();
-
                                 pastOrderDatas.add(new PastOrderData(product_id, order_date, price, product_status));
-
                             }
                             pastOrderAdapter = new PastOrderAdapter(context, pastOrderDatas);
                             recyclerviewPastOrder.setAdapter(pastOrderAdapter);

@@ -118,7 +118,6 @@ public class AddressAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private void delete_to_cart(final String cart_id )
     {
 
-
         Ion.with(context)
                 .load("http://netforce.biz/renteeze/webservice/Users/delete_address/" + cart_id)
                 .asJsonObject()

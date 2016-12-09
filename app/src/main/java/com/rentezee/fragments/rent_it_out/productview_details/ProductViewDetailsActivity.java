@@ -62,7 +62,6 @@ public class ProductViewDetailsActivity extends BaseActivity
     private TextView tvProductName,tvProductCategoryName,tvDescription,tvProductID;
     private TextView tvSecurityMoney, tvPerDayRent;
     private CardView cardViewDescription;
-
     ActionBar actionBar;
     String device_id;
     MaterialFavoriteButton materialFavoriteButton;
@@ -340,7 +339,6 @@ public class ProductViewDetailsActivity extends BaseActivity
 
     }
 
-
     private void load_refresh(int productId)
     {
 
@@ -368,7 +366,6 @@ public class ProductViewDetailsActivity extends BaseActivity
             json.addProperty("user_id", "");
 
         }
-
 
         Ion.with(this)
                 .load("http://netforce.biz/renteeze/webservice/products/product_details")
@@ -424,7 +421,6 @@ public class ProductViewDetailsActivity extends BaseActivity
                             String rs = getString(R.string.rs);
                             tvSecurityMoney.setText(String.format(Locale.ENGLISH, "%s%s", rs, security_price));
                             tvPerDayRent.setText(String.format(Locale.ENGLISH, "%s%s", rs, price));
-
 
 
                             dismissProgressBar();

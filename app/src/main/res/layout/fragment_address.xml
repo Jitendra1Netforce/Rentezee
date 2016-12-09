@@ -194,6 +194,7 @@
         android:background="@color/colorPrimary"
         android:layout_below="@+id/relativelayoutMain"
         android:visibility="gone"
+        android:layout_margin="10dp"
         >
 
 

@@ -1,0 +1,397 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/screenbackground"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    >
+
+    <LinearLayout
+        android:id="@+id/linear_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_alignParentTop="true"
+        android:layout_above="@+id/layoutBottom"
+        >
+
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/screenbackground"
+            >
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
+
+                <android.support.v7.widget.CardView
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    >
+
+                    <RelativeLayout
+                        android:id="@+id/relativelayout"
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        >
+
+
+                        <TextView
+                            android:id="@+id/txtAddressheading"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Address 1"
+                            android:textColor="@color/black"
+                            android:textStyle="bold"
+                            android:layout_marginLeft="7dp"
+                            />
+
+
+                        <TextView
+                            android:id="@+id/txtAddress"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Home"
+                            android:layout_marginLeft="7dp"
+                            android:textColor="@color/black"
+                            android:textStyle="bold"
+                            android:layout_below="@+id/txtAddressheading"
+                            android:layout_marginTop="5dp"
+                            />
+
+                        <TextView
+                            android:id="@+id/txtAddressDetails"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="4b/402 Kamal Nagar"
+                            android:layout_below="@+id/txtAddress"
+                            android:layout_marginTop="5dp"
+                            android:textColor="@color/black"
+                            android:layout_marginLeft="7dp"
+                            />
+
+                        <TextView
+                            android:id="@+id/txtAddressCity"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="New Delhi, Delhi-110055"
+                            android:layout_below="@+id/txtAddressDetails"
+                            android:textColor="@color/black"
+                            android:layout_marginLeft="7dp"
+                            />
+
+                        <View
+                            android:id="@+id/view"
+                            android:layout_below="@+id/txtAddressCity"
+                            android:layout_width="match_parent"
+                            android:layout_height="1.5dp"
+                            android:background="#F1F5F7"
+                            android:layout_marginTop="10dp"
+                            ></View>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:weightSum="2"
+                            android:orientation="horizontal"
+                            android:layout_below="@+id/view"
+                            android:layout_marginTop="2dp"
+                            >
+
+                            <LinearLayout
+                                android:id="@+id/layoutAddressEdit"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0.99"
+                                android:gravity="center"
+                                android:orientation="horizontal"
+                                android:background="@drawable/address_button_back"
+                                >
+
+                                <ImageView
+                                    android:layout_width="25dp"
+                                    android:layout_height="25dp"
+                                    android:layout_gravity="center_vertical"
+                                    android:src="@drawable/ic_edit_orange" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:padding="10dp"
+                                    android:text="@string/edit"
+                                    android:textStyle="bold"
+                                    android:textColor="@color/orange"
+                                    android:theme="@style/MyTextViewNormal" />
+                            </LinearLayout>
+
+
+                            <LinearLayout
+                                android:id="@+id/layoutRemove"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0.99"
+                                android:gravity="center"
+                                android:orientation="horizontal"
+                                >
+
+                                <ImageView
+                                    android:layout_width="25dp"
+                                    android:layout_height="25dp"
+                                    android:layout_gravity="center_vertical"
+                                    android:src="@drawable/ic_delete_orange" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:padding="10dp"
+                                    android:text="@string/delete"
+                                    android:textStyle="bold"
+                                    android:textColor="@color/orange"
+                                    android:theme="@style/MyTextViewNormal" />
+                            </LinearLayout>
+
+
+                        </LinearLayout>
+
+                    </RelativeLayout>
+
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/lvMyCart"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="15dp"
+                    />
+
+
+                <RelativeLayout
+                    android:id="@+id/relativeTotal"
+                    android:layout_below="@+id/lvMyCart"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <android.support.v7.widget.CardView
+                        xmlns:android="http://schemas.android.com/apk/res/android"
+                        xmlns:app="http://schemas.android.com/apk/res-auto"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:elevation="8dp"
+                        >
+
+                        <RelativeLayout
+                            android:id="@+id/relativeLayoutDetails"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="10dp"
+                            >
+
+
+                            <TextView
+                                android:id="@+id/tv_discount_heading"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="DISCOUNT (COUPON SAVE)"
+                                android:layout_alignParentLeft="true"
+                                android:textColor="@color/black"
+                                />
+
+                            <TextView
+                                android:id="@+id/tv_discount"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="00"
+                                android:layout_alignParentRight="true"
+                                android:textColor="@color/green"
+                                />
+
+
+                            <TextView
+                                android:id="@+id/tv_credit_heading"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="RENTENZEE CREDITS"
+                                android:layout_below="@+id/tv_discount_heading"
+
+                                android:layout_alignParentLeft="true"
+                                android:textColor="@color/black"
+                                />
+
+                            <TextView
+                                android:id="@+id/tv_credit"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="0"
+                                android:layout_below="@+id/tv_discount_heading"
+                                android:textColor="@color/green"
+                                android:layout_alignParentRight="true"
+                                />
+
+                            <TextView
+                                android:id="@+id/tv_servicetax_heading"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="SERVICE TAX(12%)"
+                                android:layout_below="@+id/tv_credit_heading"
+                                android:layout_alignParentLeft="true"
+                                android:textColor="@color/black"
+                                />
+
+
+                            <TextView
+                                android:id="@+id/tv_servicetax"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="0"
+                                android:layout_below="@+id/tv_credit_heading"
+                                android:layout_alignParentRight="true"
+                                android:textColor="@color/orange"
+                                />
+
+
+                            <TextView
+                                android:id="@+id/tv_othertax_heading"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="OTHER TAXES:(2%)"
+                                android:layout_below="@+id/tv_servicetax_heading"
+                                android:layout_alignParentLeft="true"
+                                android:textColor="@color/black"
+                                />
+
+
+                            <TextView
+                                android:id="@+id/tv_othertax"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="N/A"
+                                android:layout_below="@+id/tv_servicetax_heading"
+                                android:layout_alignParentRight="true"
+                                android:textColor="@color/black"
+                                />
+
+                            <TextView
+                                android:id="@+id/tv_services_charges_heading"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="SERVICES CHARGES"
+                                android:layout_below="@+id/tv_othertax_heading"
+                                android:layout_alignParentLeft="true"
+                                android:textColor="@color/black"
+                                />
+
+
+                            <TextView
+                                android:id="@+id/tv_services_charges"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="200"
+                                android:layout_below="@+id/tv_othertax_heading"
+                                android:layout_alignParentRight="true"
+                                android:textColor="@color/orange"
+                                />
+
+
+
+                            <TextView
+                                android:id="@+id/tv_total_heading"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="TOTAL"
+                                android:layout_below="@+id/tv_services_charges_heading"
+                                android:layout_alignParentLeft="true"
+                                android:textColor="@color/black"
+                                android:layout_marginTop="30dp"
+                                android:textStyle="bold"
+                                />
+
+
+                            <TextView
+                                android:id="@+id/tv_total"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="58200"
+                                android:layout_below="@+id/tv_services_charges_heading"
+                                android:layout_alignParentRight="true"
+                                android:textColor="@color/black"
+                                android:layout_marginTop="30dp"
+                                android:textStyle="bold"
+                                />
+
+
+                        </RelativeLayout>
+
+                    </android.support.v7.widget.CardView>
+
+
+                </RelativeLayout>
+
+
+            </LinearLayout>
+
+
+
+
+        </android.support.v4.widget.NestedScrollView>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layoutBottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorPrimary"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/layoutContinue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:background="@color/colorPrimary"
+
+            >
+
+
+            <Button
+                android:id="@+id/continue_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/save_mdpi"
+                android:text="Continue"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:layout_centerHorizontal="true"
+                android:background="?android:attr/selectableItemBackground"
+                />
+
+
+        </RelativeLayout>
+
+
+
+
+    </LinearLayout>
+
+
+
+
+</RelativeLayout>

@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 import com.rentezee.main.R;
+
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -41,7 +43,6 @@ public class NotificationAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         View view = inflater.inflate(R.layout.row_notification, parent, false);
         notificationHolder = new NotificationHolder(view);
-
         return notificationHolder;
     }
 
@@ -50,6 +51,51 @@ public class NotificationAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     {
 
         NotificationHolder homeHolder = (NotificationHolder) holder;
+
+        if(itemList.get(position).type.toString().equals("transaction"))
+        {
+            homeHolder.tvProductTitle.setText(itemList.get(position).title);
+
+            String data_message = itemList.get(position).message+"\n"+"Transaction id -"+itemList.get(position).transaction_id.toString()+"\n"+"Order id -"+itemList.get(position).order_id.toString();
+
+            homeHolder.tv_product_descricption.setText(data_message);
+
+            String dtStart = itemList.get(position).date;
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+            try {
+                Date date = format.parse(dtStart);
+                System.out.println(date);
+            } catch (ParseException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+
+            homeHolder.tv_date.setText(dtStart.toString().substring(0,10));
+
+            homeHolder.tv_time.setText(dtStart.toString().substring(11,16));
+
+        }
+        else{
+
+            homeHolder.tvProductTitle.setText(itemList.get(position).title);
+
+            homeHolder.tv_product_descricption.setText(itemList.get(position).message);
+
+            String dtStart = itemList.get(position).date;
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+            try {
+                Date date = format.parse(dtStart);
+                System.out.println(date);
+            } catch (ParseException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+
+            homeHolder.tv_date.setText(dtStart.toString().substring(0,10));
+
+            homeHolder.tv_time.setText(dtStart.toString().substring(11,16));
+
+        }
 
 
 

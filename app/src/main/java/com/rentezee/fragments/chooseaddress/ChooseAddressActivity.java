@@ -49,7 +49,7 @@ public class ChooseAddressActivity extends BaseActivity
     public  EditText Address_label, Address_line1, Address_line2, Locality, city, pincode;
     public  Button saveButton;
     CoordinatorLayout coordinatorLayout;
-
+    public  static  String discount_amount,rentenzee_credit_amount,service_tax,other_tax,shipping_charge,subtotal,total_amount;
 
 
 
@@ -71,6 +71,16 @@ public class ChooseAddressActivity extends BaseActivity
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setTitle("Select Address");
         }
+
+        Intent intent = getIntent();
+
+        discount_amount = intent.getStringExtra("discount_amount");
+        rentenzee_credit_amount = intent.getStringExtra("rentenzee_credit_amount");
+        service_tax = intent.getStringExtra("service_tax");
+        other_tax = intent.getStringExtra("other_tax");
+        shipping_charge = intent.getStringExtra("shipping_charge");
+        subtotal = intent.getStringExtra("subtotal");
+        total_amount = intent.getStringExtra("total_amount");
 
 
 
@@ -96,8 +106,6 @@ public class ChooseAddressActivity extends BaseActivity
         recyclerviewPastOrder.setLayoutManager(mLayoutManager);
 
         recyclerviewPastOrder.setNestedScrollingEnabled(true);
-
-
 
         user = (User) new AppPreferenceManager(getApplicationContext()).getObject(PreferenceKeys.savedUser, User.class);
 

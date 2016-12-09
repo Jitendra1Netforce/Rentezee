@@ -14,7 +14,7 @@ import com.rentezee.main.R;
 public class NotificationHolder extends RecyclerView.ViewHolder {
 
     View view;
-    TextView tvProductName,tv_product_descricption,tv_date,tv_time;
+    TextView tvProductTitle,tv_product_descricption,tv_date,tv_time;
     ImageView imProductImage;
     RelativeLayout relativelayout;
 
@@ -26,7 +26,7 @@ public class NotificationHolder extends RecyclerView.ViewHolder {
 
         imProductImage = (ImageView) itemView.findViewById(R.id.imv_product);
 
-        tvProductName = (TextView) itemView.findViewById(R.id.tv_product_name);
+        tvProductTitle = (TextView) itemView.findViewById(R.id.tv_product_name);
 
         tv_product_descricption = (TextView) itemView.findViewById(R.id.tv_product_descricption);
 

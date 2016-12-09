@@ -14,6 +14,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -43,16 +44,16 @@ public class MyCart extends BaseActivity implements TimePickerDialog.OnTimeSetLi
     RecyclerView mycartProducts;
     Context context;
     LinearLayout layoutBottom;
-    ArrayList<MyCartData> myCartDatas = new ArrayList<>();
+    public static  ArrayList<MyCartData> myCartDatas = new ArrayList<>();
     MyCartAdapter myCartAdapter;
     RelativeLayout relativeTotal;
-    LinearLayout layoutContinue;
+    RelativeLayout layoutContinue;
     public String device_id;
     RelativeLayout relativeLayoutDetails;
     DashboardContainer dashboardContainer;
-    TextView tvService_tax,tvOthertax,tvSerciceCharge,tv_total;
-    int total_per_item;
-
+    TextView tvService_tax,tvOthertax,tvSerciceCharge,tv_total,tv_discount,tv_credit;
+    int total_per_item,all_text_charge,total_payable_amount;
+    Button continue_button;
 
 
 
@@ -61,6 +62,8 @@ public class MyCart extends BaseActivity implements TimePickerDialog.OnTimeSetLi
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_cart);
+
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -79,9 +82,13 @@ public class MyCart extends BaseActivity implements TimePickerDialog.OnTimeSetLi
         layoutBottom = (LinearLayout) findViewById(R.id.layoutBottom);
         relativeTotal = (RelativeLayout) findViewById(R.id.relativeTotal);
 
-        layoutContinue = (LinearLayout)findViewById(R.id.layoutContinue);
+        layoutContinue = (RelativeLayout)findViewById(R.id.layoutContinue);
 
         relativeLayoutDetails = (RelativeLayout) findViewById(R.id.relativeLayoutDetails);
+
+        tv_discount = (TextView) findViewById(R.id.tv_discount);
+
+        tv_credit = (TextView) findViewById(R.id.tv_credit);
 
         tvService_tax= (TextView) findViewById(R.id.tv_servicetax);
 
@@ -90,6 +97,8 @@ public class MyCart extends BaseActivity implements TimePickerDialog.OnTimeSetLi
         tvOthertax= (TextView) findViewById(R.id.tv_othertax);
 
         tv_total = (TextView) findViewById(R.id.tv_total);
+
+        continue_button = (Button) findViewById(R.id.continue_button) ;
 
         mycartProducts=(RecyclerView)findViewById(R.id.lvMyCart);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
@@ -116,16 +125,62 @@ public class MyCart extends BaseActivity implements TimePickerDialog.OnTimeSetLi
             public void onClick(View view)
             {
 
+
+                System.out.println("hi ----------"+myCartDatas.get(0).to_date.toString());
                 Intent intent = new Intent(context, ChooseAddressActivity.class);
+                intent.putExtra("discount_amount",tv_discount.getText().toString());
+                intent.putExtra("rentenzee_credit_amount",tv_credit.getText().toString());
+                intent.putExtra("service_tax",tvService_tax.getText().toString());
+                intent.putExtra("other_tax",tv_discount.getText().toString());
+                intent.putExtra("service_charge",tvSerciceCharge.getText().toString());
+
                 gotoActivity(intent);
+
+
             }
         });
 
+
+
+        continue_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view)
+            {
+
+                System.out.println("hi ----------"+myCartDatas.get(0).to_date.toString());
+
+                Intent intent = new Intent(context, ChooseAddressActivity.class);
+
+                intent.putExtra("discount_amount",tv_discount.getText().toString());
+                intent.putExtra("rentenzee_credit_amount",tv_credit.getText().toString());
+                intent.putExtra("service_tax",tvService_tax.getText().toString());
+                intent.putExtra("other_tax",tvOthertax.getText().toString());
+                intent.putExtra("shipping_charge",tvSerciceCharge.getText().toString());
+                intent.putExtra("subtotal",tv_total.getText().toString());
+                intent.putExtra("total_amount",tv_total.getText().toString());
+
+
+                gotoActivity(intent);
+
+
+
+            }
+        });
 
         fetchData(true);
 
         dashboardContainer = new DashboardContainer();
         dashboardContainer.count_cart();
+
+
+        all_text_charge = Integer.valueOf(tv_total.getText().toString())/12+Integer.valueOf(tv_total.getText().toString())+ Integer.valueOf(tvSerciceCharge.getText().toString());
+
+        System.out.println("all_txt_==============="+ all_text_charge);
+
+        total_payable_amount = Integer.valueOf(tv_total.getText().toString())+all_text_charge;
+
+        tv_total.setText(String.valueOf(total_payable_amount));
+
 
 
 
@@ -143,7 +198,6 @@ public class MyCart extends BaseActivity implements TimePickerDialog.OnTimeSetLi
 
     private void reset()
     {
-
         myCartDatas.clear();
         layoutBottom.setVisibility(View.GONE);
         relativeTotal.setVisibility(View.GONE);
@@ -185,14 +239,16 @@ public class MyCart extends BaseActivity implements TimePickerDialog.OnTimeSetLi
 
                             System.out.println("data=====" + productListArray.size());
 
-                            if(productListArray.size()== 0){
+                            if(productListArray.size()== 0)
+                            {
 
                                 relativeLayoutDetails.setVisibility(View.GONE);
                             }
 
-
                             for (int i = 0; i < productListArray.size(); i++)
                             {
+
+
                                 JsonObject jsonObject = (JsonObject) productListArray.get(i);
 
                                 String cart_id = jsonObject.get("id").getAsString();
@@ -202,6 +258,8 @@ public class MyCart extends BaseActivity implements TimePickerDialog.OnTimeSetLi
                                 String category_name = jsonObject.get("categories_name").getAsString();
                                 String security_price = jsonObject.get("security_price").getAsString();
                                 String image = jsonObject.get("image").getAsString();
+
+
                                 if(security_price.equals("0"))
                                 {
                                     total_per_item = Integer.valueOf(price);
@@ -211,11 +269,28 @@ public class MyCart extends BaseActivity implements TimePickerDialog.OnTimeSetLi
 
                                     total_per_item = Integer.valueOf(price)*1+Integer.valueOf(security_price);
                                 }
-                                myCartDatas.add(new MyCartData(cart_id,product_id, name, image, price, security_price,category_name,String.valueOf(total_per_item)));
+
+                                String current_date = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
+                                String nextday = "";
+                                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                                Calendar c = Calendar.getInstance();
+                                try {
+                                    c.setTime(sdf.parse(current_date));
+                                } catch (ParseException p) {
+                                    p.printStackTrace();
+                                }
+                                c.add(Calendar.DATE, 1);  // number of days to add
+                                nextday = sdf.format(c.getTime());  // dt is now the new date
+
+
+                                myCartDatas.add(new MyCartData(cart_id,product_id, name, image, price, security_price,category_name,"1",current_date,nextday,String.valueOf(total_per_item)));
                                 relativeLayoutDetails.setVisibility(View.VISIBLE);
+
 
                             }
                             myCartAdapter.notifyDataSetChanged();
+
+
 
                             dismissProgressBar();
                             layoutBottom.setVisibility(View.VISIBLE);

@@ -63,11 +63,12 @@
                     android:textStyle="bold"
                     />
 
-                <ImageView
+                <TextView
                     android:layout_width="10dp"
                     android:layout_height="10dp"
-                    android:src="@drawable/circle_orange_back"
+                    android:background="@drawable/circle_orange_back"
                     android:layout_centerHorizontal="true"
+                    android:layout_marginTop="3dp"
                     />
 
                 <TextView
@@ -88,17 +89,17 @@
                     android:layout_alignParentLeft="true"
                     android:textColor="@color/black"
                     android:layout_below="@+id/tvTransactionId"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="10dp"
                     android:textStyle="bold"
                     />
 
-                <ImageView
+                <TextView
                     android:layout_width="10dp"
                     android:layout_height="10dp"
-                    android:src="@drawable/circle_orange_back"
+                    android:background="@drawable/circle_orange_back"
                     android:layout_centerHorizontal="true"
                     android:layout_below="@+id/tvTransactionIdHeading"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="13dp"
                     />
 
 
@@ -110,7 +111,7 @@
                     android:layout_alignParentRight="true"
                     android:textColor="@color/black"
                     android:layout_below="@+id/tvTransactionIdHeading"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="10dp"
                     />
 
 
@@ -123,17 +124,17 @@
                     android:layout_alignParentLeft="true"
                     android:textColor="@color/black"
                     android:layout_below="@+id/tvOrderId"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="10dp"
                     android:textStyle="bold"
                     />
 
-                <ImageView
+                <TextView
                     android:layout_width="10dp"
                     android:layout_height="10dp"
-                    android:src="@drawable/circle_orange_back"
+                    android:background="@drawable/circle_orange_back"
                     android:layout_centerHorizontal="true"
                     android:layout_below="@+id/tvOrderIdHeading"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="13dp"
                     />
 
 
@@ -145,7 +146,7 @@
                     android:layout_alignParentRight="true"
                     android:textColor="@color/black"
                     android:layout_below="@+id/tvOrderIdHeading"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="10dp"
                     />
 
 
@@ -158,17 +159,17 @@
                     android:layout_alignParentLeft="true"
                     android:textColor="@color/black"
                     android:layout_below="@+id/tvTotalOrderHeading"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="10dp"
                     android:textStyle="bold"
                     />
 
-                <ImageView
+                <TextView
                     android:layout_width="10dp"
                     android:layout_height="10dp"
-                    android:src="@drawable/circle_orange_back"
+                    android:background="@drawable/circle_orange_back"
                     android:layout_centerHorizontal="true"
                     android:layout_below="@+id/tvTotalOrderHeading"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="13dp"
                     />
 
 
@@ -180,43 +181,15 @@
                     android:layout_alignParentRight="true"
                     android:textColor="@color/black"
                     android:layout_below="@+id/tvTotalOrderHeading"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="10dp"
                     />
 
 
-                <TextView
-                    android:id="@+id/tvItemsName2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Cooler"
-                    android:layout_alignParentRight="true"
-                    android:textColor="@color/black"
-                    android:layout_below="@+id/tvItemsName1"
-                    android:layout_marginTop="5dp"
-                    />
 
 
-                <TextView
-                    android:id="@+id/tvItemsName3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Gas"
-                    android:layout_alignParentRight="true"
-                    android:textColor="@color/black"
-                    android:layout_below="@+id/tvItemsName2"
-                    android:layout_marginTop="5dp"
-                    />
 
-                <TextView
-                    android:id="@+id/tvItemsName4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Pant"
-                    android:layout_alignParentRight="true"
-                    android:textColor="@color/black"
-                    android:layout_below="@+id/tvItemsName3"
-                    android:layout_marginTop="5dp"
-                    />
+
+
 
 
                 <TextView
@@ -226,18 +199,18 @@
                     android:text="Total Payment:"
                     android:layout_alignParentLeft="true"
                     android:textColor="@color/black"
-                    android:layout_below="@+id/tvItemsName4"
-                    android:layout_marginTop="20dp"
+                    android:layout_below="@+id/tvItemsName1"
+                    android:layout_marginTop="10dp"
                     android:textStyle="bold"
                     />
 
-                <ImageView
+                <TextView
                     android:layout_width="10dp"
                     android:layout_height="10dp"
-                    android:src="@drawable/circle_orange_back"
+                    android:background="@drawable/circle_orange_back"
                     android:layout_centerHorizontal="true"
-                    android:layout_below="@+id/tvItemsName4"
-                    android:layout_marginTop="20dp"
+                    android:layout_below="@+id/tvItemsName1"
+                    android:layout_marginTop="13dp"
                     />
 
 
@@ -248,31 +221,19 @@
                     android:text="1500"
                     android:layout_alignParentRight="true"
                     android:textColor="@color/black"
-                    android:layout_below="@+id/tvItemsName4"
-                    android:layout_marginTop="20dp"
+                    android:layout_below="@+id/tvItemsName1"
+                    android:layout_marginTop="10dp"
                     />
 
 
                 <TextView
-                    android:id="@+id/tvScheduleHeading"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Scheduled"
-                    android:layout_alignParentLeft="true"
-                    android:textColor="@color/black"
-                    android:layout_below="@+id/tvTotalpaymentHeading"
-                    android:layout_marginTop="5dp"
-                    android:textStyle="bold"
-                    />
-
-                <ImageView
                     android:layout_width="10dp"
                     android:layout_height="10dp"
-                    android:src="@drawable/circle_orange_back"
+                    android:background="@drawable/circle_orange_back"
                     android:layout_centerHorizontal="true"
                     android:layout_below="@+id/tvTotalpaymentHeading"
-                    android:layout_marginTop="5dp"
-                    />
+                    android:layout_marginTop="13dp"
+                    android:id="@+id/textView" />
 
 
                 <TextView
@@ -283,7 +244,7 @@
                     android:layout_alignParentRight="true"
                     android:textColor="@color/black"
                     android:layout_below="@+id/tvTotalpaymentHeading"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="10dp"
                     />
 
 
@@ -297,9 +258,22 @@
                     android:layout_below="@+id/tvScheduleHeading"
                     android:layout_marginTop="5dp"
                     android:textStyle="bold"
+                    android:visibility="gone"
                     />
 
-                </RelativeLayout>
+                <TextView
+                    android:id="@+id/tvScheduleHeading"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Delivery Date"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:layout_alignBaseline="@+id/textView"
+                    android:layout_alignBottom="@+id/textView"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true" />
+
+            </RelativeLayout>
 
             </RelativeLayout>
 
@@ -316,7 +290,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:background="@android:color/black"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="gone"
+        >
 
         <LinearLayout
             android:id="@+id/layoutSort"

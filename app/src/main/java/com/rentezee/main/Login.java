@@ -44,6 +44,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInStatusCodes;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.rentezee.helpers.AppPreferenceManager;
 import com.rentezee.helpers.BaseActivity;
 import com.rentezee.helpers.Constants;
@@ -58,6 +59,7 @@ import com.rentezee.helpers.VolleyGsonRequest;
 import com.rentezee.pojos.LoginResponse;
 import com.rentezee.pojos.SignUpResponse;
 import com.rentezee.pojos.User;
+import com.rentezee.services.MyFirebaseInstanceIdService;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -77,7 +79,7 @@ public class Login extends BaseActivity implements View.OnClickListener
     private EditText etEmail, etPassword;
     private CallbackManager callbackManager;
     private GoogleApiClient googleApiClient;
-
+    String reg_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -95,6 +97,9 @@ public class Login extends BaseActivity implements View.OnClickListener
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
+        reg_id =  FirebaseInstanceId.getInstance().getToken();
+
+        System.out.println("token ==========="+ reg_id);
 
         //find views
         coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinatorLayout);
@@ -284,6 +289,7 @@ public class Login extends BaseActivity implements View.OnClickListener
             jsonObject.put("name", name);
             jsonObject.put("email", email);
             jsonObject.put("mobile", "");
+            jsonObject.put("reg_id",reg_id);
             //registerViaId: 1 -> Normal, 2 -> Facebook, 3 -> Google
             if (registerVia == RegisterVia.facebook)
             {
@@ -383,6 +389,7 @@ public class Login extends BaseActivity implements View.OnClickListener
         try {
             jsonObject.put("email", email);
             jsonObject.put("password", password);
+            jsonObject.put("reg_id",reg_id);
             //registerViaId: 1 -> Normal, 2 -> Facebook, 3 -> Google
 
             showProgressBar(context);

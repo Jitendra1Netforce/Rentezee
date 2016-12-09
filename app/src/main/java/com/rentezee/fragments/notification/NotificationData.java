@@ -6,15 +6,16 @@ package com.rentezee.fragments.notification;
 public class NotificationData
 {
 
-    public String product_id,product_name,image_url,date,time;
+    public String type,title,image_url,message,order_id,transaction_id,date;
 
-    NotificationData(String product_id, String product_name, String image_url,String date,String time)
+    NotificationData(String type, String title, String message,String order_id,String transaction_id,String date)
     {
-        this.product_id = product_id;
-        this.product_name = product_name;
-        this.image_url = image_url;
+        this.type = type;
+        this.title = title;
+        this.message = message;
+        this.order_id = order_id;
+        this.transaction_id = transaction_id;
         this.date = date;
-        this.time = time;
     }
 
 }

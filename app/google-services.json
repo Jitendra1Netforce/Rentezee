@@ -1,33 +1,27 @@
 {
   "project_info": {
-    "project_number": "81037985335",
-    "project_id": "rentenzee"
+    "project_number": "871045836722",
+    "firebase_url": "https://rentenzee-37b5b.firebaseio.com",
+    "project_id": "rentenzee-37b5b",
+    "storage_bucket": "rentenzee-37b5b.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:81037985335:android:3e27d55603bccfed",
+        "mobilesdk_app_id": "1:871045836722:android:3e27d55603bccfed",
         "android_client_info": {
           "package_name": "com.rentezee.main"
         }
       },
       "oauth_client": [
         {
-          "client_id": "81037985335-68dj1lgc6vfgcc13u3gvsl9u901j1chg.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.rentezee.main",
-            "certificate_hash": "DE60535992F504F545CF93381F42600AAF96DB57"
-          }
-        },
-        {
-          "client_id": "81037985335-9at5jt11l6hto3sp7v3s5jkvpgqhavtc.apps.googleusercontent.com",
+          "client_id": "871045836722-574fs49m0bflav96v4l52flujrd14ou2.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDBgIOKZWPD9cuZtT2VJP03pP5H2vYMgtA"
+          "current_key": "AIzaSyC3cCYxXYlYusaMuxPW6rhqdDRBhrbPMxY"
         }
       ],
       "services": {
@@ -39,7 +33,7 @@
           "other_platform_oauth_client": []
         },
         "ads_service": {
-          "status": 1
+          "status": 2
         }
       }
     }

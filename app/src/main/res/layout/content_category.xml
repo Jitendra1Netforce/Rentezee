@@ -17,13 +17,22 @@
         android:layout_alignParentTop="true"
         app:tabMode="scrollable" />
 
-    <ListView
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipyrefreshlayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/layoutBottom"
+        android:layout_below="@+id/tabLayout"
+        >
+
+    <android.support.v7.widget.RecyclerView
         android:id="@+id/lvProducts"
         android:divider="@null"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/layoutBottom"
-        android:layout_below="@+id/tabLayout" />
+        />
+
+    </android.support.v4.widget.SwipeRefreshLayout>
 
     <LinearLayout
         android:id="@+id/layoutBottom"
@@ -57,36 +66,6 @@
                 android:theme="@style/MyTextViewNormal" />
         </LinearLayout>
 
-        <TextView
-            android:layout_width="1px"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="5dp"
-            android:layout_marginTop="5dp"
-            android:background="@color/hintColor" />
-
-        <LinearLayout
-            android:id="@+id/layoutFilter"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:layout_gravity="center_vertical"
-                android:src="@mipmap/ic_filter" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:padding="10dp"
-                android:text="@string/filter"
-                android:textColor="@color/hintColor"
-                android:theme="@style/MyTextViewNormal" />
-        </LinearLayout>
 
     </LinearLayout>
 

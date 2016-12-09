@@ -50,7 +50,7 @@ public class Category extends BaseActivity implements View.OnClickListener,Swipe
      private int categoryId, page, sortBy;
      DashboardContainer dashboardContainer;
      AlertDialog.Builder alertDialog;
-     AlertDialog alert;
+
      SwipeRefreshLayout mSwipyRefreshLayout;
      int product_count = 1;
      Boolean loadingMore= false;
@@ -73,7 +73,6 @@ public class Category extends BaseActivity implements View.OnClickListener,Swipe
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
-
 
         //find views
         coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinatorLayout);
@@ -385,7 +384,9 @@ public class Category extends BaseActivity implements View.OnClickListener,Swipe
 
     }
 
-    private void showSortPopup(){
+    private void showSortPopup()
+    {
+
         ArrayList<String> options=new ArrayList<>();
         options.add("Relevance");
         options.add("Price low to high");
@@ -394,41 +395,37 @@ public class Category extends BaseActivity implements View.OnClickListener,Swipe
 
         alertDialog = new AlertDialog.Builder(context);
 
-         alert = alertDialog.create();
-
-
         LayoutInflater inflater = getLayoutInflater();
         View convertView = inflater.inflate(R.layout.sort_popup, null);
         alertDialog.setView(convertView);
         final ListView lv = (ListView) convertView.findViewById(R.id.list);
         final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,options);
         lv.setAdapter(adapter);
-        alertDialog.show();
+        final AlertDialog ad = alertDialog.show();
 
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l)
             {
 
-
                 if(adapter.getItem(i).toString().equals("Relevance"))
                 {
 
                     load_sort("relevance");
-                    alert.dismiss();
+                    ad.dismiss();
                 }
 
                 if (adapter.getItem(i).toString().equals("Price low to high"))
                 {
 
                     load_sort("low_price");
-                    alert.dismiss();
+                    ad.dismiss();
                 }
 
                 if (adapter.getItem(i).toString().equals("Price high to low"))
                 {
                     load_sort("high_price");
-                    alert.dismiss();
+                    ad.dismiss();
 
                 }
 
@@ -436,7 +433,7 @@ public class Category extends BaseActivity implements View.OnClickListener,Swipe
                 {
 
                      load_sort("latest");
-                    alert.dismiss();
+                    ad.dismiss();
 
                 }
 

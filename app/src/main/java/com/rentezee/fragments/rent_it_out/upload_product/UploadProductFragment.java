@@ -94,6 +94,8 @@ public class UploadProductFragment extends Fragment
     CheckBox saleCheckButton,rentCheckButton;
 
 
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
@@ -367,6 +369,9 @@ public class UploadProductFragment extends Fragment
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
         String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
+
+
+
         return Uri.parse(path);
     }
 
@@ -451,7 +456,6 @@ public class UploadProductFragment extends Fragment
 
             }
 
-
             baseActivity.showProgressBar(getActivity());
             System.out.println("image array size =====" + rentItDatas.size());
 
@@ -481,7 +485,7 @@ public class UploadProductFragment extends Fragment
                             //.setHeader("ENCTYPE", "multipart/form-data")
                     .addMultipartParts(files)
                     .setMultipartParameter("action", "add_item")
-                            //.setMultipartFile("image", "image*//*", new File(rentItDatas.get(0).path))
+                           // .setMultipartFile("image", "image*//*", new File(rentItDatas.get(0).path))
                     .setMultipartParameter("user_id", user_id)
                     .setMultipartParameter("product_name", product_name.getText().toString())
                     .setMultipartParameter("description", discription.getText().toString())
@@ -496,7 +500,6 @@ public class UploadProductFragment extends Fragment
                             if (result == null)
                             {
 
-
                                 Toast.makeText(getActivity(), "error called", Toast.LENGTH_SHORT).show();
                                 e.printStackTrace();
                                 baseActivity.dismissProgressBar();
@@ -505,7 +508,6 @@ public class UploadProductFragment extends Fragment
                             }
                             else
                             {
-
 
                                 System.out.println("result============="+ result);
                                 Toast.makeText(getActivity(), "success called", Toast.LENGTH_SHORT).show();

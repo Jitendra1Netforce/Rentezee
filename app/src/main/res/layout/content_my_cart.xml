@@ -130,7 +130,7 @@
                     android:id="@+id/tv_othertax_heading"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="OTHER TAXES:"
+                    android:text="OTHER TAXES:(2%)"
                     android:layout_below="@+id/tv_servicetax_heading"
                     android:layout_alignParentLeft="true"
                     android:textColor="@color/black"
@@ -162,7 +162,7 @@
                     android:id="@+id/tv_services_charges"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="200:00"
+                    android:text="200"
                     android:layout_below="@+id/tv_othertax_heading"
                     android:layout_alignParentRight="true"
                     android:textColor="@color/orange"
@@ -187,7 +187,7 @@
                     android:id="@+id/tv_total"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="58200:00"
+                    android:text="58200"
                     android:layout_below="@+id/tv_services_charges_heading"
                     android:layout_alignParentRight="true"
                     android:textColor="@color/black"
@@ -218,26 +218,33 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="@android:color/black"
+        android:background="@color/colorPrimary"
         android:orientation="vertical">
 
-        <LinearLayout
-            android:id="@+id/layoutContinue"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-
-            <TextView
-                android:layout_width="wrap_content"
+            <RelativeLayout
+                android:id="@+id/layoutContinue"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:padding="10dp"
-                android:text="Continue"
-                android:textColor="@color/hintColor"
-                android:theme="@style/MyTextViewNormal" />
-        </LinearLayout>
+                android:padding="5dp"
+                android:background="@color/colorPrimary"
 
+                >
+
+
+                <Button
+                    android:id="@+id/continue_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/save_mdpi"
+                    android:text="Continue"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:layout_centerHorizontal="true"
+                    android:background="?android:attr/selectableItemBackground"
+                    />
+
+
+            </RelativeLayout>
 
 
 

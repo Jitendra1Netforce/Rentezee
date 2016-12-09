@@ -76,6 +76,7 @@ public class SignUp extends BaseActivity implements View.OnClickListener
     public static final String PREFERENCES = "WishListPrefs";
     SharedPreferences settings;
     SharedPreferences.Editor prefEditor;
+    String reg_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,6 +90,9 @@ public class SignUp extends BaseActivity implements View.OnClickListener
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
+
+
+        reg_id =  FirebaseInstanceId.getInstance().getToken();
 
         //find views
         coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinatorLayout);
@@ -249,6 +253,7 @@ public class SignUp extends BaseActivity implements View.OnClickListener
             jsonObject.put("email", email);
             jsonObject.put("mobile", mobile);
             jsonObject.put("password", password);
+            jsonObject.put("reg_id",reg_id);
             //registerViaId: 1 -> Normal, 2 -> Facebook, 3 -> Google
             jsonObject.put("registeredVia", 1);
             jsonObject.put("appTypeId", Constants.APP_TYPE_ID);

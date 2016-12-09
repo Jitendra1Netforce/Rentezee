@@ -6,9 +6,6 @@
     android:layout_marginTop="60dp"
     >
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
 
         <RelativeLayout
             android:id="@+id/relative_layout_container"
@@ -21,33 +18,15 @@
                 android:id="@+id/relativeLayout_delivery"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="10dp"
+                android:padding="15dp"
                 >
 
-                <ImageView
-                    android:id="@+id/imageview_payment1"
-                    android:layout_width="15dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/ic_delivery"
-                    />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Delivery"
-                    android:layout_toRightOf="@+id/imageview_payment1"
-                    android:textColor="@color/black"
-                    android:textStyle="bold"
-
-                    />
 
                 <RadioGroup
                     android:id="@+id/radioGroup"
-                    android:layout_toRightOf="@+id/imageview_payment1"
-                    android:layout_below="@+id/imageview_payment1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
+                    android:layout_alignParentLeft="true"
                     >
 
                     <RadioButton
@@ -55,26 +34,21 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Rentezee credit"
+                        android:textSize="18sp"
+
                         />
-
-                    <RadioButton
-                        android:textColor="@color/black"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Rentezee credit" />
-
-
-                    <RadioButton
-                        android:textColor="@color/black"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Rentezee credit" />
-
 
                 </RadioGroup>
 
-
-
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="300.00"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:layout_alignParentRight="true"
+                    android:textSize="18sp"
+                    />
 
 
             </RelativeLayout>
@@ -94,35 +68,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/view_delivery"
-                android:padding="10dp"
+                android:padding="15dp"
                 >
 
-                <ImageView
-                    android:id="@+id/imageview_payment2"
-
-                    android:layout_width="15dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/ic_delivery"
-
-                    />
 
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Security"
-                    android:layout_toRightOf="@+id/imageview_payment2"
-                    android:textColor="@color/black"
-                    android:textStyle="bold"
 
 
-                    />
 
 
                 <RadioGroup
                     android:id="@+id/radioGroup2"
-                    android:layout_toRightOf="@+id/imageview_payment2"
-                    android:layout_below="@+id/imageview_payment2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
@@ -134,19 +90,18 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="CC Avenue"
+                        android:textSize="18sp"
+
                         />
 
-                    <RadioButton
-                        android:textColor="@color/black"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Paytm" />
 
 
                     <RadioButton
                         android:textColor="@color/black"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:textSize="18sp"
                         android:text="At time of delivery(DD/CC/Post Dated Cheque)" />
 
 
@@ -167,64 +122,14 @@
                 android:id="@+id/relativeLayout_rent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="10dp"
+                android:padding="15dp"
                 android:layout_below="@+id/view_security"
 
                 >
 
 
-                <ImageView
-                    android:id="@+id/imageview_payment3"
-
-                    android:layout_width="15dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/ic_delivery"
-
-                    />
 
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Rent"
-                    android:layout_toRightOf="@+id/imageview_payment3"
-                    android:textColor="@color/black"
-                    android:textStyle="bold"
-
-                    />
-
-
-                <RadioGroup
-                    android:id="@+id/radioGroup3"
-                    android:layout_toRightOf="@+id/imageview_payment3"
-                    android:layout_below="@+id/imageview_payment3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    >
-
-                    <RadioButton
-                        android:textColor="@color/black"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Internet Banking"
-                        />
-
-                    <RadioButton
-                        android:textColor="@color/black"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Credit Card" />
-
-
-                    <RadioButton
-                        android:textColor="@color/black"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Debit Card" />
-
-
-                </RadioGroup>
 
 
 
@@ -235,7 +140,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Note: Method of Payment for Delivery and Rent Must be same"
-                    android:layout_below="@+id/radioGroup3"
                     android:layout_marginTop="10dp"
                     android:textColor="@color/red_color"
                     android:textStyle="bold"
@@ -250,56 +154,47 @@
                     >
 
 
-                    <CheckBox
-                        android:id="@+id/checkBox1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Redeem Credits?"
-                        android:textColor="@color/colorPrimary"
-                        />
+                  <TextView
+                      android:id="@+id/tvPayableAmountHeading"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:text="Amount Payable"
+                      android:textColor="@color/black"
+                      android:layout_marginTop="10dp"
+                      android:textSize="18sp"
+                      />
 
                     <TextView
                         android:id="@+id/textviewTotal"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Total:55,555.66"
+                        android:text="5500.00"
                         android:layout_alignParentRight="true"
                         android:textColor="@color/black"
-                        android:textStyle="bold"
                         android:layout_marginTop="10dp"
+                        android:textSize="18sp"
                         />
 
-                    <TextView
-                        android:id="@+id/textviewCreditRedeemed"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Total:55,555.66"
-                        android:layout_alignParentRight="true"
-                        android:layout_below="@+id/textviewTotal"
-                        android:textColor="@color/green"
-                        android:textStyle="bold"
-
-                        />
 
 
                 </RelativeLayout>
-
-
 
 
             </RelativeLayout>
 
 
             <RelativeLayout
+               android:layout_alignParentBottom="true"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
                 android:background="@color/colorPrimary"
                 android:layout_marginTop="30dp"
-                android:layout_below="@+id/relativeLayout_rent"
+
                 >
 
                 <Button
+                    android:id="@+id/buttonProceedPayment"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Proceed to Payment"
@@ -320,7 +215,5 @@
         </RelativeLayout>
 
 
-
-    </ScrollView>
 
 </RelativeLayout>

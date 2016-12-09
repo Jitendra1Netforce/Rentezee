@@ -2,6 +2,7 @@ package com.rentezee.fragments.notification;
 
 import android.content.Context;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,21 +13,30 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
+import com.rentezee.fragments.chat.ChatActivity;
+import com.rentezee.helpers.AppPreferenceManager;
 import com.rentezee.helpers.BaseActivity;
+import com.rentezee.helpers.PreferenceKeys;
 import com.rentezee.main.DashboardContainer;
+import com.rentezee.main.Login;
 import com.rentezee.main.R;
+import com.rentezee.pojos.User;
 
 import java.util.ArrayList;
 
 public class NotificationActivity extends BaseActivity
 {
 
-
     RecyclerView recycler_notification;
     Context context;
     ArrayList<NotificationData> notificationDatas = new ArrayList<>();
     NotificationAdapter notificationAdapter;
     DashboardContainer dashboardContainer;
+    public static String id, user_id;
+    long userId;
+    User user;
+    String title,message,order_id,transaction_id;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -36,8 +46,6 @@ public class NotificationActivity extends BaseActivity
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-
 
         context=this;
 
@@ -51,30 +59,44 @@ public class NotificationActivity extends BaseActivity
         dashboardContainer.count_cart();
 
 
+        user = (User) new AppPreferenceManager(getApplicationContext()).getObject(PreferenceKeys.savedUser, User.class);
+
+        if (user != null)
+        {
+
+            userId = user.getUserId();
+            user_id = Long.toString(userId);
+
+        }
+        else{
+
+            Intent i = new Intent(NotificationActivity.this, Login.class);
+            startActivity(i);
+            finish();
+
+        }
+
         recycler_notification=(RecyclerView)findViewById(R.id.lvNotification);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recycler_notification.setLayoutManager(mLayoutManager);
+        notificationAdapter = new NotificationAdapter(context, notificationDatas);
+        recycler_notification.setAdapter(notificationAdapter);
 
         recycler_notification.setNestedScrollingEnabled(false);
-         fetchData(true);
+
+        reset(user_id);
 
     }
 
-    private void fetchData(boolean reset)
-    {
-        if(reset)
-        {
-            reset();
-        }
-    }
 
 
-    private void reset()
+
+    private void reset(String user_id)
     {
         notificationDatas.clear();
         showProgressBar(context);
         Ion.with(this)
-                .load("http://netforce.biz/renteeze/webservice/products/product_list?cat_id=1")
+                .load("http://netforce.biz/renteeze/webservice/users/offers/"+user_id)
                 .asJsonObject()
                 .setCallback(new FutureCallback<JsonObject>()
                 {
@@ -91,17 +113,34 @@ public class NotificationActivity extends BaseActivity
                             for (int i = 0; i < productListArray.size(); i++)
                             {
                                 JsonObject jsonObject = (JsonObject) productListArray.get(i);
-                                JsonObject product = jsonObject.getAsJsonObject("Product");
-                                String id = product.get("id").getAsString();
-                                String name = product.get("name").getAsString();
-                                String price = product.get("price").getAsString();
-                                String special_price = product.get("special_price").getAsString();
-                                String image = "http://netforce.biz/renteeze/webservice/files/products/" + product.get("images").getAsString();
-                                notificationDatas.add(new NotificationData(id, name, image, price, special_price));
+
+                                String date = jsonObject.get("date").getAsString();
+
+                                JsonObject product = jsonObject.getAsJsonObject("message");
+
+                                String type = product.get("type").getAsString();
+
+                                if(type.toString().equals("transaction"))
+                                {
+                                     title = product.get("title").getAsString();
+                                     message = product.get("message").getAsString();
+                                     order_id = product.get("order_id").getAsString();
+                                     transaction_id = product.get("transaction_id").getAsString();
+
+                                }
+                                else{
+
+                                     title = product.get("title").getAsString();
+                                     message = product.get("message").getAsString();
+                                     order_id = "";
+                                     transaction_id= "";
+
+                                }
+
+                                notificationDatas.add(new NotificationData(type, title, message, order_id, transaction_id,date));
 
                             }
-                            notificationAdapter = new NotificationAdapter(context, notificationDatas);
-                            recycler_notification.setAdapter(notificationAdapter);
+
                             notificationAdapter.notifyDataSetChanged();
 
                             dismissProgressBar();
@@ -117,8 +156,6 @@ public class NotificationActivity extends BaseActivity
                 });
 
     }
-
-
 
     @Override
     protected void onResume() {

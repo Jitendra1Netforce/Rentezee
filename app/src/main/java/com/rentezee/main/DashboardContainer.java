@@ -64,6 +64,7 @@ import com.rentezee.adapters.DashboardCategoriesAdapter;
 import com.rentezee.adapters.TrendingAdapter;
 import com.rentezee.adapters.ViewPagerAdapter;
 import com.rentezee.fragments.DashboardSliderImage;
+import com.rentezee.fragments.chat.ChatActivity;
 import com.rentezee.fragments.myorder.MyOrder;
 import com.rentezee.fragments.myorder.activeorder.ActiveOrders;
 import com.rentezee.fragments.my_cart.MyCart;
@@ -506,6 +507,11 @@ public class DashboardContainer extends BaseActivity implements NavigationView.O
                 callIntent.setData(Uri.parse("tel:123456789"));
                 startActivity(callIntent);*/
                 break;
+            case R.id.nav_chat:
+                Intent chat=new Intent(context, ChatActivity.class);
+                gotoActivity(chat);
+                break;
+
 
 
         }
@@ -776,6 +782,8 @@ public class DashboardContainer extends BaseActivity implements NavigationView.O
                                 category_id.add(id);
                                 param_aux.put(Integer.parseInt(id), name.toString());
                             }
+
+
                             dashboardCategoriesAdapterAdapter = new DashboardCategoriesAdapter(context, categoryDatas);
 
                             gvCategories.setFocusable(false);

@@ -5,16 +5,22 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
+import android.util.Log;
 
 import com.bumptech.glide.Glide;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
+import com.google.gson.JsonObject;
+import com.rentezee.fragments.notification.NotificationActivity;
 import com.rentezee.helpers.Debugger;
 import com.rentezee.main.DashboardContainer;
 import com.rentezee.main.R;
+
+import org.json.JSONObject;
 
 import java.util.Map;
 
@@ -25,14 +31,34 @@ import java.util.Map;
  */
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
+
+    String type,title,message,transaction_id,order_id,message_body;
     private static final String TAG = MyFirebaseMessagingService.class.getSimpleName();
 
     @Override
-    public void onMessageReceived(RemoteMessage remoteMessage) {
+    public void onMessageReceived(RemoteMessage remoteMessage)
+    {
         super.onMessageReceived(remoteMessage);
+
+        String json =remoteMessage.getData().toString();
+
         Debugger.i(TAG, remoteMessage.getData().toString());
+
         Map<String, String> map = remoteMessage.getData();
-        Debugger.i(TAG, "Token " + FirebaseInstanceId.getInstance().getToken());
+
+        type = map.get("type").toString();
+
+        title = map.get("title").toString();
+
+        message = map.get("message").toString();
+
+
+        System.out.println("type========"+type);
+
+       // message_body  = message+"\n" +"Your Transaction id = "+ transaction_id +"\n+"+"Order Id="+ order_id.toString();
+
+       /* Debugger.i(TAG, "Token " + FirebaseInstanceId.getInstance().getToken());
+
         Debugger.i(TAG, "From " + remoteMessage.getFrom() + ", " + remoteMessage.getNotification().getTitle());
         Debugger.i(TAG, "body " + remoteMessage.getNotification().getBody());
         Debugger.i(TAG, map.get("imageUrl"));
@@ -43,12 +69,13 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         Debugger.i(TAG, "Token " + FirebaseInstanceId.getInstance().getToken());
         Debugger.i(TAG, "Title " + remoteMessage.getNotification().getTitle());
         Debugger.i(TAG, "body " + notification.getBody());
-        Debugger.i(TAG, imageUrl);
+        Debugger.i(TAG, imageUrl);*/
 
-        showNotification(notification.getTitle(), notification.getBody(), imageUrl);
+        showNotification(title, message, "");
     }
 
-    private Bitmap getImage(String url) {
+    private Bitmap getImage(String url)
+    {
         Bitmap bitmap = null;
         try {
             bitmap = Glide
@@ -72,12 +99,17 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         }
 
         NotificationCompat.Builder mBuilder=null;
-        if (imageUrl == null) {
+
+        Bitmap icon = BitmapFactory.decodeResource(getApplicationContext().getResources(),
+                R.mipmap.ic_launcher);
+
             mBuilder = new NotificationCompat.Builder(this)
-                            .setSmallIcon(R.mipmap.ic_launcher)
+                          .setSmallIcon(R.mipmap.ic_launcher)
+                           .setLargeIcon(icon)
                             .setContentTitle(title)
                             .setContentText(body);
-        } else {
+
+       /* else {
             Bitmap bmp = getImage(imageUrl);
             mBuilder = new NotificationCompat.Builder(this)
                             .setSmallIcon(R.mipmap.ic_launcher)
@@ -87,9 +119,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                                     .setSummaryText(body)
                             )
                             .setContentText(body);
-        }
+        }*/
         // Creates an explicit intent for an Activity in your app
-        Intent resultIntent = new Intent(this, DashboardContainer.class);
+        Intent resultIntent = new Intent(this, NotificationActivity.class);
 
         // The stack builder object will contain an artificial back stack for the
         // started Activity.

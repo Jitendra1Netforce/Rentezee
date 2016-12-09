@@ -83,4 +83,7 @@
     <string name="title_activity_profile_setting">ProfileSetting</string>
     <string name="mobile">Mobile Number</string>
     <string name="delete">Delete</string>
+
+    <string name="white_chat_box_text">I want to reschedule my today,s appointment</string>
+
 </resources>
