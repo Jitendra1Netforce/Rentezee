@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="15dp"
+    >
+<RelativeLayout
+    android:id="@+id/relativeLayout1"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginRight="10dp"
+    >
+   <TextView
+       android:id="@+id/date_txt"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:text="15"
+       android:textSize="30sp"
+       android:textColor="@color/black"
+       />
+   <TextView
+     android:id="@+id/day_txt"
+     android:layout_below="@+id/date_txt"
+     android:layout_width="wrap_content"
+     android:layout_height="wrap_content"
+     android:text="Today"
+     android:textColor="@color/black"
+     />
+
+    <TextView
+        android:id="@+id/time_txt"
+        android:layout_below="@+id/day_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="11:45"
+        android:textColor="@color/black"
+        />
+</RelativeLayout>
+
+
+    <TextView
+        android:id="@+id/service_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="3 Services"
+        android:layout_toRightOf="@+id/relativeLayout1"
+        android:layout_marginTop="10dp"
+        />
+
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"></RelativeLayout>
+
+</RelativeLayout>

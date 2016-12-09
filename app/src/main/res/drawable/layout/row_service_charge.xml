@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/linear_layout"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        >
+
+        <TextView
+            android:id="@+id/service_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Regular Manicure"
+            android:textColor="@color/black"
+            />
+
+        <TextView
+            android:id="@+id/service_charge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/service_name"
+            android:text="400"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            />
+
+        <TextView
+            android:id="@+id/service_minute"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/service_name"
+            android:text="30 min"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="40dp"
+            android:layout_toRightOf="@+id/service_charge"
+            android:textColor="@color/black"
+            />
+
+
+
+        <com.github.ivbaranov.mfb.MaterialFavoriteButton
+            android:id="@+id/material_button"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            app:mfb_animate_favorite="true"
+            app:mfb_animate_unfavorite="false"
+            app:mfb_padding="12"
+            app:mfb_favorite_image="@drawable/ic_select"
+            app:mfb_not_favorite_image="@drawable/ic_add_service"
+            app:mfb_rotation_duration="100"
+            app:mfb_rotation_angle="360"
+            app:mfb_bounce_duration="300"
+            app:mfb_color="black"
+            app:mfb_type="star"
+            />
+
+
+    </RelativeLayout>
+
+</LinearLayout>

@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/activity_registration"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar_layout" />
+
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/google_button_background"
+        android:padding="15dp"
+        android:inputType="text"
+        android:textColor="@color/black"
+        android:hint="FIRST NAME"
+        android:imeOptions="actionNext"
+        android:singleLine="true"
+        />
+
+
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/google_button_background"
+        android:padding="15dp"
+        android:inputType="text"
+        android:hint="LAST NAME"
+        android:imeOptions="actionNext"
+        android:singleLine="true"
+        android:textColor="@color/black"
+        />
+
+
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/google_button_background"
+        android:padding="15dp"
+        android:inputType="textEmailAddress"
+        android:hint="EMAIL"
+        android:imeOptions="actionNext"
+        android:singleLine="true"
+        android:textColor="@color/black"
+        />
+
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/google_button_background"
+        android:padding="15dp"
+        android:inputType="number"
+        android:hint="MOBILE NUMBER"
+        android:maxLength="10"
+        android:imeOptions="actionNext"
+        android:singleLine="true"
+        android:textColor="@color/black"
+        />
+
+
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/password_textinput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/password_image"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:animateLayoutChanges="false"
+        app:hintEnabled="false"
+        >
+
+        <EditText
+            android:id="@+id/editTextPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="PASSWORD"
+            android:padding="15dp"
+            android:inputType="textPassword"
+            android:background="@drawable/google_button_background"
+            android:imeOptions="actionDone"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            />
+    </android.support.design.widget.TextInputLayout>
+
+
+    <Button
+        android:id="@+id/signUp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="15dp"
+        android:text="SIGN UP"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:textColor="@drawable/button_text_color"
+        android:background="@drawable/button_selector"
+        />
+
+
+
+</LinearLayout>

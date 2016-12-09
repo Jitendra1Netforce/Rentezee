@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:id="@+id/nail_linearlayout"
+    >
+
+    <TextView
+        android:id="@+id/service_tittle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="MANICURE"
+        android:padding="15dp"
+        android:textColor="#000000"
+        android:background="@color/nail_header_back"
+        />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/service_detail_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        >
+
+    </android.support.v7.widget.RecyclerView>
+</LinearLayout>
