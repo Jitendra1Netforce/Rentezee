@@ -25,9 +25,9 @@
 
             <ImageView
                 android:id="@+id/imgTransactionStatus"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_delivery"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@drawable/ic_success"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="15dp"
                 />
@@ -291,14 +291,13 @@
         android:layout_alignParentBottom="true"
         android:background="@android:color/black"
         android:orientation="horizontal"
-        android:visibility="gone"
+        android:paddingBottom="5dp"
         >
 
         <LinearLayout
-            android:id="@+id/layoutSort"
-            android:layout_width="0dp"
+            android:id="@+id/layoutHome"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:gravity="center"
             android:orientation="horizontal">
 
@@ -306,7 +305,9 @@
                 android:layout_width="16dp"
                 android:layout_height="16dp"
                 android:layout_gravity="center_vertical"
-                android:src="@mipmap/ic_sort" />
+                android:src="@mipmap/ic_sort"
+                android:clickable="false"
+                />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -315,39 +316,12 @@
                 android:padding="10dp"
                 android:text="Home"
                 android:textColor="@color/hintColor"
-                android:theme="@style/MyTextViewNormal" />
+                android:theme="@style/MyTextViewNormal"
+                android:clickable="false"
+                />
         </LinearLayout>
 
-        <TextView
-            android:layout_width="1px"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="5dp"
-            android:layout_marginTop="5dp"
-            android:background="@color/hintColor" />
 
-        <LinearLayout
-            android:id="@+id/layoutFilter"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:layout_gravity="center_vertical"
-                android:src="@mipmap/ic_filter" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:padding="10dp"
-                android:text="My Orders"
-                android:textColor="@color/hintColor"
-                android:theme="@style/MyTextViewNormal" />
-        </LinearLayout>
 
     </LinearLayout>
 

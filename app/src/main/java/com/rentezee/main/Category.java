@@ -219,8 +219,6 @@ public class Category extends BaseActivity implements View.OnClickListener,Swipe
         }*/
 
 
-
-
         if(selectedTabPosition == 0)
         {
             fetchData(true);
@@ -235,7 +233,7 @@ public class Category extends BaseActivity implements View.OnClickListener,Swipe
 
         loadingMore =true;
         Ion.with(this)
-                .load("http://netforce.biz/renteeze/webservice/products/product_list?cat_id="+categoryId+"&limit="+limit)
+                .load("https://netforcesales.com/renteeze/webservice/products/product_list?cat_id="+categoryId+"&limit="+limit)
 
                 .asJsonObject()
                 .setCallback(new FutureCallback<JsonObject>() {
@@ -253,18 +251,24 @@ public class Category extends BaseActivity implements View.OnClickListener,Swipe
                                 JsonObject product = jsonObject.getAsJsonObject("Product");
                                 JsonObject category = jsonObject.getAsJsonObject("Category");
 
-                                String categories_name = category.get("name").getAsString();
-                                String id = product.get("id").getAsString();
-                                String name = product.get("name").getAsString();
-                                String price = product.get("price").getAsString();
-                                String security_price = product.get("security_price").getAsString();
-                                String image = "http://netforce.biz/renteeze/webservice/files/products/" + product.get("images").getAsString();
-                                productListDatas.add(new ProductListData(id, name, image, price, categories_name,security_price));
+                                try {
+
+                                    String categories_name = category.get("name").getAsString();
+                                    String id = product.get("id").getAsString();
+                                    String name = product.get("name").getAsString();
+                                    String price = product.get("price").getAsString();
+                                    String security_price = product.get("security_price").getAsString();
+                                    String image = "https://netforcesales.com/renteeze/webservice/files/products/" + product.get("images").getAsString();
+                                    productListDatas.add(new ProductListData(id, name, image, price, categories_name, security_price));
+
+                                } catch (Exception load_new) {
+
+                                }
 
                             }
 
                             productsAdapter.notifyDataSetChanged();
-                            loadingMore =false;
+                            loadingMore = false;
                             mSwipyRefreshLayout.setRefreshing(false);
 
                             layoutBottom.setVisibility(View.VISIBLE);
@@ -300,7 +304,7 @@ public class Category extends BaseActivity implements View.OnClickListener,Swipe
         loadingMore = true;
         mSwipyRefreshLayout.setRefreshing(true);
         Ion.with(this)
-                .load("http://netforce.biz/renteeze/webservice/products/product_list?cat_id="+categoryId+"&limit="+limit+"&sort="+"")
+                .load("https://netforcesales.com/renteeze/webservice/products/product_list?cat_id="+categoryId+"&limit="+limit+"&sort="+"")
 
                 .asJsonObject()
                 .setCallback(new FutureCallback<JsonObject>() {
@@ -313,18 +317,34 @@ public class Category extends BaseActivity implements View.OnClickListener,Swipe
 
                             System.out.println("data=====" + result);
 
-                            for (int i = 0; i < productListArray.size(); i++) {
+                            for (int i = 0; i < productListArray.size(); i++)
+                            {
                                 JsonObject jsonObject = (JsonObject) productListArray.get(i);
                                 JsonObject product = jsonObject.getAsJsonObject("Product");
                                 JsonObject category = jsonObject.getAsJsonObject("Category");
 
-                                String categories_name = category.get("name").getAsString();
-                                String id = product.get("id").getAsString();
-                                String name = product.get("name").getAsString();
-                                String price = product.get("price").getAsString();
-                                String security_price = product.get("security_price").getAsString();
-                                String image = "http://netforce.biz/renteeze/webservice/files/products/" + product.get("images").getAsString();
-                                productListDatas.add(new ProductListData(id, name, image, price, categories_name,security_price));
+                                try
+                                {
+
+                                    String categories_name = category.get("name").getAsString();
+                                    String id = product.get("id").getAsString();
+                                    String name = product.get("name").getAsString();
+                                    String price = product.get("price").getAsString();
+                                    String security_price = product.get("security_price").getAsString();
+                                    String image = "https://netforcesales.com/renteeze/webservice/files/products/" + product.get("images").getAsString();
+                                    productListDatas.add(new ProductListData(id, name, image, price, categories_name,security_price));
+
+
+
+                                }
+                                catch (Exception load)
+                                {
+
+
+                                }
+
+
+
 
                             }
 
@@ -545,7 +565,7 @@ public class Category extends BaseActivity implements View.OnClickListener,Swipe
         showProgressBar(context);
          loadingMore = true;
         Ion.with(this)
-                .load("http://netforce.biz/renteeze/webservice/products/product_list?cat_id="+categoryId+"&limit="+limit+"&sort="+"")
+                .load("https://netforcesales.com/renteeze/webservice/products/product_list?cat_id="+categoryId+"&limit="+limit+"&sort="+"")
 
                 .asJsonObject()
                 .setCallback(new FutureCallback<JsonObject>() {
@@ -559,17 +579,29 @@ public class Category extends BaseActivity implements View.OnClickListener,Swipe
                             System.out.println("data=====" + result);
 
                             for (int i = 0; i < productListArray.size(); i++) {
+
                                 JsonObject jsonObject = (JsonObject) productListArray.get(i);
                                 JsonObject product = jsonObject.getAsJsonObject("Product");
                                 JsonObject category = jsonObject.getAsJsonObject("Category");
 
-                                String categories_name = category.get("name").getAsString();
-                                String id = product.get("id").getAsString();
-                                String name = product.get("name").getAsString();
-                                String price = product.get("price").getAsString();
-                                String security_price = product.get("security_price").getAsString();
-                                String image = "http://netforce.biz/renteeze/webservice/files/products/" + product.get("images").getAsString();
-                                productListDatas.add(new ProductListData(id, name, image, price, categories_name,security_price));
+                                try {
+
+                                    String categories_name = category.get("name").getAsString();
+                                    String id = product.get("id").getAsString();
+                                    String name = product.get("name").getAsString();
+                                    String price = product.get("price").getAsString();
+                                    String security_price = product.get("security_price").getAsString();
+                                    String image = "https://netforcesales.com/renteeze/webservice/files/products/" + product.get("images").getAsString();
+                                    productListDatas.add(new ProductListData(id, name, image, price, categories_name,security_price));
+
+
+                                }catch (Exception r){
+
+
+                                }
+
+
+
 
                             }
 
@@ -603,7 +635,7 @@ public class Category extends BaseActivity implements View.OnClickListener,Swipe
         showProgressBar(context);
 
         Ion.with(this)
-                .load("http://netforce.biz/renteeze/webservice/products/product_list?cat_id="+categoryId+"&sort="+sort)
+                .load("https://netforcesales.com/renteeze/webservice/products/product_list?cat_id="+categoryId+"&sort="+sort)
                 .asJsonObject()
                 .setCallback(new FutureCallback<JsonObject>() {
                     @Override
@@ -620,33 +652,43 @@ public class Category extends BaseActivity implements View.OnClickListener,Swipe
                                 JsonObject product = jsonObject.getAsJsonObject("Product");
                                 JsonObject category = jsonObject.getAsJsonObject("Category");
 
-                                String categories_name = category.get("name").getAsString();
-                                String id = product.get("id").getAsString();
-                                String name = product.get("name").getAsString();
-                                String price = product.get("price").getAsString();
-                                String security_price = product.get("security_price").getAsString();
-                                String image = "http://netforce.biz/renteeze/webservice/files/products/" + product.get("images").getAsString();
-                                productListDatas.add(new ProductListData(id, name, image, price, categories_name,security_price));
+                                try {
 
+                                    String categories_name = category.get("name").getAsString();
+                                    String id = product.get("id").getAsString();
+                                    String name = product.get("name").getAsString();
+                                    String price = product.get("price").getAsString();
+                                    String security_price = product.get("security_price").getAsString();
+                                    String image = "https://netforcesales.com/renteeze/webservice/files/products/" + product.get("images").getAsString();
+                                    productListDatas.add(new ProductListData(id, name, image, price, categories_name, security_price));
+
+                                }
+                                catch (Exception a){
+
+
+                                }
+
+
+                                }
+
+                                productsAdapter.notifyDataSetChanged();
+
+                                dismissProgressBar();
+                                layoutBottom.setVisibility(View.VISIBLE);
+                            }else{
+
+                                dismissProgressBar();
+                                Log.e("error", e.toString());
                             }
-
-                            productsAdapter.notifyDataSetChanged();
-
-                            dismissProgressBar();
-                            layoutBottom.setVisibility(View.VISIBLE);
-                        } else {
-
-                            dismissProgressBar();
-                            Log.e("error", e.toString());
                         }
                     }
-                });
 
-    }
+                    );
+
+                }
 
 
-
-    @Override
+        @Override
     protected void onResume() {
         super.onResume();
         dashboardContainer = new DashboardContainer();

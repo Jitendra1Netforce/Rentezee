@@ -6,7 +6,9 @@
     android:layout_height="match_parent"
     android:id="@+id/coordinatorLayout"
     android:fitsSystemWindows="true"
-    tools:context="com.rentezee.main.Category">
+    tools:context="com.rentezee.main.Category"
+    android:background="@color/screenbackground"
+    >
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"

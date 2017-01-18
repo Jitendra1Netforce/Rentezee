@@ -3,8 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Rentezee.iml" filepath="$PROJECT_DIR$/Rentezee.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/Rentezee.iml" filepath="$PROJECT_DIR$/.idea/Rentezee.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/payUMoneysdk/payUMoneysdk.iml" filepath="$PROJECT_DIR$/payUMoneysdk/payUMoneysdk.iml" />
     </modules>
   </component>
 </project>

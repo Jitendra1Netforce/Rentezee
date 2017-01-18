@@ -10,12 +10,10 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.animation.OvershootInterpolator;
-import android.view.animation.ScaleAnimation;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.rentezee.fragments.my_cart.MyCart;
-import com.rentezee.main.DashboardContainer;
+import com.rentezee.navigation.my_cart.MyCart;
 import com.rentezee.main.R;
 import com.rentezee.main.Search;
 import com.rentezee.views.CircleProgressBar;
@@ -28,6 +26,7 @@ import com.rentezee.views.CircleProgressBar;
 public abstract  class BaseActivity extends AppCompatActivity {
 
     private Dialog dialog;
+    RelativeLayout relativeCart;
     public static TextView tvCartCount ;
 
 
@@ -59,6 +58,16 @@ public abstract  class BaseActivity extends AppCompatActivity {
         View view = menu.findItem(R.id.menu_cart).getActionView();
 
          tvCartCount = (TextView) view.findViewById(R.id.tvCartCount);
+
+        relativeCart = (RelativeLayout) view.findViewById(R.id.relativeCart);
+
+
+        relativeCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                gotoActivity(MyCart.class);
+            }
+        });
 
         //tvCartCount.setText(String.valueOf(DashboardContainer.cart_count));
 

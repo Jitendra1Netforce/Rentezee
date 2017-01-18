@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -11,6 +12,7 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -30,6 +32,8 @@ public class Search extends BaseActivity {
     ArrayList<SearchData> searchDatas = new ArrayList<>();
     SearchAdapter searchAdapter;
     ListView lvProducts;
+    RelativeLayout relativeEmpty;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -47,6 +51,8 @@ public class Search extends BaseActivity {
         }
 
         lvProducts=(ListView)findViewById(R.id.lvProducts);
+
+        relativeEmpty = (RelativeLayout) findViewById(R.id.relativeEmpty);
 
         lvProducts.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -96,7 +102,7 @@ public class Search extends BaseActivity {
     private void load_refresh(String n)
     {
         // recyclerView.setVisibility(View.GONE);
-
+        relativeEmpty.setVisibility(View.GONE);
         searchDatas.clear();
 
         showProgressBar(context);
@@ -105,7 +111,7 @@ public class Search extends BaseActivity {
         jsonObject.addProperty("product_name",n);
 
         Ion.with(this)
-                .load("http://netforce.biz/renteeze/webservice/Products/search")
+                .load("https://netforcesales.com/renteeze/webservice/Products/search")
                  .setJsonObjectBody(jsonObject)
                 .asJsonObject()
                 .setCallback(new FutureCallback<JsonObject>() {
@@ -117,6 +123,17 @@ public class Search extends BaseActivity {
                             System.out.println("data====="+ result.toString());
 
                             JsonArray productListArray = result.getAsJsonArray("search");
+
+                            if (productListArray.size() == 0)
+                            {
+
+                                relativeEmpty.setVisibility(View.VISIBLE);
+                            }
+                            else
+                            {
+
+                                relativeEmpty.setVisibility(View.GONE);
+                            }
 
 
                             for (int i = 0; i < productListArray.size(); i++) {

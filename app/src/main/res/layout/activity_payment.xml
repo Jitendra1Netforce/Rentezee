@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.rentezee.fragments.my_cart.MyCart">
+    tools:context="com.rentezee.navigation.my_cart.MyCart">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"

@@ -6,7 +6,7 @@ android {
         config {
             keyAlias 'Rentezee'
             keyPassword 'Rentezee0501'
-            storeFile file('F:/Keystores/Rentezee/Rentezee.jks')
+            //storeFile file('F:/Keystores/Rentezee/Rentezee.jks')
             storePassword 'Rentezee0501'
         }
     }
@@ -51,9 +51,7 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-
     testCompile 'junit:junit:4.12'
-
     compile 'com.android.support:appcompat-v7:24.2.1'
     compile 'com.google.code.gson:gson:2.4'
     compile 'com.android.support:design:24.2.1'
@@ -84,6 +82,6 @@ dependencies {
     compile 'com.jaredrummler:material-spinner:1.1.0'
     compile 'com.wdullaer:materialdatetimepicker:2.5.0'
     compile 'com.github.halysongoncalves:pugnotification:1.8.1'
-
-}   
+    compile project(':payUMoneysdk')
+}
 apply plugin: 'com.google.gms.google-services'

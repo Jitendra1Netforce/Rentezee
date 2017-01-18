@@ -16,7 +16,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context="com.rentezee.fragments.profile.general.address.AddressFragment"
+    tools:context="com.rentezee.navigation.profile.general.address.AddressFragment"
     >
 
     <RelativeLayout
@@ -28,6 +28,58 @@
             android:id="@+id/relativelayoutMain"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
+
+
+            <RelativeLayout
+                android:id="@+id/relativeEmptyAddress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:visibility="invisible"
+                >
+
+
+                <ImageView
+                    android:id="@+id/emptyAddressImage"
+                    android:layout_width="120dp"
+                    android:layout_height="150dp"
+                    android:layout_marginTop="50dp"
+                    android:layout_centerHorizontal="true"
+                    android:src="@drawable/ic_address"
+                    />
+
+                <TextView
+                    android:id="@+id/tvEmpty"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:text="No Address found!"
+                    android:textColor="@color/orange"
+                    android:layout_below="@+id/emptyAddressImage"
+                    android:textSize="18sp"
+                    android:layout_marginTop="30dp"
+                    />
+
+
+                <Button
+                    android:id="@+id/buttonMyOrder"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:text="RENTENZEE"
+                    android:background="@color/colorPrimary"
+                    android:textColor="@color/orange"
+                    android:layout_below="@+id/tvEmpty"
+                    android:padding="15dp"
+                    android:layout_margin="40dp"
+                    android:visibility="invisible"
+                    />
+
+
+            </RelativeLayout>
+
+
 
             <TextView
                 android:id="@+id/txtAddAddressHeading"
@@ -206,6 +258,8 @@
             android:layout_below="@+id/relativelayoutMain"
             android:visibility="gone"
             android:layout_margin="10dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="5dp"
             >
 
 
@@ -219,6 +273,7 @@
                 android:textColor="@color/white"
                 android:layout_centerHorizontal="true"
                 android:background="?android:attr/selectableItemBackground"
+                android:clickable="false"
                 />
 
 

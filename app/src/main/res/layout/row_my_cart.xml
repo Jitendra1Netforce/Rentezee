@@ -51,7 +51,7 @@
 
 
                 <TextView
-                    android:id="@+id/tvItemTotal"
+                    android:id="@+id/tvItemTotalHeading"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="ITEM TOTAL"
@@ -239,7 +239,7 @@
                     />
 
                 <TextView
-                    android:id="@+id/tvTotaldata"
+                    android:id="@+id/tvItemTotal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"

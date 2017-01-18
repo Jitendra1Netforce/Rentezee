@@ -18,10 +18,10 @@
 
 
             <TextView
-                android:id="@+id/txtAddressheading"
+                android:id="@+id/txtcreditBy"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Credit By : Referal"
+                android:text="Debit By"
                 android:textColor="@color/black"
                 android:textStyle="bold"
                 android:layout_marginLeft="7dp"
@@ -29,37 +29,38 @@
 
 
             <TextView
-                android:id="@+id/txtAddress"
+                android:id="@+id/txtAmountHeading"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Credit Amount"
+                android:text="Amount"
                 android:layout_marginLeft="7dp"
                 android:textColor="@color/black"
-                android:layout_below="@+id/txtAddressheading"
+                android:layout_below="@+id/txtcreditBy"
                 android:layout_marginTop="10dp"
                 />
 
             <TextView
-                android:id="@+id/txtAddressDetails"
+                android:id="@+id/txtAmount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="\u20B9 500"
-                android:layout_below="@+id/txtAddressheading"
-                android:layout_toRightOf="@+id/txtAddress"
+                android:layout_below="@+id/txtcreditBy"
+                android:layout_toRightOf="@+id/txtAmountHeading"
                 android:layout_marginTop="10dp"
                 android:textColor="@color/green"
                 android:layout_marginLeft="10dp"
                 />
 
             <TextView
-                android:id="@+id/txtAddressCity"
+                android:id="@+id/txtDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="05 Aug"
                 android:textColor="@color/black"
                 android:layout_marginLeft="7dp"
-                android:layout_alignParentRight="true"
-
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/txtAmountHeading"
+                android:layout_marginTop="10dp"
                 />
 
 

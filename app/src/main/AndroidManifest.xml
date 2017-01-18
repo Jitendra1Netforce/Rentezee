@@ -119,7 +119,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.rentezee.fragments.myorder.activeorder.ActiveOrders"
+            android:name="com.rentezee.navigation.myorder.activeorder.ActiveOrders"
             android:label="@string/title_activity_category"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -138,63 +138,78 @@
                 android:resource="@xml/searchable" />
         </activity>
         <activity
-            android:name="com.rentezee.fragments.my_cart.MyCart"
+            android:name="com.rentezee.navigation.my_cart.MyCart"
             android:label="@string/title_activity_my_cart"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.rentezee.fragments.wishlist.WishList"
+            android:name="com.rentezee.navigation.wishlist.WishList"
             android:label="@string/title_activity_my_cart"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.rentezee.fragments.notification.NotificationActivity"
+            android:name="com.rentezee.navigation.notification.NotificationActivity"
             android:label="@string/title_activity_my_cart"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.rentezee.fragments.payment.PaymentActivity"
+            android:name="com.rentezee.navigation.transaction_details.PaymentActivity"
             android:label="Payment Option"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.rentezee.fragments.profile.ProfileSetting"
+            android:name="com.rentezee.navigation.profile.ProfileSetting"
             android:label="@string/title_activity_profile_setting"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.rentezee.fragments.payment.TransactionDetailActivity"
+            android:name="com.rentezee.navigation.transaction_details.TransactionDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.rentezee.fragments.myorder.MyOrder"
+            android:name="com.rentezee.navigation.myorder.MyOrder"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.rentezee.fragments.rent_it_out.RentitOutActivity"
+            android:name="com.rentezee.navigation.rent_it_out.RentitOutActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.rentezee.fragments.chooseaddress.ChooseAddressActivity"
+            android:name="com.rentezee.navigation.chooseaddress.ChooseAddressActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.rentezee.fragments.rentenzee_credit.CreditActivity"
+            android:name="com.rentezee.navigation.rentenzee_credit.CreditActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.rentezee.fragments.rent_it_out.productview_details.ProductViewDetailsActivity"
+            android:name="com.rentezee.navigation.rent_it_out.productview_details.ProductViewDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.rentezee.fragments.my_cart.DeliveryActivity"
+            android:name="com.rentezee.navigation.my_cart.DeliveryActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.rentezee.fragments.chat.ChatActivity"
+            android:name="com.rentezee.navigation.chat.ChatActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="com.rentezee.navigation.myorder.orderdetails.OrderDetailActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="com.rentezee.navigation.payumoneysdk.PayUMoneyActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
-            ></activity>
+            />
+
+        <activity
+            android:name="com.rentezee.navigation.payumoneysdk.WaletPayment"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            />
+
     </application>
 
 </manifest>

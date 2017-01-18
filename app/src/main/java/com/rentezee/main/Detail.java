@@ -4,15 +4,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
@@ -29,21 +25,17 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
-import com.rentezee.adapters.ProductsAdapter;
 import com.rentezee.adapters.ViewPagerAdapter;
-import com.rentezee.fragments.DashboardSliderImage;
+import com.rentezee.navigation.DashboardSliderImage;
 import com.rentezee.helpers.AppPreferenceManager;
 import com.rentezee.helpers.BaseActivity;
 import com.rentezee.helpers.Constants;
 import com.rentezee.helpers.Debugger;
 import com.rentezee.helpers.PreferenceKeys;
-import com.rentezee.helpers.Util;
 import com.rentezee.helpers.VolleyErrorHandler;
 import com.rentezee.helpers.VolleyGsonRequest;
 import com.rentezee.pojos.GenericResponse;
-import com.rentezee.pojos.LoginResponse;
 import com.rentezee.pojos.User;
-import com.rentezee.pojos.mdashboard.Slider;
 import com.rentezee.pojos.mdetail.ProductDetail;
 import com.rentezee.pojos.mdetail.Response;
 
@@ -161,9 +153,9 @@ public class Detail extends BaseActivity
 
         layoutBottom=(LinearLayout)findViewById(R.id.layoutBottom);
 
-        String cat_id = getIntent().getStringExtra(Constants.PRODUCT_ID);
+        String product_id = getIntent().getStringExtra(Constants.PRODUCT_ID);
 
-          user = (User) new AppPreferenceManager(context).getObject(PreferenceKeys.savedUser, User.class);
+        user = (User) new AppPreferenceManager(context).getObject(PreferenceKeys.savedUser, User.class);
 
         dashboardContainer = new DashboardContainer();
         dashboardContainer.count_cart();
@@ -240,8 +232,8 @@ public class Detail extends BaseActivity
             {
 
                 add_to_cart(device_id, id);
-                dashboardContainer.count_cart();
-
+                //dashboardContainer.count_cart();
+                count_cart();
 
             }
         });
@@ -249,7 +241,7 @@ public class Detail extends BaseActivity
 
         // fetchDetail(Integer.parseInt(cat_id));
 
-        load_refresh(Integer.parseInt(cat_id));
+        load_refresh(Integer.parseInt(product_id));
     }
 
     private void fetchDetail(int productId)
@@ -341,7 +333,7 @@ public class Detail extends BaseActivity
 
             showProgressBar(context);
 
-            VolleyGsonRequest<GenericResponse> gsonRequest = new VolleyGsonRequest<>("http://netforce.biz/renteeze/webservice/Users/add_wishlist",
+            VolleyGsonRequest<GenericResponse> gsonRequest = new VolleyGsonRequest<>("https://netforcesales.com/renteeze/webservice/Users/add_wishlist",
                     jsonObject,
                     new com.android.volley.Response.Listener<GenericResponse>() {
                         @Override
@@ -397,7 +389,7 @@ public class Detail extends BaseActivity
 
             showProgressBar(context);
 
-            VolleyGsonRequest<GenericResponse> gsonRequest = new VolleyGsonRequest<>("http://netforce.biz/renteeze/webservice/Products/addtocart",
+            VolleyGsonRequest<GenericResponse> gsonRequest = new VolleyGsonRequest<>("https://netforcesales.com/renteeze/webservice/Products/addtocart",
                     jsonObject,
                     new com.android.volley.Response.Listener<GenericResponse>() {
                         @Override
@@ -411,8 +403,11 @@ public class Detail extends BaseActivity
                                     System.out.println("some data =========" + response.toString());
 
                                     Toast.makeText(getApplicationContext(),response.getMessage().toString(),Toast.LENGTH_SHORT).show();
-                                    dashboardContainer = new DashboardContainer();
-                                    dashboardContainer.count_cart();
+                                   /* dashboardContainer = new DashboardContainer();
+                                    dashboardContainer.count_cart();*/
+
+                                    count_cart();
+
 
                                 }
                                 else
@@ -447,6 +442,77 @@ public class Detail extends BaseActivity
     }
 
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+
+        try {
+            invalidateOptionsMenu();
+            count_cart();
+        } catch (Exception e) {
+
+        }
+
+    }
+
+
+    public  void count_cart()
+    {
+        // recyclerView.setVisibility(View.GONE);
+        // homeDatas.clear();
+
+        System.out.println("device_id-------------" + device_id);
+
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("device_id", device_id);
+
+
+        Ion.with(this)
+                .load("https://netforcesales.com/renteeze/webservice/Pages/dashboard.json")
+                .setJsonObjectBody(jsonObject)
+                .asJsonObject()
+                .setCallback(new FutureCallback<JsonObject>() {
+                    @Override
+                    public void onCompleted(Exception e, JsonObject result) {
+
+                        //                        System.out.println("data================" + result.toString());
+
+                        if (result != null)
+                        {
+                            JsonObject v = result.getAsJsonObject("data");
+
+                            try
+                            {
+
+                                String my_cart_c = v.get("my_cart").getAsString();
+
+                                int new_my_cart = Integer.parseInt(my_cart_c);
+
+                                tvCartCount.setText(String.valueOf(new_my_cart));
+
+
+                            }
+                            catch (Exception cart){}
+
+                            //setMenuCounter(R.id.nav_cart, new_my_cart);
+                        }
+                        else
+                        {
+
+                            dismissProgressBar();
+                            Log.e("error", e.toString());
+                        }
+                    }
+                });
+
+
+    }
+
+
+
+
+
     private void load_refresh(int productId)
     {
 
@@ -467,6 +533,7 @@ public class Detail extends BaseActivity
         {
 
             System.out.println("Not Login =================");
+
             json.addProperty("action", "details");
             json.addProperty("id", String.valueOf(productId));
             json.addProperty("device_id", device_id);
@@ -476,7 +543,7 @@ public class Detail extends BaseActivity
 
 
         Ion.with(this)
-                .load("http://netforce.biz/renteeze/webservice/products/product_details")
+                .load("https://netforcesales.com/renteeze/webservice/products/product_details")
                 .setJsonObjectBody(json)
                 .asJsonObject()
                 .setCallback(new FutureCallback<JsonObject>() {
@@ -506,7 +573,7 @@ public class Detail extends BaseActivity
 
                                 Fragment fragment = new DashboardSliderImage();
                                 Bundle bundle = new Bundle();
-                                bundle.putString(Constants.URL, "http://netforce.biz/renteeze/webservice/files/products/" + image);
+                                bundle.putString(Constants.URL, "https://netforcesales.com/renteeze/webservice/files/products/" + image);
                                 fragment.setArguments(bundle);
                                 adapter.addFragment(fragment, "");
                             }
@@ -518,15 +585,15 @@ public class Detail extends BaseActivity
 
                             String category_name = category.get("name").getAsString();
 
+                            try
+                            {
+
                             JsonObject user_details = data.getAsJsonObject("User");
 
                             String user_name = user_details.get("name").getAsString();
 
                             String user_email = user_details.get("email").getAsString();
 
-
-
-                            try {
 
                                 user_mobile = user_details.get("mobile").getAsString();
 
@@ -545,16 +612,10 @@ public class Detail extends BaseActivity
 
                                 System.out.println("user_mobile============"+user_mobile);*/
 
-                            }
-                            catch (Exception exe)
-                            {
-
-
-                            }
-
                             tvUserName.setText(user_name);
                             tvUserEmail.setText(user_email);
                             tvUserMobile.setText(user_mobile);
+
 
                             JsonObject product = data.getAsJsonObject("Product");
                             id = product.get("id").getAsString();
@@ -594,10 +655,15 @@ public class Detail extends BaseActivity
                                 layoutPrice.setVisibility(View.VISIBLE);
                                 layoutRentPrice.setVisibility(View.VISIBLE);
 
-
                             }
 
+                            }
+                            catch (Exception exe)
+                            {
 
+
+
+                            }
 
                             layoutBottom.setVisibility(View.VISIBLE);
 
@@ -605,7 +671,8 @@ public class Detail extends BaseActivity
 
                             System.out.println("wishlist_status==============" + wishlist_status);
 
-                            if (wishlist_status.equals("1")) {
+                            if (wishlist_status.equals("1"))
+                            {
 
                                 System.out.println("data============" + settings.getBoolean(id, true));
 
@@ -618,7 +685,9 @@ public class Detail extends BaseActivity
 
 
                             }
-                            else {
+                            else
+                            {
+
                                 System.out.println("not favo============" + settings.getBoolean(id, true));
                                 materialFavoriteButton.setAnimateUnfavorite(true);
                                 materialFavoriteButton.setBounceDuration(300);
@@ -626,7 +695,6 @@ public class Detail extends BaseActivity
                                 materialFavoriteButton.setRotationDuration(100);
                                 materialFavoriteButton.setFavoriteResource(R.mipmap.ic_add_to_wishlist);
                                 materialFavoriteButton.setFavorite(false);
-
 
                             }
 

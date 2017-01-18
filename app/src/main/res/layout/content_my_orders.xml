@@ -20,7 +20,7 @@
         android:background="@color/colorPrimary"
         app:tabMode="fixed" />
 
-    <com.rentezee.fragments.profile.general.WrapContentViewPager
+    <com.rentezee.navigation.profile.general.WrapContentViewPager
         android:id="@+id/pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

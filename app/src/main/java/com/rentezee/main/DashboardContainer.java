@@ -9,7 +9,6 @@ import android.content.IntentFilter;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.location.Location;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -27,7 +26,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.Menu;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -63,16 +61,15 @@ import com.koushikdutta.ion.Ion;
 import com.rentezee.adapters.DashboardCategoriesAdapter;
 import com.rentezee.adapters.TrendingAdapter;
 import com.rentezee.adapters.ViewPagerAdapter;
-import com.rentezee.fragments.DashboardSliderImage;
-import com.rentezee.fragments.chat.ChatActivity;
-import com.rentezee.fragments.myorder.MyOrder;
-import com.rentezee.fragments.myorder.activeorder.ActiveOrders;
-import com.rentezee.fragments.my_cart.MyCart;
-import com.rentezee.fragments.notification.NotificationActivity;
-import com.rentezee.fragments.profile.ProfileSetting;
-import com.rentezee.fragments.rent_it_out.RentitOutActivity;
-import com.rentezee.fragments.rentenzee_credit.CreditActivity;
-import com.rentezee.fragments.wishlist.WishList;
+import com.rentezee.navigation.DashboardSliderImage;
+import com.rentezee.navigation.chat.ChatActivity;
+import com.rentezee.navigation.myorder.MyOrder;
+import com.rentezee.navigation.my_cart.MyCart;
+import com.rentezee.navigation.notification.NotificationActivity;
+import com.rentezee.navigation.profile.ProfileSetting;
+import com.rentezee.navigation.rent_it_out.RentitOutActivity;
+import com.rentezee.navigation.rentenzee_credit.CreditActivity;
+import com.rentezee.navigation.wishlist.WishList;
 import com.rentezee.helpers.AppPreferenceManager;
 import com.rentezee.helpers.BaseActivity;
 import com.rentezee.helpers.Constants;
@@ -86,8 +83,6 @@ import com.rentezee.pojos.mdashboard.Slider;
 import com.rentezee.pojos.mdashboard.Trending;
 import com.rentezee.services.GPSTracker;
 import com.rentezee.views.ExpandableHeightGridView;
-
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -139,6 +134,9 @@ public class DashboardContainer extends BaseActivity implements NavigationView.O
     public static  int my_cart =0;
     public static  String  device_id;
 
+    int count = 0;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -170,6 +168,7 @@ public class DashboardContainer extends BaseActivity implements NavigationView.O
                 .addOnConnectionFailedListener(this)
                 .addApi(LocationServices.API)
                 .build();
+
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -256,6 +255,8 @@ public class DashboardContainer extends BaseActivity implements NavigationView.O
 
         System.out.println("my_cart==============" + my_cart);
 
+
+        count = 1;
 
         setMenuCounter(R.id.nav_notifications, 0);
         setMenuCredits(R.id.nav_rentezee_credits, 0);
@@ -461,7 +462,6 @@ public class DashboardContainer extends BaseActivity implements NavigationView.O
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item)
-
     {
         switch (item.getItemId())
         {
@@ -723,7 +723,7 @@ public class DashboardContainer extends BaseActivity implements NavigationView.O
 
         showProgressBar(context);
         Ion.with(this)
-                .load("http://netforce.biz/renteeze/webservice/Pages/dashboard.json")
+                .load("https://netforcesales.com/renteeze/webservice/Pages/dashboard.json")
                 .setJsonObjectBody(jsonObject)
                 .asJsonObject()
                 .setCallback(new FutureCallback<JsonObject>() {
@@ -733,6 +733,7 @@ public class DashboardContainer extends BaseActivity implements NavigationView.O
                         //System.out.println("data================" + result.toString());
 
                         if (result != null) {
+                            Log.i("result",result.toString());
                             JsonObject v = result.getAsJsonObject("data");
 
                             String my_cart_c = v.get("my_cart").getAsString();
@@ -759,7 +760,7 @@ public class DashboardContainer extends BaseActivity implements NavigationView.O
 
                                 Fragment fragment = new DashboardSliderImage();
                                 Bundle bundle = new Bundle();
-                                bundle.putString(Constants.URL, "http://netforce.biz/renteeze/webservice/images/slides/" + image);
+                                bundle.putString(Constants.URL, "https://netforcesales.com/renteeze/webservice/images/slides/" + image);
                                 fragment.setArguments(bundle);
                                 adapter.addFragment(fragment, name);
                             }
@@ -768,19 +769,22 @@ public class DashboardContainer extends BaseActivity implements NavigationView.O
 
                             category_data.add("Choose Category");
 
-                            for (int i = 0; i < categoruArray.size(); i++) {
+                            for (int i = 0; i < categoruArray.size(); i++)
+                            {
                                 JsonObject jsonObject = (JsonObject) categoruArray.get(i);
                                 JsonObject category = jsonObject.getAsJsonObject("Category");
                                 String id = category.get("id").getAsString();
 
                                 String name = category.get("name").getAsString();
-                                String image = "http://netforce.biz/renteeze/webservice/images/" + category.get("image").getAsString();
+                                String image = "https://netforcesales.com/renteeze/webservice/images/" + category.get("image").getAsString();
 
                                 System.out.println("imageurl ======================" + name);
                                 categoryDatas.add(new CategoriesData(id, name, image));
                                 category_data.add(name);
                                 category_id.add(id);
                                 param_aux.put(Integer.parseInt(id), name.toString());
+
+
                             }
 
 
@@ -813,7 +817,7 @@ public class DashboardContainer extends BaseActivity implements NavigationView.O
                                 String name = trenging.get("name").getAsString();
                                 String price = trenging.get("price").getAsString();
                                 String special_price = trenging.get("special_price").getAsString();
-                                String image = "http://netforce.biz/renteeze/webservice/files/products/" + trenging.get("images").getAsString();
+                                String image = "https://netforcesales.com/renteeze/webservice/files/products/" + trenging.get("images").getAsString();
 
                                 System.out.println("imageurl ======================" + name);
                                 trendingDatas.add(new TrendingData(id, name, image, price, special_price, category_name));
@@ -858,7 +862,7 @@ public class DashboardContainer extends BaseActivity implements NavigationView.O
             jsonObject.put("versionName", Util.getVersionName(context));
             jsonObject.put("lat", lat);
             jsonObject.put("lng", lng);
-            String url = "http://netforce.biz/renteeze/webservice/Pages/dashboard.json"; //URL to hit
+            String url = "https://netforcesales.com/renteeze/webservice/Pages/dashboard.json"; //URL to hit
 
 
             showProgressBar(context);
@@ -909,6 +913,7 @@ public class DashboardContainer extends BaseActivity implements NavigationView.O
     }
 */
 
+
     private void processDashboardResponse(com.rentezee.pojos.mdashboard.Response response)
     {
         fetchedSliderDataList = response.getData().getSliderData();
@@ -932,13 +937,23 @@ public class DashboardContainer extends BaseActivity implements NavigationView.O
 
         if (fetchedCategoryDataList.size() > 6)
         {
+
+            System.out.println("fetchedCategoryDataList=============="+fetchedCategoryDataList.size());
+
             categoryDataList = new ArrayList<>();
             for (int i = 0; i < 6; i++) {
                 categoryDataList.add(fetchedCategoryDataList.get(i));
             }
            // dashboardCategoriesAdapterAdapter = new DashboardCategoriesAdapter(context, categoryDataList);
             ivMore.setVisibility(View.VISIBLE);
-        } else {
+
+
+        }
+        else
+        {
+
+            System.out.println("fetchedCategoryDataList=============="+fetchedCategoryDataList.size());
+
             ivMore.setVisibility(View.GONE);
            // dashboardCategoriesAdapterAdapter = new DashboardCategoriesAdapter(context, fetchedCategoryDataList);
         }
@@ -972,8 +987,8 @@ public class DashboardContainer extends BaseActivity implements NavigationView.O
     }
 
 
-    public  void count_cart(){
-
+    public  void count_cart()
+    {
         // recyclerView.setVisibility(View.GONE);
         // homeDatas.clear();
 
@@ -982,30 +997,36 @@ public class DashboardContainer extends BaseActivity implements NavigationView.O
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("device_id", device_id);
 
+
         Ion.with(this)
-                .load("http://netforce.biz/renteeze/webservice/Pages/dashboard.json")
+                .load("https://netforcesales.com/renteeze/webservice/Pages/dashboard.json")
                 .setJsonObjectBody(jsonObject)
                 .asJsonObject()
                 .setCallback(new FutureCallback<JsonObject>() {
                     @Override
                     public void onCompleted(Exception e, JsonObject result) {
 
-//                        System.out.println("data================" + result.toString());
+                        //                        System.out.println("data================" + result.toString());
 
                         if (result != null)
                         {
                             JsonObject v = result.getAsJsonObject("data");
 
-                            String my_cart_c = v.get("my_cart").getAsString();
+                            try
+                            {
 
-                            int new_my_cart = Integer.parseInt(my_cart_c);
+                                String my_cart_c = v.get("my_cart").getAsString();
 
-                            tvCartCount.setText(String.valueOf(new_my_cart));
+                                int new_my_cart = Integer.parseInt(my_cart_c);
 
-                            System.out.println("reload------------------" + cart_count);
+                                tvCartCount.setText(String.valueOf(new_my_cart));
+
+                                System.out.println("reload------------------" + cart_count);
+
+                            }
+                            catch (Exception cart){}
 
                             //setMenuCounter(R.id.nav_cart, new_my_cart);
-
                         }
                         else
                         {
@@ -1030,7 +1051,11 @@ public class DashboardContainer extends BaseActivity implements NavigationView.O
 
         }
 
-        count_cart();
+        if( count == 1)
+        {
+            count_cart();
+        }
+
 
         User user = (User) new AppPreferenceManager(context).getObject(PreferenceKeys.savedUser, User.class);
 

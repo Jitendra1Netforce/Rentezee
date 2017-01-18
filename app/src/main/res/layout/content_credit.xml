@@ -9,7 +9,6 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     >
 
-
     <TextView
         android:id="@+id/txtTotalCreditHeading"
         android:layout_width="wrap_content"
@@ -22,26 +21,64 @@
         />
 
 
-                <TextView
-                    android:id="@+id/txtCreditAmount"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    android:text="\u20B9 3,000"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="10dp"
-                    android:layout_below="@+id/txtTotalCreditHeading"
-                    android:textSize="25sp"
-                    android:layout_marginBottom="10dp"
-                    />
+
+    <RelativeLayout
+        android:id="@+id/relativePrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtTotalCreditHeading"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="10dp"
+        >
+
+
+        <TextView
+            android:id="@+id/txtRupeesSign"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:text="\u20B9 "
+            android:textSize="25sp"
+            />
+
+        <TextView
+            android:id="@+id/txtCreditAmount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:layout_toRightOf="@+id/txtRupeesSign"
+            android:textSize="25sp"
+            android:text=""
+            />
+
+
+
+    </RelativeLayout>
+
+
+    <Button
+        android:id="@+id/buttonAddMoney"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:text="Add Money"
+        android:background="?android:attr/selectableItemBackground"
+        android:textColor="@color/orange"
+        android:textAllCaps="false"
+        android:layout_below="@+id/txtTotalCreditHeading"
+        android:layout_marginTop="15dp"
+        />
+
 
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/lvMyCart"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/txtCreditAmount"
-
+        android:layout_below="@+id/relativePrice"
+        android:layout_marginTop="15dp"
+        android:background="@color/screenbackground"
         >
 
     </android.support.v7.widget.RecyclerView>

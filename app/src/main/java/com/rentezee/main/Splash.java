@@ -15,7 +15,7 @@ import android.util.DisplayMetrics;
 import android.view.View;
 
 import com.rentezee.adapters.ViewPagerAdapter;
-import com.rentezee.fragments.SplashSliderIntro;
+import com.rentezee.navigation.SplashSliderIntro;
 import com.rentezee.helpers.AppPreferenceManager;
 import com.rentezee.helpers.BaseActivity;
 import com.rentezee.helpers.Constants;

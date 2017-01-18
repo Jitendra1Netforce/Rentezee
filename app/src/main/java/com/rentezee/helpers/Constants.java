@@ -6,7 +6,7 @@ package com.rentezee.helpers;
 
 public interface Constants {
     int APP_TYPE_ID=1;
-    String API="http://netforce.biz/renteeze/Beta/";
+    String API="https://netforcesales.com/renteeze/Beta/";
     String fillData="fillData";
     String name="name";
     String email="email";

@@ -11,8 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
-import com.rentezee.fragments.EditProfile;
-import com.rentezee.fragments.SavedAddress;
+import com.rentezee.navigation.EditProfile;
+import com.rentezee.navigation.SavedAddress;
 import com.rentezee.helpers.BaseActivity;
 
 public class EditProfileAddress extends BaseActivity {

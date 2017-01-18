@@ -1,0 +1,275 @@
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="100dp"
+
+        >
+
+        <CheckBox
+            android:id="@+id/rentenzeeCheckbox"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_alignParentLeft="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            />
+
+
+        <TextView
+            android:id="@+id/tvCreditHeading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Rentenzee Credit"
+            android:layout_marginTop="10dp"
+            android:textSize="18sp"
+            android:textColor="@color/orange"
+           android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/rentenzeeCheckbox"
+            />
+
+
+        <RelativeLayout
+            android:id="@+id/relativeCredit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            >
+
+
+            <TextView
+                android:id="@+id/txtRupeesSign"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:text="\u20B9 "
+                android:layout_marginTop="10dp"
+                android:textSize="18sp"
+                android:layout_marginBottom="10dp"
+                />
+
+            <TextView
+                android:id="@+id/tvRentenzeeCreditAmount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:text="3000"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@+id/txtRupeesSign"
+                android:textSize="18sp"
+                android:layout_marginBottom="10dp"
+                />
+
+        </RelativeLayout>
+
+
+        <View
+            android:id="@+id/creditView"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/black"
+            android:layout_below="@+id/relativeCredit"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            ></View>
+
+
+        <CheckBox
+            android:id="@+id/payumoneyCheckbox"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_marginTop="15dp"
+            android:layout_below="@+id/creditView"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="10dp"
+            android:checked="true"
+            />
+
+
+
+        <TextView
+            android:id="@+id/txtPayuMoneyHeading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/orange"
+            android:text="PayU Money"
+            android:layout_marginTop="15dp"
+            android:textSize="18sp"
+            android:layout_below="@+id/creditView"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/payumoneyCheckbox"
+            />
+
+
+        <TextView
+            android:id="@+id/txtPayableAmount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/green"
+            android:text="3000"
+            android:layout_marginTop="15dp"
+            android:layout_alignParentRight="true"
+            android:textSize="18sp"
+            android:layout_below="@+id/creditView"
+            android:layout_marginRight="10dp"
+            android:visibility="invisible"
+            />
+
+
+
+
+        <RelativeLayout
+            android:id="@+id/relative_layout"
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+            android:layout_below="@+id/txtPayuMoneyHeading"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                >
+                <TextView
+                    android:text="User Name:"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:textSize="18dp"
+                    />
+
+
+                <EditText
+                    android:id="@+id/amount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:maxLength="10"
+                    android:inputType="numberDecimal" />
+
+
+
+            </LinearLayout>
+
+
+
+
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tvNote"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/relative_layout"
+            android:textColor="@color/red_color"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:text="Note: Method of Payment for Delivery and Rent Must be Same"
+            />
+
+        <TextView
+            android:id="@+id/tvRentenzeeCredit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:text="3000"
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/tvNote"
+            android:textSize="18sp"
+            android:layout_marginBottom="10dp"
+            android:visibility="invisible"
+            />
+
+
+    </RelativeLayout>
+
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        >
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Payable Amount"
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/black"
+            android:layout_marginTop="20dp"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            />
+
+        <RelativeLayout
+            android:id="@+id/relativePrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="60dp"
+            >
+
+
+
+            <TextView
+                android:id="@+id/txtAnountRupeesSign"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:text="\u20B9 "
+                android:layout_marginTop="15dp"
+                android:textSize="18sp"
+                android:layout_marginBottom="10dp"
+                />
+
+            <TextView
+                android:id="@+id/txtPayableAmount2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/green"
+                android:text="3000"
+                android:layout_marginTop="15dp"
+                android:layout_toRightOf="@+id/txtAnountRupeesSign"
+                android:textSize="18sp"
+                android:layout_marginBottom="10dp"
+
+                />
+
+
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/pay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="makePayment"
+            android:background="@color/colorPrimary"
+            android:text="Proceed to Payment"
+            android:textAllCaps="false"
+            android:textColor="@color/orange"
+            android:layout_marginTop="20dp"
+           android:layout_below="@+id/relativePrice"
+            />
+
+
+
+
+    </RelativeLayout>
+
+
+    </RelativeLayout>

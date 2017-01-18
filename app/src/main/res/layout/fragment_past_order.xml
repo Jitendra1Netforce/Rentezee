@@ -7,6 +7,71 @@
     android:layout_height="match_parent"
     android:background="@color/screenbackground"
     >
+
+
+    <RelativeLayout
+        android:id="@+id/relativeEmptyOrder"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <ImageView
+            android:id="@+id/emptyCartImage"
+            android:layout_width="130dp"
+            android:layout_height="150dp"
+            android:layout_marginTop="40dp"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/ic_order"
+            />
+
+        <TextView
+            android:id="@+id/tvEmpty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="No Order Found!"
+            android:textColor="@color/orange"
+            android:layout_below="@+id/emptyCartImage"
+            android:textSize="18sp"
+            android:layout_marginTop="20dp"
+
+            />
+
+        <TextView
+            android:id="@+id/tvEmptyContent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="There is a lot you can get rent Spend Smart.. Save Smart.. with Rentenzee "
+            android:textColor="@color/black"
+            android:layout_below="@+id/tvEmpty"
+            android:textSize="18sp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="20dp"
+            />
+
+
+
+        <Button
+            android:id="@+id/buttonMyOrder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="RENTENZEE"
+            android:background="@color/colorPrimary"
+            android:textColor="@color/orange"
+            android:layout_below="@+id/tvEmptyContent"
+            android:padding="15dp"
+            android:layout_margin="40dp"
+            />
+
+
+    </RelativeLayout>
+
+
+
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/lvProducts"
         android:divider="@null"

@@ -48,6 +48,7 @@ import com.rentezee.helpers.Debugger;
 import com.rentezee.helpers.JToast;
 import com.rentezee.helpers.PreferenceKeys;
 import com.rentezee.helpers.RegisterVia;
+import com.rentezee.helpers.SimpleActivity;
 import com.rentezee.helpers.Util;
 import com.rentezee.helpers.Validator;
 import com.rentezee.helpers.VolleyErrorHandler;
@@ -66,7 +67,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
 
-public class SignUp extends BaseActivity implements View.OnClickListener
+public class SignUp extends SimpleActivity implements View.OnClickListener
 {
 
     private static final String TAG = SignUp.class.getSimpleName();
@@ -78,8 +79,11 @@ public class SignUp extends BaseActivity implements View.OnClickListener
     SharedPreferences.Editor prefEditor;
     String reg_id;
 
+
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
         context = this;
@@ -190,7 +194,7 @@ public class SignUp extends BaseActivity implements View.OnClickListener
         json.addProperty("versionName", "1.0");
 
         Ion.with(context)
-                .load("http://netforce.biz/renteeze/webservice/users/signup")
+                .load("https://netforcesales.com/renteeze/webservice/users/signup")
                 .setJsonObjectBody(json)
                 .asJsonObject()
                 .setCallback(new FutureCallback<JsonObject>() {
@@ -203,7 +207,7 @@ public class SignUp extends BaseActivity implements View.OnClickListener
 
 
      /* Ion.with(context)
-                .load("POST","http://netforce.biz/renteeze/webservice/users/signup")
+                .load("POST","https://netforcesales.com/renteeze/webservice/users/signup")
                 .setBodyParameter("name", name)
                 .setBodyParameter("email", email)
                 .setBodyParameter("mobile", mobile)
@@ -223,7 +227,7 @@ public class SignUp extends BaseActivity implements View.OnClickListener
 */
 
        /*Ion.with(SignUp.this)
-                .load("http://netforce.biz/renteeze/webservice/users/signup")
+                .load("https://netforcesales.com/renteeze/webservice/users/signup")
 
 
                 .setMultipartParameter("name", name)
@@ -260,7 +264,7 @@ public class SignUp extends BaseActivity implements View.OnClickListener
             jsonObject.put("versionName", Util.getVersionName(context));
 
             Debugger.i(TAG, "post data " + jsonObject.toString());
-            String url = "http://netforce.biz/renteeze/webservice/users/signup"; //URL to hit
+            String url = "https://netforcesales.com/renteeze/webservice/users/signup"; //URL to hit
             showProgressBar(context);
             VolleyGsonRequest<SignUpResponse> gsonRequest = new VolleyGsonRequest<>(url, jsonObject,
                     new Response.Listener<SignUpResponse>()

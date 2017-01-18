@@ -26,7 +26,7 @@
     <string name="new_user">New user?</string>
 
     <!--validation error -->
-    <string name="error_name">Please enter valid name</string>
+    <string name="error_name">Please Enter  Name</string>
     <string name="error_email_empty">Please enter your email address</string>
     <string name="error_email_not_valid">Email address is not valid</string>
     <string name="error_mobile_empty">Please enter your mobile no.</string>

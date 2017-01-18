@@ -52,6 +52,7 @@ import com.rentezee.helpers.Debugger;
 import com.rentezee.helpers.JToast;
 import com.rentezee.helpers.PreferenceKeys;
 import com.rentezee.helpers.RegisterVia;
+import com.rentezee.helpers.SimpleActivity;
 import com.rentezee.helpers.Util;
 import com.rentezee.helpers.Validator;
 import com.rentezee.helpers.VolleyErrorHandler;
@@ -69,7 +70,7 @@ import java.util.HashMap;
 
 import static com.rentezee.main.R.id.coordinatorLayout;
 
-public class Login extends BaseActivity implements View.OnClickListener
+public class Login extends SimpleActivity implements View.OnClickListener
 {
 
     private static final String TAG = Login.class.getSimpleName();
@@ -308,7 +309,7 @@ public class Login extends BaseActivity implements View.OnClickListener
             Debugger.i(TAG, "post data " + jsonObject.toString());
             String url = Constants.API + "socialLogin"; //URL to hit
             showProgressBar(context);
-            VolleyGsonRequest<LoginResponse> gsonRequest = new VolleyGsonRequest<>("http://netforce.biz/renteeze/webservice/Users/fb_login",
+            VolleyGsonRequest<LoginResponse> gsonRequest = new VolleyGsonRequest<>("https://netforcesales.com/renteeze/webservice/Users/fb_login",
                     jsonObject,
                     new Response.Listener<LoginResponse>() {
                         @Override
@@ -394,7 +395,7 @@ public class Login extends BaseActivity implements View.OnClickListener
 
             showProgressBar(context);
 
-             VolleyGsonRequest<LoginResponse> gsonRequest = new VolleyGsonRequest<>("http://netforce.biz/renteeze/webservice/Users/authenticate",
+             VolleyGsonRequest<LoginResponse> gsonRequest = new VolleyGsonRequest<>("https://netforcesales.com/renteeze/webservice/Users/authenticate",
                 jsonObject,
                 new Response.Listener<LoginResponse>() {
                     @Override

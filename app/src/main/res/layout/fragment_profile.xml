@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/screenbackground"
-    tools:context="com.rentezee.fragments.profile.general.address.AddressFragment">
+    tools:context="com.rentezee.navigation.profile.general.address.AddressFragment">
 
 
     <RelativeLayout
@@ -159,7 +159,9 @@
                     android:padding="5dp"
                     android:layout_marginTop="15dp"
                     android:background="@color/colorPrimary"
-                  android:layout_below="@+id/layoutUserMobile"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_below="@+id/layoutUserMobile"
                     >
 
 
@@ -172,6 +174,7 @@
                         android:textAllCaps="false"
                         android:textColor="@color/white"
                         android:layout_centerHorizontal="true"
+                        android:clickable="false"
                         android:background="?android:attr/selectableItemBackground"
                         />
 

@@ -23,61 +23,108 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <RelativeLayout
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/cardViewDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
                 android:padding="10dp"
-                >
-
-                <TextView
-                    android:id="@+id/txtUsername"
-                    android:layout_width="wrap_content"
+                android:elevation="2dp"
+                app:cardCornerRadius="2dp">
+                <RelativeLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Arvind"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/black"
-                    android:layout_alignParentLeft="true"
-                    />
+                    android:padding="10dp"
+                    >
 
-                <TextView
-                    android:id="@+id/txtUserEmail"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="arvindkumaryadav937@gmail.com"
-                    android:textColor="@color/black"
-                    android:layout_below="@+id/txtUsername"
-                    android:layout_alignParentLeft="true"
-                    />
+                    <TextView
+                        android:id="@+id/txtUsername"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"
+                        android:layout_alignParentLeft="true"
+                        />
 
-                <TextView
-                    android:id="@+id/txtMobileNo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="9811531065"
-                    android:textColor="@color/black"
-                    android:layout_alignParentRight="true"
-                    />
+                    <TextView
+                        android:id="@+id/txtUserEmail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textColor="@color/black"
+                        android:layout_below="@+id/txtUsername"
+                        android:layout_alignParentLeft="true"
+                        />
 
-            </RelativeLayout>
 
-            <RelativeLayout
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        >
+
+                        <ImageView
+                            android:id="@+id/imageView1"
+                            android:layout_width="20dp"
+                            android:layout_height="17dp"
+                            android:src="@drawable/call_hdpi"
+                            />
+
+                        <TextView
+                            android:layout_toRightOf="@+id/imageView1"
+                            android:id="@+id/txtMobileNo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=""
+                            android:textColor="@color/black"
+                            android:textStyle="bold"
+                            android:layout_marginLeft="3dp"
+                            />
+
+                    </RelativeLayout>
+
+
+                </RelativeLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:padding="10dp"
+                android:elevation="2dp"
+                app:cardCornerRadius="2dp">
 
-                <android.support.v4.view.ViewPager
-                    android:id="@+id/viewPager"
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content">
 
-                <me.relex.circleindicator.CircleIndicator
-                    android:id="@+id/indicator"
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:layout_alignParentBottom="true"
-                    app:ci_drawable="@drawable/indicator_selected"
-                    app:ci_drawable_unselected="@drawable/indicator_unselected" />
-            </RelativeLayout>
+                    <android.support.v4.view.ViewPager
+                        android:id="@+id/viewPager"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                    <me.relex.circleindicator.CircleIndicator
+                        android:id="@+id/indicator"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:layout_alignParentBottom="true"
+                        app:ci_drawable="@drawable/indicator_selected"
+                        app:ci_drawable_unselected="@drawable/indicator_unselected" />
+                </RelativeLayout>
+
+            </android.support.v7.widget.CardView>
 
             <TextView
                 android:id="@+id/tvProductID"
@@ -94,10 +141,7 @@
                 android:textAllCaps="true"
                 android:textStyle="bold" />
 
-
             <android.support.v7.widget.CardView
-
-                android:id="@+id/cardViewDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="10dp"
@@ -105,6 +149,7 @@
                 android:layout_marginRight="10dp"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="20dp"
+                android:layout_marginBottom="10dp"
                 android:padding="10dp"
                 android:elevation="2dp"
                 app:cardCornerRadius="2dp">
@@ -164,72 +209,182 @@
                         android:layout_marginBottom="20dp"
                         />
 
+                    <TextView
+                        android:id="@+id/tvPriceHeading"
+                        style="@style/MyTextViewSmall"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:maxLines="1"
+                        android:text="Price"
+                        android:textStyle="bold" />
+
+
+                    <TextView
+                        android:id="@+id/tvPrice"
+                        style="@style/MyTextViewSmall"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Security Money Rent"
+                        android:layout_marginTop="10dp"
+                        android:textColor="@color/black"
+                        android:layout_marginLeft="2dp"
+                        android:textStyle="bold"
+
+                        />
+
+                    <LinearLayout
+
+                        android:id="@+id/layoutPrice"
+                        android:layout_marginTop="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <LinearLayout
+                            android:id="@+id/layoutSecurityPrice"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/tvSecurityMoneyHeading"
+                                style="@style/MyTextViewSmall"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:maxLines="1"
+                                android:text="Security Money Rent"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/tvSecurityMoney"
+                                style="@style/MyTextViewSmall"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="10dp"
+                                android:maxLines="1"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/layoutRentPrice"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/tvPerDayRentHeading"
+                                style="@style/MyTextViewSmall"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:maxLines="1"
+                                android:text="Per Day Rent"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/tvPerDayRent"
+                                style="@style/MyTextViewSmall"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="10dp"
+                                android:maxLines="1"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+
                 </LinearLayout>
 
             </android.support.v7.widget.CardView>
 
-            <LinearLayout
 
-                android:id="@+id/layoutPrice"
-                android:layout_margin="10dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
 
-                    <TextView
-                        style="@style/MyTextViewSmall"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:maxLines="1"
-                        android:text="Security Money Rent"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/tvSecurityMoney"
-                        style="@style/MyTextViewSmall"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        android:maxLines="1"
-                        android:textStyle="bold" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <TextView
-                        style="@style/MyTextViewSmall"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:maxLines="1"
-                        android:text="Per Day Rent"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/tvPerDayRent"
-                        style="@style/MyTextViewSmall"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        android:maxLines="1"
-                        android:textStyle="bold" />
-                </LinearLayout>
-            </LinearLayout
-                >
 
         </LinearLayout>
     </ScrollView>
 
+    <LinearLayout
 
+        android:id="@+id/layoutBottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@android:color/black"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        >
+
+        <LinearLayout
+            android:id="@+id/layoutAddToCart"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_gravity="center_vertical"
+                android:src="@mipmap/ic_add_to_cart" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:padding="10dp"
+                android:text="@string/add_to_cart"
+                android:textColor="@color/hintColor"
+                android:theme="@style/MyTextViewNormal" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
+            android:background="@color/hintColor" />
+
+        <LinearLayout
+            android:id="@+id/layoutAddToWishlist"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+
+            <com.github.ivbaranov.mfb.MaterialFavoriteButton
+                android:id="@+id/payment_salon_material_button"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_alignParentRight="true"
+                app:mfb_animate_favorite="true"
+                app:mfb_animate_unfavorite="true"
+                app:mfb_rotation_duration="100"
+                app:mfb_rotation_angle="360"
+                app:mfb_bounce_duration="300"
+                app:mfb_color="black"
+                app:mfb_type="star"
+                app:mfb_not_favorite_image="@mipmap/ic_add_to_wishlist"
+                app:mfb_favorite_image="@mipmap/ic_favorite_hdpi"
+                android:layout_below="@+id/payonline_txt"
+
+                />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:padding="10dp"
+                android:text="@string/add_to_wishlist"
+                android:textColor="@color/hintColor"
+                android:theme="@style/MyTextViewNormal" />
+        </LinearLayout>
+
+    </LinearLayout>
 
 </RelativeLayout>

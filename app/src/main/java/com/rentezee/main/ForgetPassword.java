@@ -84,7 +84,7 @@ public class ForgetPassword extends BaseActivity implements View.OnClickListener
 
             jsonObject.put("email", email);
 
-        String url= "http://netforce.biz/renteeze/webservice/Users/forgot_password";
+        String url= "https://netforcesales.com/renteeze/webservice/Users/forgot_password";
         showProgressBar(context);
         VolleyGsonRequest<GenericResponse> gsonRequest = new VolleyGsonRequest<>(url,
                 jsonObject,
